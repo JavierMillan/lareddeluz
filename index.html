@@ -4,25 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Red de Luz - Tu luz interior te espera</title>
+    <link rel="icon" type="image/png" href="assets/cuadrado.png">
+    <link rel="apple-touch-icon" href="assets/cuadrado.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar glass">
-        <div class="nav-content">
-            <a href="#" class="nav-logo">
-                <img src="assets/cuadrado.png" alt="La Red de Luz" class="nav-logo-img">
-                <span>La Red de Luz</span>
-            </a>
-            <div class="nav-links">
-                <a href="#why" class="nav-link">Por qué</a>
-                <a href="#methodology" class="nav-link">Metodología</a>
-                <a href="#testimonios" class="nav-link">Testimonios</a>
-                <a href="#contact" class="nav-link cta-button glass">Contacto</a>
-            </div>
-        </div>
-    </nav>    <!-- Hero Section -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="network-bg" id="networkBg"></div>
         <div class="hero-content">
@@ -155,5 +143,13 @@
     </section>
 
     <script src="js/main.js"></script>
+    <script>
+        // Cargar navbar global
+        fetch('navbar.html')
+            .then(res => res.text())
+            .then(html => {
+                document.body.insertAdjacentHTML('afterbegin', html);
+            });
+    </script>
 </body>
 </html>

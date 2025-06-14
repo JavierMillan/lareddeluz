@@ -127,6 +127,22 @@ function enableSmoothScroll() {
     });
 }
 
+// Smooth scroll para los links del navbar
+document.querySelectorAll('.dropdown-content a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            targetSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
 // Pillar card hover effect
 function enablePillarCardHover() {
     document.querySelectorAll('.pillar-card').forEach(card => {
