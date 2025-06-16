@@ -1,186 +1,255 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Create story particles
-    const storyParticles = document.querySelector('.story-particles');
-    if (storyParticles) {
-        for(let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'story-particle';
-        for(let i = 0; i < 60; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'magical-star';
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
-            particle.style.setProperty('--duration', `${2 + Math.random() * 4}s`);
-            dust.appendChild(particle);
-        }
-        originSection.appendChild(dust);
-    }
+// ===================================
+// CONOCER.JS - Orquestador de la Experiencia del Viaje Interior
+// Maneja las animaciones de scroll y efectos de revelación
+// ===================================
 
-    // Nebulosa en .awakening-section
-    const awakeningSection = document.querySelector('.awakening-section');
-    if (awakeningSection && !awakeningSection.querySelector('.nebula-effect')) {
-        const nebula = document.createElement('div');
-        nebula.className = 'nebula-effect';
-        awakeningSection.appendChild(nebula);
-    }
+class StoryExperience {
+  constructor() {
+    this.init();
+  }
 
-    // Animación de las palabras constelación
-    const words = document.querySelectorAll('.word');
-    words.forEach((word, index) => {
-        word.style.animation = `constellationFade 6s infinite ${index * 2}s`;
-        word.style.left = `${Math.random() * 80}%`;
-        word.style.top = `${Math.random() * 80}%`;
-    });
-    
-    // Crear partículas flotantes
-    const storyParticles = document.querySelector('.story-particles');
-    
-    for(let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'story-particle';
-        
-        // Posición aleatoria
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${Math.random() * 100}%`;
-        
-        // Animación única para cada partícula
-        particle.style.animation = `
-            float ${5 + Math.random() * 5}s infinite ease-in-out ${Math.random() * 5}s,
-            twinkle ${3 + Math.random() * 2}s infinite ease-in-out ${Math.random() * 3}s
-        `;
-        
-        storyParticles.appendChild(particle);
-    }
+  init() {
+    this.setupObserver();
+    this.setupStaggeredAnimations();
+    this.setupScrollEffects();
+    this.setupParticles();
+  }
 
-    // Revelar texto al scrollear
-    const storyParagraphs = document.querySelectorAll('.story-text p');
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
-                }
-            });
-        },
-        { threshold: 0.2 }
-    );
-
-    storyParagraphs.forEach(p => observer.observe(p));
-
-    // Efecto de ondulación para el Awakening
-    const awakenText = document.querySelector('.awakening-text');
-    
-    if (awakenText) {
-        awakenText.addEventListener('mousemove', (e) => {
-            const { left, top, width, height } = awakenText.getBoundingClientRect();
-            const x = (e.clientX - left) / width;
-            const y = (e.clientY - top) / height;
-            
-            awakenText.style.setProperty('--x', `${x * 100}%`);
-            awakenText.style.setProperty('--y', `${y * 100}%`);
-        });
-    }
-
-    // Crear efecto de polvo cósmico
-    const createCosmicDust = () => {
-        const dust = document.createElement('div');
-        dust.className = 'cosmic-dust';
-        document.body.appendChild(dust);
-
-        for(let i = 0; i < 100; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'magical-star';
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
-            particle.style.setProperty('--duration', `${2 + Math.random() * 4}s`);
-            particle.style.setProperty('--delay', `${Math.random() * 2}s`);
-            dust.appendChild(particle);
-        }
+  // ===================================
+  // INTERSECTION OBSERVER - Revelación por Scroll
+  // ===================================
+  setupObserver() {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '-50px 0px -50px 0px'
     };
 
-    createCosmicDust();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.revealSection(entry.target);
+        }
+      });
+    }, observerOptions);
 
-    // Efecto de parallax sutil en scroll
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        document.querySelectorAll('.nebula-effect').forEach(nebula => {
-            nebula.style.transform = `translateY(${scrolled * 0.1}px)`;
-        });
+    // Observar todas las secciones de la historia
+    document.querySelectorAll('.story-block').forEach(block => {
+      observer.observe(block);
     });
+  }
 
-    // Scroll suave entre secciones
-    document.querySelectorAll('.scroll-down').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            const target = this.getAttribute('data-scroll');
-            if (target && document.querySelector(target)) {
-                document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+  revealSection(section) {
+    // Marcar sección como visible
+    section.classList.add('in-view');
+    
+    // Animar elementos fade-in con delay escalonado
+    const fadeElements = section.querySelectorAll('.fade-in');
+    fadeElements.forEach((el, index) => {
+      setTimeout(() => {
+        el.classList.add('visible');
+      }, index * 200);
     });
+  }
 
-    // Inicializar efectos
-    createOrbs();
-    createGeometric();
-    initScrollReveal();
-    
-    // Event listeners
-    window.addEventListener('scroll', handleScroll);
-    initSmoothScroll();
-});
+  // ===================================
+  // ANIMACIONES ESCALONADAS
+  // ===================================
+  setupStaggeredAnimations() {
+    // Animar spans en text-group con delays incrementales
+    document.querySelectorAll('.text-group').forEach(group => {
+      const spans = group.querySelectorAll('span');
+      spans.forEach((span, index) => {
+        span.style.transitionDelay = `${index * 0.3}s`;
+      });
+    });
+  }
 
-function createOrbs() {
-    const container = document.getElementById('orbs');
-    if (!container) return;
-    
-    const orbCount = 12;
-    for (let i = 0; i < orbCount; i++) {
-        const orb = document.createElement('div');
-        orb.className = 'orb';
-        orb.style.left = `${Math.random() * 100}%`;
-        orb.style.top = `${Math.random() * 100}%`;
-        orb.style.setProperty('--size', `${Math.random() * 3 + 2}rem`);
-        orb.style.setProperty('--duration', `${Math.random() * 2 + 3}s`);
-        orb.style.setProperty('--delay', `${Math.random() * 5}s`);
-        container.appendChild(orb);
+  // ===================================
+  // EFECTOS DE SCROLL PARALLAX SUTIL
+  // ===================================
+  setupScrollEffects() {
+    let ticking = false;
+
+    const updateScrollEffects = () => {
+      const scrollY = window.pageYOffset;
+      
+      // Efecto parallax en hero
+      const hero = document.querySelector('.story-hero');
+      if (hero) {
+        const heroRect = hero.getBoundingClientRect();
+        if (heroRect.bottom > 0) {
+          const transform = scrollY * 0.3;
+          hero.style.transform = `translateY(${transform}px)`;
+        }
+      }
+
+      // Efecto de fade en partículas según scroll
+      const particles = document.querySelector('.story-particles');
+      if (particles) {
+        const opacity = Math.max(0, 1 - (scrollY / window.innerHeight));
+        particles.style.opacity = opacity;
+      }
+
+      ticking = false;
+    };
+
+    const requestScrollUpdate = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollEffects);
+        ticking = true;
+      }
+    };
+
+    // Throttled scroll listener
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+  }
+
+  // ===================================
+  // SISTEMA DE PARTÍCULAS DINÁMICAS
+  // ===================================
+  setupParticles() {
+    const particles = document.querySelector('.story-particles');
+    if (!particles) return;
+
+    // Crear partículas adicionales dinámicamente
+    for (let i = 0; i < 6; i++) {
+      const particle = document.createElement('div');
+      particle.style.cssText = `
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        background: var(--spark-gold);
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0;
+        animation: pulse ${3 + Math.random() * 4}s infinite ease-in-out;
+        animation-delay: ${Math.random() * 4}s;
+        top: ${Math.random() * 100}%;
+        left: ${Math.random() * 100}%;
+      `;
+      particles.appendChild(particle);
     }
+
+    // Animar entrada de partículas
+    setTimeout(() => {
+      particles.style.opacity = '1';
+    }, 2000);
+  }
+
+  // ===================================
+  // EFECTOS ESPECIALES PARA SECCIONES CLAVE
+  // ===================================
+  setupSpecialEffects() {
+    // Efecto especial para la sección "El Origen" (Big Bang)
+    const origenSection = document.querySelector('#origen');
+    if (origenSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.triggerBigBangEffect(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      observer.observe(origenSection);
+    }
+  }
+
+  triggerBigBangEffect(section) {
+    // Crear ondas de expansión
+    const waves = document.createElement('div');
+    waves.style.cssText = `
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--spark-gold);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+      animation: big-bang 3s ease-out forwards;
+    `;
+    section.appendChild(waves);
+
+    // Remover después de la animación
+    setTimeout(() => {
+      waves.remove();
+    }, 3000);
+  }
+
+  // ===================================
+  // SMOOTH SCROLL PARA NAVEGACIÓN
+  // ===================================
+  setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(anchor.getAttribute('href'));
+        
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  }
+
+  // ===================================
+  // OPTIMIZACIÓN DE RENDIMIENTO
+  // ===================================
+  optimizePerformance() {
+    // Lazy loading de efectos pesados
+    const heavyEffects = document.querySelectorAll('.story-block');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Activar efectos solo cuando la sección es visible
+          entry.target.style.willChange = 'auto';
+        } else {
+          // Desactivar efectos para secciones no visibles
+          entry.target.style.willChange = 'unset';
+        }
+      });
+    }, { rootMargin: '100px' });
+
+    heavyEffects.forEach(section => observer.observe(section));
+  }
 }
 
-// Add Intersection Observer for scroll animations
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            // Handle block titles
-            if (entry.target.classList.contains('block-title')) {
-                entry.target.classList.add('visible');
-            }
-            
-            // Handle text groups
-            if (entry.target.classList.contains('text-group')) {
-                const spans = entry.target.querySelectorAll('span');
-                spans.forEach((span, index) => {
-                    setTimeout(() => {
-                        span.classList.add('visible');
-                    }, index * 200);
-                });
-            }
-            
-            // Handle quotes
-            if (entry.target.classList.contains('text-quote')) {
-                entry.target.classList.add('visible');
-            }
-            
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-// Observe elements
-document.querySelectorAll('.block-title, .text-group, .text-quote').forEach(element => {
-    observer.observe(element);
+// ===================================
+// INICIALIZACIÓN
+// ===================================
+document.addEventListener('DOMContentLoaded', () => {
+  const storyExperience = new StoryExperience();
+  
+  // Configurar efectos especiales después de la carga inicial
+  setTimeout(() => {
+    storyExperience.setupSpecialEffects();
+    storyExperience.setupSmoothScroll();
+    storyExperience.optimizePerformance();
+  }, 500);
 });
+
+// ===================================
+// OPTIMIZACIÓN PARA DISPOSITIVOS MÓVILES
+// ===================================
+if ('ontouchstart' in window) {
+  // Reducir efectos en móviles para mejor rendimiento
+  document.body.classList.add('touch-device');
+  
+  // CSS adicional para touch devices
+  const style = document.createElement('style');
+  style.textContent = `
+    .touch-device .story-hero::before {
+      animation: none;
+    }
+    .touch-device .story-particles {
+      display: none;
+    }
+  `;
+  document.head.appendChild(style);
+}
