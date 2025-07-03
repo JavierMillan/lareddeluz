@@ -1,6 +1,7 @@
 // Network Animation
 function createNetwork() {
     const container = document.getElementById('networkBg');
+    if (!container) return;
     const nodeCount = 20;
     
     // Create nodes
@@ -95,17 +96,19 @@ function createMagicalEffects() {
     });
 }
 
-// Scroll Reveal
-function revealOnScroll() {
+// Scroll Reveal optimizado con IntersectionObserver
+function setupRevealObserver() {
     const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach(reveal => {
-        const windowHeight = window.innerHeight;
-        const revealTop = reveal.getBoundingClientRect().top;
-        const revealPoint = 100;
-        if (revealTop < windowHeight - revealPoint) {
-            reveal.classList.add('active');
-        }
-    });
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(reveal => observer.observe(reveal));
 }
 
 // Smooth scroll for anchor links
@@ -255,7 +258,7 @@ document.querySelectorAll('.scroll-down').forEach(arrow => {
 function initLaRedDeLuz() {
     createNetwork();
     createParticles();
-    revealOnScroll();
+    setupRevealObserver();
     enableSmoothScroll();
     enablePillarCardHover();
     createMagicalEffects();
@@ -285,5 +288,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-window.addEventListener('scroll', revealOnScroll);

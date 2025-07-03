@@ -434,3 +434,67 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Network background for sections */
+.section-network {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-background);
+}
+.section-network .network-node,
+.section-network .network-line {
+  opacity: 0.2;
+}
+/* Progress Navigation */
+.story-progress {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+}
+.story-progress ul {
+  list-style: none;
+}
+.story-progress li {
+  margin: 1rem 0;
+}
+.story-progress a {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--gold-light);
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.3s;
+}
+.story-progress a.active {
+  background: var(--gold-light);
+}
+
+/* Gradual backgrounds from darkness to light */
+#vacio {
+  background: linear-gradient(160deg, var(--void-deep), var(--void-medium));
+}
+
+#llamado {
+  background: linear-gradient(160deg, var(--void-medium), var(--creation-blue));
+}
+
+#origen {
+  background: radial-gradient(circle at center, var(--creation-blue), var(--light-birth));
+}
+
+#vision {
+  background: radial-gradient(circle at center, var(--light-birth), rgba(255,255,255,0.1));
+}
+
+@media (max-width: 600px) {
+  .scroll-indicator {
+    bottom: 2rem;
+  }
+  .story-block {
+    padding: 8rem 2rem;
+  }
+}

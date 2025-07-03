@@ -2,15 +2,19 @@
    Incluye glassmorphism, animaciones base, y estilos de todas las secciones.
    Mantiene la guía de estilo y paleta EXACTA. */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
-
 :root {
     --gold-light: #e4cd85;
     --gold-dark: #c08a2d;
     --deep-blue: #163384;
     --black: #000000;
     --white: #ffffff;
+    --spark-gold: var(--gold-light);
+    --void-deep: #0d0b16;
+    --void-medium: #232a3d;
+    --creation-blue: #163384;
+    --light-birth: #f9f4e3;
+    --z-background: 0;
+    --z-content: 1;
 }
 
 * {
