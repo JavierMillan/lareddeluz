@@ -434,6 +434,18 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Network background for sections */
+.section-network {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-background);
+}
+.section-network .network-node,
+.section-network .network-line {
+  opacity: 0.2;
+}
 /* Progress Navigation */
 .story-progress {
   position: fixed;
