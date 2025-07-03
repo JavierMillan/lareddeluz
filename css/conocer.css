@@ -358,6 +358,10 @@ body {
     z-index: 2;
 }
 
+.el-camino-card p {
+  font-size: 1.18rem;
+}
+
 @media (max-width: 900px) {
     .el-camino-cloud-bg {
         background-size: 200% 100%;
@@ -400,7 +404,7 @@ body {
   box-shadow: 0 2px 24px 0 rgba(22,51,132,0.08);
   padding: 2.8rem 2.2rem 2.2rem 2.2rem;
   min-width: 270px;
-  max-width: 370px;
+  max-width: 800px;
   min-height: 220px;
   margin: 0 auto;
   transition: box-shadow 0.3s, transform 0.3s;
@@ -421,15 +425,6 @@ body {
   text-align: left;
   letter-spacing: 0.01em;
   opacity: 0.92;
-}
-.conocer-encuentro-card blockquote:before {
-  content: '“';
-  font-size: 2.5rem;
-  color: #e4cd85;
-  position: absolute;
-  left: 0.5rem; top: -1.2rem;
-  opacity: 0.13;
-  font-family: 'Playfair Display', serif;
 }
 
 /* --- LA LUZ: Halo dorado y fondo radial --- */
@@ -456,10 +451,10 @@ body {
   filter: blur(2px);
 }
 .conocer-luz-subtitle {
+  padding: 1em;
   font-size: 1.22rem;
   color: var(--white);
   opacity: 0.92;
-  margin-bottom: 3.5rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -567,6 +562,11 @@ body {
 /* ===================== */
 /* 7. REFINAMIENTO Y RESPONSIVE */
 @media (max-width: 900px) {
+  .navbar {
+    padding: 0;
+    padding-top: 1rem;
+  }
+
   .story-glass-card {
     padding: 2rem 1.2rem;
   }

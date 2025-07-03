@@ -816,7 +816,7 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding-top: 1rem;
+    padding: 1rem;
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(228, 205, 133, 0.1);
