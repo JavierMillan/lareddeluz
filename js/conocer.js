@@ -16,7 +16,6 @@ class StoryExperience {
     this.setupSectionNetworks();
     this.setupProgressNav();
     document.addEventListener('navbarLoaded', () => this.adjustNavbarLinks());
-  }
 
   // ===================================
   // INTERSECTION OBSERVER - Revelación por Scroll
