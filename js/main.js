@@ -189,24 +189,6 @@ function enablePillarCardClick() {
     });
 }
 
-// Navbar hamburger y links responsive
-function enableNavbarHamburger() {
-    const hamburger = document.querySelector('.navbar-hamburger');
-    const navLinks = document.querySelector('.navbar-links');
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-        });
-    }
-    document.querySelectorAll('.navbar-link').forEach(link => {
-        link.addEventListener('click', function() {
-            if (window.innerWidth < 900 && navLinks) {
-                navLinks.classList.remove('active');
-            }
-        });
-    });
-}
-
 // Scroll next buttons
 function enableScrollNextButtons() {
     document.querySelectorAll('.scroll-next').forEach(btn => {
@@ -221,8 +203,10 @@ function enableScrollNextButtons() {
 
 // Scroll next buttons (scroll-down)
 function enableScrollDownButtons() {
-    document.querySelectorAll('.scroll-down').forEach(btn => {
-        btn.addEventListener('click', function() {
+    // Soporte para .scroll-down y .conocer-scroll-down
+    document.querySelectorAll('.scroll-down, .conocer-scroll-down').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
             const selector = btn.getAttribute('data-scroll');
             if (selector) {
                 const target = document.querySelector(selector);
@@ -254,7 +238,42 @@ document.querySelectorAll('.scroll-down').forEach(arrow => {
     });
 });
 
-// Initialize all
+// --- BURGER MENU SIMPLE ---
+function toggleBurgerMenu(btn) {
+  var navLinks = document.querySelector('.nav-links');
+  btn.classList.toggle('open');
+  navLinks.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  var burger = document.querySelector('.nav-toggle');
+  var navLinks = document.querySelector('.nav-links');
+  if (!burger || !navLinks) return;
+  if (window.innerWidth <= 900 && !navLinks.contains(e.target) && !burger.contains(e.target)) {
+    navLinks.classList.remove('open');
+    burger.classList.remove('open');
+  }
+});
+
+// Cierra el menú mobile al hacer click en cualquier enlace del menú o submenú
+function closeMobileMenuOnLinkClick() {
+    document.querySelectorAll('.nav-links a, .dropdown-content a').forEach(link => {
+        link.addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            const navToggle = document.querySelector('.nav-toggle');
+            if (navLinks && navLinks.classList.contains('open')) {
+                navLinks.classList.remove('open');
+            }
+            if (navToggle && navToggle.classList.contains('open')) {
+                navToggle.classList.remove('open');
+            }
+            // Cierra cualquier dropdown abierto
+            document.querySelectorAll('.nav-dropdown').forEach(drop => drop.classList.remove('open'));
+        });
+    });
+}
+
+// Inicialización global
 function initLaRedDeLuz() {
     createNetwork();
     createParticles();
@@ -262,7 +281,6 @@ function initLaRedDeLuz() {
     enableSmoothScroll();
     enablePillarCardHover();
     createMagicalEffects();
-    enableNavbarHamburger();
     enableScrollNextButtons();
     enableScrollDownButtons();
     enablePillarCardClick(); // <-- activar click en cartas
@@ -287,4 +305,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    closeMobileMenuOnLinkClick();
 });

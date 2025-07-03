@@ -1,6 +1,116 @@
 /* Nuevo diseño simplificado para conocer.html
    Fondo gradual de la oscuridad a la luz */
 
+/* ===================== */
+/* 1. FONDO Y PARTICULAS */
+.liquid-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, var(--void-deep) 0%, var(--deep-blue) 60%, var(--gold-light) 100%);
+  overflow: hidden;
+  opacity: 0.95;
+  animation: liquidGradient 16s ease-in-out infinite alternate;
+}
+
+@keyframes liquidGradient {
+  0% {
+    filter: blur(0px) brightness(1);
+    background-position: 0% 50%;
+  }
+  50% {
+    filter: blur(8px) brightness(1.08);
+    background-position: 100% 50%;
+  }
+  100% {
+    filter: blur(0px) brightness(1);
+    background-position: 0% 50%;
+  }
+}
+
+.story-particles {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+.story-particles .particle {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-light), var(--deep-blue));
+  box-shadow: 0 0 12px 2px var(--gold-light), 0 0 24px 4px var(--deep-blue);
+  opacity: 0.7;
+  animation: floatStar 12s linear infinite;
+}
+
+@keyframes floatStar {
+  0% { transform: translateY(0) scale(1); opacity: 0.7; }
+  50% { transform: translateY(-40px) scale(1.3); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 0.7; }
+}
+
+/* ===================== */
+/* 2. TARJETAS Y ANIMACIONES */
+.story-glass-card {
+  box-shadow: 0 8px 32px 0 rgba(22,51,132,0.12), 0 1.5px 8px 0 rgba(228,205,133,0.08);
+  transition: box-shadow 0.6s cubic-bezier(.4,1.6,.6,1), transform 0.7s cubic-bezier(.4,1.6,.6,1);
+  will-change: transform, box-shadow;
+  padding: 3.5rem 2.5rem;
+  margin: 2.5rem 0;
+  background: rgba(22,51,132,0.10);
+  border: 1.5px solid rgba(228,205,133,0.18);
+  border-radius: 24px;
+  backdrop-filter: blur(24px) saturate(1.2);
+}
+.story-glass-card:hover, .story-glass-card:focus {
+  box-shadow: 0 12px 48px 0 rgba(228,205,133,0.18), 0 2.5px 16px 0 rgba(22,51,132,0.12);
+  transform: translateY(-6px) scale(1.025);
+}
+
+.fadeInUp {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUpModern 1.2s cubic-bezier(.4,1.6,.6,1) forwards;
+}
+@keyframes fadeInUpModern {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.in-view .fade-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s cubic-bezier(.4,1.6,.6,1), transform 0.8s cubic-bezier(.4,1.6,.6,1);
+}
+
+/* ===================== */
+/* 3. SECCIONES GENERALES */
+.story-section {
+  position: relative;
+  z-index: 2;
+  transition: background 1.2s cubic-bezier(.4,1.6,.6,1);
+}
+
+.story-section.in-view::before {
+  content: '';
+  position: absolute;
+  left: 50%; top: 0; transform: translateX(-50%);
+  width: 80vw; height: 100px;
+  background: radial-gradient(ellipse at center, rgba(228,205,133,0.12) 0%, transparent 80%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  animation: haloFade 1.2s cubic-bezier(.4,1.6,.6,1);
+}
+@keyframes haloFade {
+  from { opacity: 0; }
+  to { opacity: 0.7; }
+}
+
 .story-container {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -40,10 +150,6 @@
   transform: none;
 }
 
-#historia {
-  background: var(--void-deep);
-  color: var(--white);
-}
 
 #vacio {
   background: linear-gradient(to bottom, var(--void-deep), var(--void-medium));
@@ -65,6 +171,406 @@
   color: var(--black);
 }
 
+/* ===================== */
+/* 4. CONOCER.HTML EXCLUSIVO */
+/* HERO luxury oscuro */
+.conocer-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: none;
+  z-index: 2;
+  overflow: hidden;
+  padding-top: 7vh;
+  padding-bottom: 7vh;
+}
+
+.conocer-hero-card {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+  margin: 0 auto;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+.conocer-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 8vw, 5.2rem);
+  font-weight: 400;
+  color: var(--gold-light);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 32px rgba(22,51,132,0.18), 0 1px 0 #232a3d;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
+  padding: 0 0.5rem;
+}
+
+.conocer-hero-subtitle {
+  color: var(--white);
+  font-size: 1.35rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  max-width: 520px;
+  opacity: 0.92;
+}
+
+@media (max-width: 700px) {
+  .conocer-hero-card {
+    padding: 2.2rem 1.2rem 1.5rem 1.2rem;
+    gap: 1.2rem;
+  }
+  .conocer-hero-title {
+    font-size: 2.2rem;
+    padding: 0 0.2rem;
+  }
+}
+
+/* Nebula Canvas Background */
+#nebula-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: #0d0b16;
+  opacity: 1;
+  transition: opacity 0.7s;
+}
+
+body {
+  background: #0d0b16;
+}
+
+/* Asegura que el resto del contenido esté por encima */
+.story-container, .liquid-bg, .story-particles {
+  position: relative;
+  z-index: 2;
+}
+
+/* El Llamado - fondo de estrellas y spacing premium */
+.conocer-llamado {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(180deg, #181a24 0%, #232a3d 100%);
+  z-index: 2;
+  overflow: hidden;
+  padding: 7vh 0 7vh 0;
+}
+
+.conocer-llamado-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  background: none;
+}
+
+.llamado-stars {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.conocer-llamado-card {
+  position: relative;
+  z-index: 3;
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+  margin: 0 auto;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+@media (max-width: 700px) {
+  .conocer-llamado-card {
+    padding: 2.2rem 1.2rem 1.5rem 1.2rem;
+    gap: 1.2rem;
+  }
+}
+
+/* --- EL CAMINO: Fondo negro profundo con estrellas sutiles --- */
+.el-camino-section {
+    position: relative;
+    background: #0d0b16;
+    overflow: visible;
+    z-index: 1;
+}
+
+.el-camino-cloud-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background: url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" viewBox="0 0 1440 400" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="80" r="1.5" fill="%23e4cd85" opacity="0.7"/><circle cx="400" cy="120" r="1.2" fill="%23fff" opacity="0.5"/><circle cx="900" cy="180" r="1.7" fill="%23e4cd85" opacity="0.8"/><circle cx="700" cy="300" r="1.1" fill="%23fff" opacity="0.4"/><circle cx="200" cy="250" r="1.4" fill="%23e4cd85" opacity="0.6"/><circle cx="1300" cy="100" r="1.3" fill="%23fff" opacity="0.5"/><circle cx="1100" cy="350" r="1.6" fill="%23e4cd85" opacity="0.7"/><circle cx="600" cy="60" r="1.1" fill="%23fff" opacity="0.4"/><circle cx="300" cy="350" r="1.2" fill="%23fff" opacity="0.4"/><circle cx="1000" cy="200" r="1.5" fill="%23e4cd85" opacity="0.6"/></svg>');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    filter: none;
+    opacity: 0.7;
+    transition: opacity 0.6s;
+}
+
+.el-camino-section > *:not(.el-camino-cloud-bg) {
+    position: relative;
+    z-index: 1;
+}
+
+.el-camino-title {
+    margin-bottom: 1.2rem !important;
+}
+
+.el-camino-card {
+    box-shadow: 0 8px 40px 0 rgba(22,51,132,0.13), 0 2px 24px 0 rgba(228,205,133,0.10);
+    background: rgba(22, 51, 132, 0.10);
+    border: 1.5px solid rgba(228,205,133,0.18);
+    border-radius: 28px;
+    backdrop-filter: blur(18px);
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 900px) {
+    .el-camino-cloud-bg {
+        background-size: 200% 100%;
+        filter: none;
+    }
+    .el-camino-title {
+        margin-bottom: 0.8rem !important;
+    }
+}
+
+/* --- EL ENCUENTRO: Red de puntos conectados y efecto agua --- */
+.conocer-encuentro {
+  background: linear-gradient(180deg, #191b23 0%, #232a3d 100%);
+  position: relative;
+  padding: 10vh 0 10vh 0;
+}
+.conocer-encuentro-bg {
+  background: none;
+}
+.conocer-encuentro::before {
+  content: '';
+  position: absolute;
+  left: 50%; top: 0; transform: translateX(-50%);
+  width: 100vw; height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="2" fill="%23e4cd85" opacity="0.06"/><circle cx="60" cy="40" r="2" fill="%23e4cd85" opacity="0.06"/><circle cx="100" cy="60" r="2" fill="%23e4cd85" opacity="0.06"/><line x1="20" y1="20" x2="60" y2="40" stroke="%23e4cd85" stroke-width="1" opacity="0.03"/><line x1="60" y1="40" x2="100" y2="60" stroke="%23e4cd85" stroke-width="1" opacity="0.03"/></svg>');
+  background-repeat: repeat;
+  background-size: 120px 80px;
+  opacity: 0.10;
+  pointer-events: none;
+  z-index: 1;
+}
+.conocer-encuentro-grid {
+  margin: 1em;
+  gap: 3.5rem;
+}
+.conocer-encuentro-card {
+  background: rgba(22,51,132,0.08);
+  border: 1.5px solid rgba(228,205,133,0.10);
+  border-radius: 18px;
+  box-shadow: 0 2px 24px 0 rgba(22,51,132,0.08);
+  padding: 2.8rem 2.2rem 2.2rem 2.2rem;
+  min-width: 270px;
+  max-width: 370px;
+  min-height: 220px;
+  margin: 0 auto;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.conocer-encuentro-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(228,205,133,0.13);
+  transform: translateY(-8px) scale(1.03);
+}
+.conocer-encuentro-card blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.18rem;
+  font-style: italic;
+  color: var(--gold-light);
+  background: none;
+  border-left: 3px solid var(--gold-light);
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  margin: 0;
+  text-align: left;
+  letter-spacing: 0.01em;
+  opacity: 0.92;
+}
+.conocer-encuentro-card blockquote:before {
+  content: '“';
+  font-size: 2.5rem;
+  color: #e4cd85;
+  position: absolute;
+  left: 0.5rem; top: -1.2rem;
+  opacity: 0.13;
+  font-family: 'Playfair Display', serif;
+}
+
+/* --- LA LUZ: Halo dorado y fondo radial --- */
+.conocer-luz {
+  background: radial-gradient(circle at 50% 30%, #e4cd8533 0%, #232a3d 80%);
+  padding: 12vh 0 12vh 0;
+}
+.conocer-luz-title {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 2.8rem;
+  letter-spacing: -0.01em;
+}
+.conocer-luz-title::before {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px; height: 80px;
+  background: radial-gradient(ellipse at center, #e4cd85 0%, transparent 80%);
+  opacity: 0.13;
+  z-index: 1;
+  pointer-events: none;
+  filter: blur(2px);
+}
+.conocer-luz-subtitle {
+  font-size: 1.22rem;
+  color: var(--white);
+  opacity: 0.92;
+  margin-bottom: 3.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+.conocer-luz .conocer-cta {
+  margin-top: 1.8rem;
+  box-shadow: 0 0 24px 0 #e4cd8533;
+  background: linear-gradient(90deg, #e4cd85 0%, #163384 100%);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 1.1rem 2.8rem;
+  font-size: 1.08rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: box-shadow 0.3s, background 0.3s, color 0.3s;
+}
+.conocer-luz .conocer-cta:hover {
+  box-shadow: 0 0 48px 0 #e4cd85cc;
+  background: linear-gradient(90deg, #fffbe6 0%, #e4cd85 100%);
+  color: #232a3d;
+}
+
+/* ===================== */
+/* 6. SCROLL-DOWN BUTTON */
+.conocer-scroll-down {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin: 2.5rem auto 0 auto;
+  cursor: pointer;
+  z-index: 10;
+  position: relative;
+  background: none;
+  border: none;
+  outline: none;
+  transition: filter 0.2s;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));
+}
+/* Halo dorado-glass premium para resaltar la flecha */
+.conocer-scroll-down::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(228,205,133,0.22) 0%, rgba(228,205,133,0.09) 60%, transparent 100%);
+  box-shadow: 0 0 24px 0 rgba(228,205,133,0.18), 0 0 0 2px rgba(255,251,230,0.10);
+  filter: blur(1.5px) saturate(1.2);
+  opacity: 0.85;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+.conocer-scroll-down:hover::before,
+.conocer-scroll-down:focus::before {
+  opacity: 1;
+  box-shadow: 0 0 36px 0 rgba(228,205,133,0.28), 0 0 0 4px rgba(255,251,230,0.18);
+  filter: blur(2.5px) saturate(1.3);
+}
+.conocer-scroll-down:focus {
+  outline: 2px solid var(--gold-light);
+}
+.conocer-scroll-arrow {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-right: 2.5px solid var(--gold-light);
+  border-bottom: 2.5px solid var(--gold-light);
+  transform: rotate(45deg);
+  opacity: 0.7;
+  transition: border-color 0.2s, opacity 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  background: none;
+}
+.conocer-scroll-down:hover .conocer-scroll-arrow,
+.conocer-scroll-down:focus .conocer-scroll-arrow {
+  border-color: #fffbe6;
+  opacity: 1;
+  box-shadow: 0 4px 16px 0 #e4cd8533;
+}
+@media (max-width: 700px) {
+  .conocer-scroll-down {
+    width: 38px;
+    height: 38px;
+    margin-top: 1.2rem;
+  }
+  .conocer-scroll-down::before {
+    width: 44px;
+    height: 44px;
+  }
+  .conocer-scroll-arrow {
+    width: 18px;
+    height: 18px;
+    border-width: 2px;
+  }
+}
+
+/* ===================== */
+/* 7. REFINAMIENTO Y RESPONSIVE */
+@media (max-width: 900px) {
+  .story-glass-card {
+    padding: 2rem 1.2rem;
+  }
+}
 @media (max-width: 600px) {
   .story-title {
     font-size: 2.2rem;
@@ -72,4 +578,14 @@
   .story-text {
     font-size: 1.1rem;
   }
+  .story-glass-card {
+    margin: 1.2rem 0;
+    padding: 1.2rem 0.5rem;
+  }
+}
+
+/* ===================== */
+/* 8. NAVBAR FIX */
+.navbar {
+  z-index: 10 !important;
 }

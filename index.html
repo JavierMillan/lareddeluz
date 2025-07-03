@@ -152,6 +152,8 @@
             .then(res => res.text())
             .then(html => {
                 document.body.insertAdjacentHTML('afterbegin', html);
+                // Esperar a que el navbar esté en el DOM antes de inicializar el JS
+                if (window.initLaRedDeLuz) window.initLaRedDeLuz();
             });
     </script>
 </body>
