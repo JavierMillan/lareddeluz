@@ -13,6 +13,7 @@ class StoryExperience {
     this.setupStaggeredAnimations();
     this.setupScrollEffects();
     this.setupParticles();
+    this.setupProgressNav();
   }
 
   // ===================================
@@ -134,6 +135,31 @@ class StoryExperience {
     setTimeout(() => {
       particles.style.opacity = '1';
     }, 2000);
+  }
+
+  // ===================================
+  // PROGRESS NAVIGATION
+  // ===================================
+  setupProgressNav() {
+    const links = document.querySelectorAll('.story-progress a');
+    const sections = document.querySelectorAll('section[id]');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(link => {
+            const target = link.getAttribute('href').slice(1);
+            if (target === entry.target.id) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.6 });
+
+    sections.forEach(section => observer.observe(section));
   }
 
   // ===================================
