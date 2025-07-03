@@ -17,6 +17,9 @@ class StoryExperience {
     this.setupProgressNav();
     document.addEventListener('navbarLoaded', () => this.adjustNavbarLinks());
 
+    // Cerrar inicialización
+  }
+
   // ===================================
   // INTERSECTION OBSERVER - Revelación por Scroll
   // ===================================
@@ -35,8 +38,8 @@ class StoryExperience {
     }, observerOptions);
 
     // Observar todas las secciones de la historia
-    document.querySelectorAll('.story-block').forEach(block => {
-      observer.observe(block);
+    document.querySelectorAll('.story-section').forEach(section => {
+      observer.observe(section);
     });
   }
 
@@ -268,7 +271,7 @@ class StoryExperience {
   // ===================================
   optimizePerformance() {
     // Lazy loading de efectos pesados
-    const heavyEffects = document.querySelectorAll('.story-block');
+    const heavyEffects = document.querySelectorAll('.story-section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
