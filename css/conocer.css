@@ -562,11 +562,6 @@ body {
 /* ===================== */
 /* 7. REFINAMIENTO Y RESPONSIVE */
 @media (max-width: 900px) {
-  .navbar {
-    padding: 0;
-    padding-top: 1rem;
-  }
-
   .story-glass-card {
     padding: 2rem 1.2rem;
   }
