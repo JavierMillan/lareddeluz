@@ -13,6 +13,8 @@ class StoryExperience {
     this.setupStaggeredAnimations();
     this.setupScrollEffects();
     this.setupParticles();
+    this.setupSectionNetworks();
+    this.setupProgressNav();
   }
 
   // ===================================
@@ -134,6 +136,59 @@ class StoryExperience {
     setTimeout(() => {
       particles.style.opacity = '1';
     }, 2000);
+  }
+
+  // ===================================
+  // REDES DINÁMICAS EN CADA SECCIÓN
+  // ===================================
+  setupSectionNetworks() {
+    document.querySelectorAll('.section-network').forEach(container => {
+      const nodeCount = 12;
+      for (let i = 0; i < nodeCount; i++) {
+        const node = document.createElement('div');
+        node.className = 'network-node';
+        node.style.left = Math.random() * 100 + '%';
+        node.style.top = Math.random() * 100 + '%';
+        node.style.animationDelay = Math.random() * 3 + 's';
+        container.appendChild(node);
+      }
+
+      for (let i = 0; i < nodeCount / 2; i++) {
+        const line = document.createElement('div');
+        line.className = 'network-line';
+        line.style.left = Math.random() * 100 + '%';
+        line.style.top = Math.random() * 100 + '%';
+        line.style.width = Math.random() * 150 + 30 + 'px';
+        line.style.transform = `rotate(${Math.random() * 360}deg)`;
+        line.style.animationDelay = Math.random() * 4 + 's';
+        container.appendChild(line);
+      }
+    });
+  }
+
+  // ===================================
+  // PROGRESS NAVIGATION
+  // ===================================
+  setupProgressNav() {
+    const links = document.querySelectorAll('.story-progress a');
+    const sections = document.querySelectorAll('section[id]');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(link => {
+            const target = link.getAttribute('href').slice(1);
+            if (target === entry.target.id) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.6 });
+
+    sections.forEach(section => observer.observe(section));
   }
 
   // ===================================

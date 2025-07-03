@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conoce la historia y propósito de La Red de Luz, una comunidad para despertar tu potencial." />
     <title>Nuestra Historia | La Red de Luz</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/conocer.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600&family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
     <script>
@@ -18,9 +19,19 @@
             .then(html => {
                 document.body.insertAdjacentHTML('afterbegin', html);
             });
-    </script>    
+    </script>
+    <aside class="story-progress">
+        <ul>
+            <li><a href="#historia" aria-label="Historia"></a></li>
+            <li><a href="#vacio" aria-label="El Vacío"></a></li>
+            <li><a href="#llamado" aria-label="El Llamado"></a></li>
+            <li><a href="#origen" aria-label="El Origen"></a></li>
+            <li><a href="#vision" aria-label="Visión"></a></li>
+        </ul>
+    </aside>    
     <main class="story-container">
         <section class="story-hero" id="historia">
+            <div class="network-bg" id="networkBg"></div>
             <div class="story-hero-overlay"></div>
             <div class="story-hero-content">
                 <h1 class="story-title">
@@ -43,6 +54,7 @@
         </section>
 
         <section class="story-block block-dark" id="vacio">
+            <div class="section-network"></div>
             <div class="story-content">
                 <h2 class="block-title">El Vacío</h2>
                 <div class="story-text">
@@ -69,6 +81,7 @@
         </section>
 
         <section class="story-block block-light" id="llamado">
+            <div class="section-network"></div>
             <div class="story-content">
                 <h2 class="block-title">El Llamado</h2>
                 <div class="story-text">
@@ -88,6 +101,7 @@
         </section>
 
         <section class="story-block block-highlight" id="origen">
+            <div class="section-network"></div>
             <div class="story-content">
                 <h2 class="block-title">El Origen</h2>
                 <div class="story-text">
@@ -111,6 +125,7 @@
         </section>
 
         <section class="story-block block-dark" id="vision">
+            <div class="section-network"></div>
             <div class="story-content">
                 <h2 class="block-title">Nuestra Visión</h2>
                 <div class="story-text">
