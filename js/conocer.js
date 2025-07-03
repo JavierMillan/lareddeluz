@@ -14,7 +14,6 @@ class StoryExperience {
     this.setupScrollEffects();
     this.setupParticles();
     this.setupSectionNetworks();
-    this.setupProgressNav();
   }
 
   // ===================================
