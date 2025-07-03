@@ -1,501 +1,75 @@
+/* Nuevo diseño simplificado para conocer.html
+   Fondo gradual de la oscuridad a la luz */
+
 .story-container {
-  position: relative;
-  overflow-x: hidden;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  transform: translateZ(0);
+  overflow-x: hidden;
 }
 
-.story-hero {
-  background: radial-gradient(
-    ellipse at center,
-    var(--void-medium) 0%,
-    var(--void-deep) 100%
-  );
-  position: relative;
+.story-section {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  overflow: hidden;
-}
-
-.story-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-      circle at 20% 30%,
-      rgba(228, 205, 133, 0.03) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(22, 51, 132, 0.02) 0%,
-      transparent 50%
-    );
-  animation: breathe 8s infinite ease-in-out;
-  z-index: var(--z-background);
-}
-
-.story-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-      45deg,
-      transparent 0%,
-      rgba(228, 205, 133, 0.02) 50%,
-      transparent 100%
-    ),
-    radial-gradient(circle at center, transparent 40%, var(--void-deep) 100%);
-  z-index: var(--z-content);
-}
-
-.story-hero-content {
+  align-items: center;
   text-align: center;
-  z-index: var(--z-content);
-  position: relative;
+  padding: 4rem 2rem;
 }
 
 .story-title {
   font-family: var(--font-heading);
-  font-size: clamp(4rem, 8vw, 8rem);
   font-weight: 300;
-  margin-bottom: 3rem;
-  line-height: 1.1;
-}
-
-.story-title .title-reveal {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(50px) scale(0.8);
-  animation: void-to-spark 2s ease-out forwards;
-  will-change: opacity, transform;
-}
-
-.story-title .title-reveal.delay-1 {
-  animation-delay: 0.5s;
-  color: var(--spark-gold);
-}
-
-.story-hero-text {
-  font-size: 1.8rem;
-  line-height: 1.8;
-  max-width: 80rem;
-  margin: 0 auto 4rem;
-  font-weight: 300;
-}
-
-.story-hero-text .text-reveal {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1.5s ease-out forwards;
-  will-change: opacity, transform;
-}
-
-.text-reveal.delay-1 {
-  animation-delay: 0.8s;
-}
-.text-reveal.delay-2 {
-  animation-delay: 1.2s;
-}
-.text-reveal.delay-3 {
-  animation-delay: 1.6s;
-}
-.text-reveal.delay-4 {
-  animation-delay: 2.2s;
-}
-
-.text-reveal.highlight {
-  color: var(--spark-gold);
-  font-weight: 500;
-  position: relative;
-}
-
-.text-reveal.highlight::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--spark-gold),
-    transparent
-  );
-  opacity: 0;
-  animation: fadeInUp 1s ease-out 2.8s forwards;
-}
-
-.scroll-indicator {
-  position: absolute;
-  bottom: 4rem;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  z-index: var(--z-content);
-  opacity: 0;
-  animation: fadeInUp 1s ease-out 3s forwards;
-}
-
-.scroll-text {
-  display: block;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: var(--gold-light);
-  opacity: 0.7;
-}
-
-.scroll-arrow {
-  width: 2px;
-  height: 3rem;
-  background: linear-gradient(to bottom, var(--gold-light), transparent);
-  margin: 0 auto;
-  position: relative;
-  animation: flow 3s infinite ease-in-out;
-}
-
-.scroll-arrow::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 8px solid var(--gold-light);
-  opacity: 0.7;
-}
-
-.story-particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: var(--z-background);
-}
-
-.story-particles::before,
-.story-particles::after {
-  content: "";
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: var(--spark-gold);
-  border-radius: 50%;
-  animation: pulse 4s infinite ease-in-out;
-}
-
-.story-particles::before {
-  top: 20%;
-  left: 15%;
-  animation-delay: -1s;
-}
-
-.story-particles::after {
-  top: 70%;
-  right: 20%;
-  animation-delay: -3s;
-}
-
-/* Sección de bloques */
-.story-block {
-  padding: 12rem 4rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.story-block::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity var(--transition-slow);
-  z-index: var(--z-background);
-}
-
-.story-block.block-dark {
-  background: radial-gradient(
-    ellipse at center,
-    var(--void-medium) 0%,
-    var(--void-deep) 100%
-  );
-}
-
-.story-block.block-dark::before {
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(22, 51, 132, 0.1) 0%,
-    transparent 70%
-  );
-}
-
-.story-block.block-dark.in-view::before {
-  opacity: 1;
-}
-
-.story-block.block-light {
-  background: linear-gradient(
-    135deg,
-    var(--void-deep) 0%,
-    var(--void-medium) 50%,
-    var(--creation-blue) 100%
-  );
-}
-
-.story-block.block-light::before {
-  background: radial-gradient(
-      circle at 30% 70%,
-      rgba(228, 205, 133, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 70% 30%,
-      rgba(255, 215, 0, 0.05) 0%,
-      transparent 60%
-    );
-}
-
-.story-block.block-light.in-view::before {
-  opacity: 1;
-}
-
-.story-block.block-highlight {
-  background: radial-gradient(
-    ellipse at center,
-    var(--creation-blue) 0%,
-    var(--void-medium) 70%,
-    var(--void-deep) 100%
-  );
-  position: relative;
-}
-
-.story-block.block-highlight::before {
-  background: radial-gradient(
-      circle at center,
-      rgba(228, 205, 133, 0.15) 0%,
-      transparent 40%
-    ),
-    conic-gradient(
-      from 0deg at 50% 50%,
-      transparent 0deg,
-      rgba(255, 215, 0, 0.1) 60deg,
-      transparent 120deg,
-      rgba(228, 205, 133, 0.1) 180deg,
-      transparent 240deg,
-      rgba(255, 215, 0, 0.05) 300deg,
-      transparent 360deg
-    );
-}
-
-.story-block.block-highlight.in-view::before {
-  opacity: 1;
-  animation: big-bang 3s ease-out forwards;
-}
-
-.story-content {
-  margin: 0 auto;
-  max-width: 90rem;
-  text-align: center;
-  position: relative;
-  z-index: var(--z-content);
-}
-
-.block-title {
-  font-family: var(--font-heading);
-  font-size: clamp(3.5rem, 6vw, 6rem);
-  font-weight: 300;
-  margin-bottom: 6rem;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all var(--transition-slow);
-}
-
-.story-block.in-view .block-title {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.2s;
-}
-
-.block-highlight .block-title {
-  color: var(--spark-gold);
-  position: relative;
-}
-
-.block-highlight .block-title::after {
-  content: "";
-  position: absolute;
-  bottom: -1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 8rem;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--spark-gold),
-    transparent
-  );
-  opacity: 0;
-  transition: opacity var(--transition-slow);
-}
-
-.story-block.in-view .block-title::after {
-  opacity: 1;
-  transition-delay: 1s;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 2rem;
 }
 
 .story-text {
-  font-size: 1.8rem;
-  line-height: 1.8;
-}
-
-.text-group {
-  margin-bottom: 4rem;
-}
-
-.text-group span {
-  display: block;
-  margin-bottom: 1rem;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all var(--transition-base);
-}
-
-.text-group span.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.text-quote {
-  font-family: var(--font-heading);
-  font-size: 2.2rem;
-  font-style: italic;
-  font-weight: 300;
-  margin: 6rem auto;
-  position: relative;
-  color: var(--gold-light);
+  font-size: 1.4rem;
+  line-height: 1.6;
   max-width: 60rem;
-  opacity: 0;
-  transform: scale(0.9);
-  transition: all var(--transition-slow);
 }
 
-.text-quote.fade-in.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.text-quote::before,
-.text-quote::after {
-  content: '"';
-  font-size: 4rem;
-  position: absolute;
-  color: var(--spark-gold);
-  opacity: 0.3;
-}
-
-.text-quote::before {
-  top: -1rem;
-  left: -2rem;
-}
-
-.text-quote::after {
-  bottom: -2rem;
-  right: -2rem;
-}
-
-.text-quote.highlight {
-  color: var(--light-birth);
-}
-
-.text-quote.highlight::before,
-.text-quote.highlight::after {
-  color: var(--spark-gold);
-  opacity: 0.6;
-}
-
-.text-lead {
-  font-family: var(--font-heading);
-  font-size: 2.8rem;
-  font-weight: 400;
-  color: var(--spark-gold);
-  margin-bottom: 4rem;
+.fade-in {
   opacity: 0;
   transform: translateY(20px);
-  transition: all var(--transition-slow);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.text-lead.fade-in.visible {
+.in-view .fade-in {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-/* Network background for sections */
-.section-network {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: var(--z-background);
-}
-.section-network .network-node,
-.section-network .network-line {
-  opacity: 0.2;
+#historia {
+  background: var(--void-deep);
+  color: var(--white);
 }
 
-/* Progress Navigation */
-.story-progress {
-  position: fixed;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1000;
-}
-.story-progress ul {
-  list-style: none;
-}
-.story-progress li {
-  margin: 1rem 0;
-}
-.story-progress a {
-  display: block;
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--gold-light);
-  border-radius: 50%;
-  background: transparent;
-  transition: background 0.3s;
-}
-.story-progress a.active {
-  background: var(--gold-light);
-}
-
-/* Gradual backgrounds from darkness to light */
 #vacio {
-  background: linear-gradient(160deg, var(--void-deep), var(--void-medium));
+  background: linear-gradient(to bottom, var(--void-deep), var(--void-medium));
+  color: var(--white);
 }
 
 #llamado {
-  background: linear-gradient(160deg, var(--void-medium), var(--creation-blue));
+  background: linear-gradient(to bottom, var(--void-medium), var(--creation-blue));
+  color: var(--white);
 }
 
 #origen {
-  background: radial-gradient(circle at center, var(--creation-blue), var(--light-birth));
+  background: linear-gradient(to bottom, var(--creation-blue), var(--light-birth));
+  color: var(--black);
 }
 
 #vision {
-  background: radial-gradient(circle at center, var(--light-birth), rgba(255,255,255,0.1));
+  background: var(--light-birth);
+  color: var(--black);
 }
 
 @media (max-width: 600px) {
-  .scroll-indicator {
-    bottom: 2rem;
+  .story-title {
+    font-size: 2.2rem;
   }
-  .story-block {
-    padding: 8rem 2rem;
+  .story-text {
+    font-size: 1.1rem;
   }
 }
