@@ -13,8 +13,9 @@ class StoryExperience {
     this.setupStaggeredAnimations();
     this.setupScrollEffects();
     this.setupParticles();
+    this.setupSectionNetworks();
     this.setupProgressNav();
-  }
+    document.addEventListener('navbarLoaded', () => this.adjustNavbarLinks());
 
   // ===================================
   // INTERSECTION OBSERVER - Revelación por Scroll
@@ -138,6 +139,34 @@ class StoryExperience {
   }
 
   // ===================================
+  // REDES DINÁMICAS EN CADA SECCIÓN
+  // ===================================
+  setupSectionNetworks() {
+    document.querySelectorAll('.section-network').forEach(container => {
+      const nodeCount = 12;
+      for (let i = 0; i < nodeCount; i++) {
+        const node = document.createElement('div');
+        node.className = 'network-node';
+        node.style.left = Math.random() * 100 + '%';
+        node.style.top = Math.random() * 100 + '%';
+        node.style.animationDelay = Math.random() * 3 + 's';
+        container.appendChild(node);
+      }
+
+      for (let i = 0; i < nodeCount / 2; i++) {
+        const line = document.createElement('div');
+        line.className = 'network-line';
+        line.style.left = Math.random() * 100 + '%';
+        line.style.top = Math.random() * 100 + '%';
+        line.style.width = Math.random() * 150 + 30 + 'px';
+        line.style.transform = `rotate(${Math.random() * 360}deg)`;
+        line.style.animationDelay = Math.random() * 4 + 's';
+        container.appendChild(line);
+      }
+    });
+  }
+
+  // ===================================
   // PROGRESS NAVIGATION
   // ===================================
   setupProgressNav() {
@@ -160,6 +189,16 @@ class StoryExperience {
     }, { threshold: 0.6 });
 
     sections.forEach(section => observer.observe(section));
+  }
+
+  // ===================================
+  // Ajustar enlaces del navbar a anclas locales
+  // ===================================
+  adjustNavbarLinks() {
+    document.querySelectorAll('a[href^="conocer.html#"]').forEach(link => {
+      const id = link.getAttribute('href').split('#')[1];
+      link.setAttribute('href', `#${id}`);
+    });
   }
 
   // ===================================

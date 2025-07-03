@@ -1,6 +1,7 @@
 // Network Animation
 function createNetwork() {
     const container = document.getElementById('networkBg');
+    if (!container) return;
     const nodeCount = 20;
     
     // Create nodes

@@ -18,6 +18,7 @@
             .then(res => res.text())
             .then(html => {
                 document.body.insertAdjacentHTML('afterbegin', html);
+                document.dispatchEvent(new Event('navbarLoaded'));
             });
     </script>
     <aside class="story-progress">
@@ -31,6 +32,7 @@
     </aside>    
     <main class="story-container">
         <section class="story-hero" id="historia">
+            <div class="network-bg" id="networkBg"></div>
             <div class="story-hero-overlay"></div>
             <div class="story-hero-content">
                 <h1 class="story-title">
@@ -53,6 +55,7 @@
         </section>
 
         <section class="story-block block-dark" id="vacio">
+            <div class="section-network"></div>
             <div class="story-content">
                 <h2 class="block-title">El Vacío</h2>
                 <div class="story-text">
@@ -79,6 +82,7 @@
         </section>
 
         <section class="story-block block-light" id="llamado">
+            <div class="section-network"></div>
             <div class="story-content">
                 <h2 class="block-title">El Llamado</h2>
                 <div class="story-text">
@@ -98,6 +102,7 @@
         </section>
 
         <section class="story-block block-highlight" id="origen">
+            <div class="section-network"></div>
             <div class="story-content">
                 <h2 class="block-title">El Origen</h2>
                 <div class="story-text">
@@ -120,7 +125,8 @@
             </div>
         </section>
 
-        <section class="story-block block-dark" id="vision">
+        <section class="story-block block-light" id="vision">
+            <div class="section-network"></div>
             <div class="story-content">
                 <h2 class="block-title">Nuestra Visión</h2>
                 <div class="story-text">

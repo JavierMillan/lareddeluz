@@ -8,6 +8,13 @@
     --deep-blue: #163384;
     --black: #000000;
     --white: #ffffff;
+    --spark-gold: var(--gold-light);
+    --void-deep: #0d0b16;
+    --void-medium: #232a3d;
+    --creation-blue: #163384;
+    --light-birth: #f9f4e3;
+    --z-background: 0;
+    --z-content: 1;
 }
 
 * {
