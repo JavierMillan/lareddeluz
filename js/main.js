@@ -2,24 +2,22 @@
 function createNetwork() {
     const container = document.getElementById('networkBg');
     if (!container) return;
+    container.innerHTML = '';
     const nodeCount = 20;
-    
-    // Create nodes
+    // Centrar visualmente las estrellas: usar 20% a 80% del ancho y alto
     for (let i = 0; i < nodeCount; i++) {
         const node = document.createElement('div');
         node.className = 'network-node';
-        node.style.left = Math.random() * 100 + '%';
-        node.style.top = Math.random() * 100 + '%';
+        node.style.left = (20 + Math.random() * 60) + '%';
+        node.style.top = (20 + Math.random() * 60) + '%';
         node.style.animationDelay = Math.random() * 3 + 's';
         container.appendChild(node);
     }
-    
-    // Create connections
     for (let i = 0; i < nodeCount / 2; i++) {
         const line = document.createElement('div');
         line.className = 'network-line';
-        line.style.left = Math.random() * 100 + '%';
-        line.style.top = Math.random() * 100 + '%';
+        line.style.left = (20 + Math.random() * 60) + '%';
+        line.style.top = (20 + Math.random() * 60) + '%';
         line.style.width = Math.random() * 200 + 50 + 'px';
         line.style.transform = `rotate(${Math.random() * 360}deg)`;
         line.style.animationDelay = Math.random() * 4 + 's';
