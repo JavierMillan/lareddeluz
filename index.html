@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -40,95 +41,6 @@
             }
         }
     </script>
-    <style>
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        @keyframes loneliness {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-10px) rotate(1deg); }
-            66% { transform: translateY(-5px) rotate(-1deg); }
-        }
-        @keyframes glowPulse {
-            0% { box-shadow: 0 0 20px rgba(228, 205, 133, 0.3); }
-            100% { box-shadow: 0 0 40px rgba(228, 205, 133, 0.6), 0 0 80px rgba(228, 205, 133, 0.2); }
-        }
-        
-        .liquid-glass {
-            background: rgba(228, 205, 133, 0.08);
-            backdrop-filter: blur(24px) saturate(120%);
-            border: 1px solid rgba(228, 205, 133, 0.15);
-        }
-        
-        .liquid-glass:hover {
-            background: rgba(228, 205, 133, 0.12);
-            box-shadow: 
-                0 16px 64px 0 rgba(228, 205, 133, 0.15),
-                0 4px 24px 0 rgba(22, 51, 132, 0.08);
-        }
-
-        .constellation-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(228, 205, 133, 0.4), transparent);
-            opacity: 0.3;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .floating-particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #e4cd85;
-            border-radius: 50%;
-            animation: twinkle 3s infinite ease-in-out;
-        }
-
-        /* Gradiente de texto premium */
-        .gradient-text {
-            background: linear-gradient(135deg, #ffffff 0%, #e4cd85 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .gradient-text-dark {
-            background: linear-gradient(135deg, #0d0b16 0%, #163384 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Starfield personalizado */
-        .starfield::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(228, 205, 133, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(22, 51, 132, 0.05) 0%, transparent 50%);
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .constellation-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-        }
-    </style>
 </head>
 <body class="bg-void-deep text-white overflow-x-hidden">
     <!-- Starfield Background -->
@@ -137,9 +49,9 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-6">
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-2">
         <div class="liquid-glass rounded-2xl">
-            <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="max-w-7xl mx-auto px-6 py-2">
                 <div class="flex justify-between items-center">
                     <!-- Logo -->
                     <div class="font-space text-xl lg:text-2xl font-semibold text-gold-light tracking-tight">
@@ -157,12 +69,13 @@
                         <a href="#mapa" class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
                             El Mapa
                         </a>
-                        <a href="historia.html" class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
+                        <a href="#narrativa" class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
                             Nuestra Historia
                         </a>
+                        <!-- WIP
                         <a href="#testimonios" class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
                             Voces
-                        </a>
+                        </a> -->
                         <a href="#unete" class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-light/25 transition-all duration-300 transform hover:-translate-y-1">
                             Únete
                         </a>
@@ -506,10 +419,10 @@
         </div>
     </section>
 
-    <!-- Testimonials Section - Voces que ya brillan -->
+    <!-- Testimonials Section - Voces que ya brillan 
     <section id="testimonios" class="min-h-screen flex flex-col justify-center relative z-10 px-4 lg:px-8 py-20 bg-deep-blue">
         <div class="max-w-6xl mx-auto">
-            <!-- Header -->
+
             <div class="text-center mb-16">
                 <h2 class="font-playfair text-3xl md:text-5xl lg:text-6xl font-normal leading-tight mb-6 text-white">
                     Voces que ya <span class="text-gold-light italic">brillan</span>
@@ -519,9 +432,9 @@
                 </p>
             </div>
 
-            <!-- Testimonials Grid -->
+            
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
+                
                 <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2">
                     <div class="mb-6">
                         <p class="font-playfair text-lg italic text-white leading-relaxed">
@@ -539,7 +452,7 @@
                     </div>
                 </div>
 
-                <!-- Testimonial 2 -->
+                
                 <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2">
                     <div class="mb-6">
                         <p class="font-playfair text-lg italic text-white leading-relaxed">
@@ -557,7 +470,7 @@
                     </div>
                 </div>
 
-                <!-- Testimonial 3 -->
+                
                 <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2">
                     <div class="mb-6">
                         <p class="font-playfair text-lg italic text-white leading-relaxed">
@@ -575,7 +488,7 @@
                     </div>
                 </div>
 
-                <!-- Testimonial 4 -->
+                
                 <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 md:col-span-2 lg:col-span-1">
                     <div class="mb-6">
                         <p class="font-playfair text-lg italic text-white leading-relaxed">
@@ -593,7 +506,7 @@
                     </div>
                 </div>
 
-                <!-- Testimonial 5 -->
+                
                 <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 lg:col-span-2">
                     <div class="mb-6">
                         <p class="font-playfair text-xl italic text-white leading-relaxed">
@@ -612,7 +525,7 @@
                 </div>
             </div>
 
-            <!-- Community Stats -->
+
             <div class="mt-16 grid md:grid-cols-3 gap-8 text-center">
                 <div class="space-y-2">
                     <div class="text-3xl lg:text-4xl font-bold text-gold-light">500+</div>
@@ -628,7 +541,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Final CTA Section - Tu momento de brillar -->
     <section id="unete" class="min-h-screen flex flex-col justify-center items-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-deep-blue to-light-birth text-center">
@@ -639,15 +552,15 @@
                 Solo lo habías <span class="italic">olvidado</span>.
             </h2>
 
-            <p class="text-xl lg:text-2xl text-black font-light leading-relaxed mb-12 max-w-3xl mx-auto">
+            <p class="text-xl lg:text-2xl text-black leading-relaxed mb-12 max-w-3xl mx-auto">
                 Este es tu momento. Tu luz interior te está esperando.<br>
                 No prometemos milagros. Prometemos movimiento.
             </p>
 
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-                <a href="/plantilla-despega.pdf" class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-8 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-gold-light/30 transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
-                    Descargar Guía DESPEGA
+                <a href="assets/ikigai.pdf" target="_blank" class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-8 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-gold-light/30 transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
+                    Descargar Guía IKIGAI
                 </a>
                 <a href="mailto:hola@lareddeluz.com" class="border-2 border-void-medium text-void-medium px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-void-medium hover:text-white transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
                     Unirme a la comunidad
