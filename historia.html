@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="La historia real de Javi: del aislamiento al encuentro, de tres pilares a cuatro, del caos al equilibrio. El nacimiento de La Red de Luz.">
+    <title>Mi Historia - Javi | La Red de Luz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="assets/cuadrado.png">
+    <link rel="stylesheet" href="css/historia.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="js/tailwind-config.js"></script>
+</head>
+
+<body class="bg-void-deep text-white overflow-x-hidden">
+    <!-- Nebula Background -->
+    <div class="nebula-bg"></div>
+    
+    <!-- Starfield -->
+    <div class="starfield fixed inset-0 z-0 pointer-events-none">
+        <!-- Dynamic stars will be injected here -->
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-2">
+        <div class="liquid-glass liquid-glass-dark rounded-2xl">
+            <div class="max-w-7xl mx-auto px-6 py-2">
+                <div class="flex justify-between items-center">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-3">
+                        <img src="assets/logo.png" alt="" class="h-10 w-auto">
+                        <h2 class="text-shadow font-space text-xl lg:text-2xl font-semibold text-gold-light tracking-tight">
+                            La Red de Luz
+                        </h2>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden lg:flex items-center space-x-8">
+                        <a href="index.html" class="text-shadow text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
+                            Inicio
+                        </a>
+                        <a href="index.html#mapa" class="text-shadow text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
+                            Los 4 Pilares
+                        </a>
+                        <a href="despega.html" class="text-shadow text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
+                            DESPEGA
+                        </a>
+                        <a href="index.html#unete" class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-light/25 transition-all duration-300 transform hover:-translate-y-1">
+                            Únete
+                        </a>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="lg:hidden text-white/80 hover:text-gold-light transition-colors" id="mobile-menu-btn">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="lg:hidden hidden mt-4" id="mobile-menu">
+            <div class="liquid-glass rounded-2xl mx-4">
+                <div class="px-6 py-4 space-y-4">
+                    <a href="index.html" class="block text-white/80 hover:text-gold-light transition-colors font-medium">Inicio</a>
+                    <a href="index.html#mapa" class="block text-white/80 hover:text-gold-light transition-colors font-medium">Los 4 Pilares</a>
+                    <a href="despega.html" class="block text-white/80 hover:text-gold-light transition-colors font-medium">DESPEGA</a>
+                    <a href="index.html#unete" class="block bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold text-center">Únete</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO: Presentación personal -->
+    <section id="presentacion" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Avatar -->
+            <div class="avatar-ring opacity-0 animate-fade-in-up">
+                <div class="avatar-inner">
+                    J
+                </div>
+            </div>
+
+            <!-- Título principal -->
+            <h1 class="font-playfair text-4xl md:text-6xl lg:text-7xl font-normal leading-tight mb-8 gradient-text opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+                Soy <span class="italic">Javi</span>,<br>
+                un encendedor de <span class="italic">chispas</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-lg lg:text-xl text-white/80 font-light leading-relaxed mb-12 max-w-3xl mx-auto opacity-0 animate-fade-in-up" style="animation-delay: 0.6s;">
+                Esta es mi historia. La de alguien que se cansó del piloto automático
+                y decidió volver a elegirse. Un viaje del aislamiento al encuentro,
+                del caos al equilibrio.
+            </p>
+
+            <!-- CTA Button -->
+            <div class="opacity-0 animate-fade-in-up" style="animation-delay: 0.9s;">
+                <a href="#aislamiento" class="inline-flex items-center gap-3 liquid-glass px-8 py-4 rounded-full text-white hover:text-gold-light transition-all duration-500 font-semibold text-lg group hover:shadow-xl hover:shadow-gold-light/20 hover:-translate-y-2">
+                    Comenzar mi historia
+                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="floating-particle top-1/4 left-1/4" style="animation-delay: 0s;"></div>
+            <div class="floating-particle top-1/3 right-1/4" style="animation-delay: 1s;"></div>
+            <div class="floating-particle bottom-1/4 left-1/3" style="animation-delay: 2s;"></div>
+            <div class="floating-particle top-1/2 right-1/3" style="animation-delay: 1.5s;"></div>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 1: El Aislamiento -->
+    <section id="aislamiento" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-deep to-void-medium">
+        <div class="max-w-4xl mx-auto">
+            <div class="chapter-indicator">
+                <div class="chapter-number">01</div>
+                <span class="text-gold-light/80 font-medium tracking-wider uppercase text-sm">El Aislamiento</span>
+            </div>
+
+            <div class="liquid-enhanced rounded-3xl p-8 lg:p-12 space-y-8">
+                <h2 class="font-playfair text-3xl md:text-5xl font-normal leading-tight text-white mb-8">
+                    Durante años creí que podía con todo... <span class="text-gold-light italic">solo</span>
+                </h2>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="liquid-glass rounded-2xl p-6 text-center">
+                        <div class="w-12 h-12 bg-gold-light/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            🏠
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">Trabajo en casa</h3>
+                        <p class="text-white/70 text-sm">Sin contacto con el exterior</p>
+                    </div>
+                    <div class="liquid-glass rounded-2xl p-6 text-center">
+                        <div class="w-12 h-12 bg-gold-light/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            🎮
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">Hobbies en casa</h3>
+                        <p class="text-white/70 text-sm">Entretenimiento solitario</p>
+                    </div>
+                    <div class="liquid-glass rounded-2xl p-6 text-center">
+                        <div class="w-12 h-12 bg-gold-light/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            📅
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">Planes en casa</h3>
+                        <p class="text-white/70 text-sm">Evitando la conexión</p>
+                    </div>
+                </div>
+
+                <blockquote class="story-quote">
+                    Hubo días en los que literalmente no me dio el sol. No era flojera: era costumbre. 
+                    Me fui aislando sin darme cuenta. Y aunque tenía logros, por dentro había algo que no estaba en paz.
+                </blockquote>
+
+                <div class="bg-void-deep/50 rounded-2xl p-6 border-l-4 border-gold-light/50">
+                    <p class="text-white/90 font-medium mb-2">El despertar</p>
+                    <p class="text-white/70 leading-relaxed">
+                        Fue mi esposa quien me encendió el foco: <span class="text-gold-light font-medium">"te estás aislando"</span>. 
+                        Me dolió aceptarlo. Conectar con la gente nunca me ha salido "natural".
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="#mensaje" class="inline-flex items-center gap-2 text-gold-light hover:text-white transition-colors">
+                    <span>Continuar leyendo</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 2: El Mensaje -->
+    <section id="mensaje" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-medium to-deep-blue">
+        <div class="max-w-4xl mx-auto">
+            <div class="chapter-indicator">
+                <div class="chapter-number">02</div>
+                <span class="text-gold-light/80 font-medium tracking-wider uppercase text-sm">El Mensaje</span>
+            </div>
+
+            <div class="liquid-enhanced rounded-3xl p-8 lg:p-12 space-y-8">
+                <h2 class="font-playfair text-3xl md:text-5xl font-normal leading-tight text-white mb-8">
+                    Si me quedaba callado, también se quedaba <span class="text-gold-light italic">apagado</span> el mensaje
+                </h2>
+
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-3 h-3 bg-gold-light rounded-full mt-2 flex-shrink-0"></div>
+                        <p class="text-white/90 text-lg leading-relaxed">
+                            Ahí entendí algo: si me quedaba callado, también se quedaba apagado el mensaje que traigo.
+                        </p>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-3 h-3 bg-gold-light rounded-full mt-2 flex-shrink-0"></div>
+                        <p class="text-white/90 text-lg leading-relaxed">
+                            No porque yo sea "importante", sino porque <span class="text-gold-light font-medium">mi historia importa</span> 
+                            igual que <span class="text-gold-light font-medium">la tuya</span>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-gold-light/10 to-deep-blue/20 rounded-2xl p-8 text-center">
+                    <p class="text-xl lg:text-2xl text-gold-light font-light italic leading-relaxed">
+                        "Cada historia tiene poder. Cada voz puede encender otras."
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="#pilares" class="inline-flex items-center gap-2 text-gold-light hover:text-white transition-colors">
+                    <span>El descubrimiento de los pilares</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 3: Los Pilares -->
+    <section id="pilares" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-deep-blue">
+        <div class="max-w-6xl mx-auto">
+            <div class="chapter-indicator">
+                <div class="chapter-number">03</div>
+                <span class="text-gold-light/80 font-medium tracking-wider uppercase text-sm">Los Cuatro Pilares</span>
+            </div>
+
+            <div class="liquid-enhanced rounded-3xl p-8 lg:p-12 space-y-12">
+                <h2 class="font-playfair text-3xl md:text-5xl font-normal leading-tight text-white mb-8 text-center">
+                    De tres pilares a <span class="text-gold-light italic">cuatro</span>
+                </h2>
+
+                <!-- Los 3 pilares originales -->
+                <div class="space-y-6 mb-12">
+                    <h3 class="text-xl font-semibold text-white/90 mb-4">Por mucho tiempo viví solo con tres pilares:</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="liquid-glass rounded-2xl p-6 text-center opacity-70">
+                            <div class="w-12 h-12 bg-white/10 rounded-full mx-auto mb-4 flex items-center justify-center">🧠</div>
+                            <h4 class="font-semibold text-white mb-2">Mental</h4>
+                            <p class="text-white/60 text-sm">Datos, lógica, medición</p>
+                        </div>
+                        <div class="liquid-glass rounded-2xl p-6 text-center opacity-70">
+                            <div class="w-12 h-12 bg-white/10 rounded-full mx-auto mb-4 flex items-center justify-center">❤️</div>
+                            <h4 class="font-semibold text-white mb-2">Emocional</h4>
+                            <p class="text-white/60 text-sm">Sentimientos, conexiones</p>
+                        </div>
+                        <div class="liquid-glass rounded-2xl p-6 text-center opacity-70">
+                            <div class="w-12 h-12 bg-white/10 rounded-full mx-auto mb-4 flex items-center justify-center">💪</div>
+                            <h4 class="font-semibold text-white mb-2">Físico</h4>
+                            <p class="text-white/60 text-sm">Cuerpo, salud, energía</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- El cuarto pilar -->
+                <div class="space-y-6">
+                    <blockquote class="story-quote">
+                        Lo espiritual lo dejé fuera por creer que era cosa de clichés. 
+                        Soy de datos, de tocar y medir. Pero cuando me permití abrir esa puerta 
+                        —sin fanatismos— encontré balance real.
+                    </blockquote>
+
+                    <div class="bg-gradient-to-r from-gold-light/20 to-gold-dark/20 rounded-2xl p-8 border-2 border-gold-light/30">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center">✨</div>
+                            <div>
+                                <h4 class="text-2xl font-semibold text-gold-light">Espiritual</h4>
+                                <p class="text-white/80">Propósito, conexión, transcendencia</p>
+                            </div>
+                        </div>
+                        <p class="text-white/90 leading-relaxed">
+                            Cambió lo que pienso, lo que hago y cómo me relaciono. 
+                            Sin fanatismos, sin clichés. Solo <span class="text-gold-light font-medium">balance real</span>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="#caos" class="inline-flex items-center gap-2 text-gold-light hover:text-white transition-colors">
+                    <span>El proceso de transformación</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 4: El Caos Transformador -->
+    <section id="caos" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-deep-blue to-void-medium">
+        <div class="max-w-4xl mx-auto">
+            <div class="chapter-indicator">
+                <div class="chapter-number">04</div>
+                <span class="text-gold-light/80 font-medium tracking-wider uppercase text-sm">El Caos Transformador</span>
+            </div>
+
+            <div class="liquid-enhanced rounded-3xl p-8 lg:p-12 space-y-8">
+                <h2 class="font-playfair text-3xl md:text-5xl font-normal leading-tight text-white mb-8">
+                    No fue bonito al inicio: fue <span class="text-gold-light italic">caos</span>
+                </h2>
+
+                <div class="space-y-6">
+                    <blockquote class="story-quote">
+                        Cuando rompes el "software de fábrica", duelen los desapegos. 
+                        Gente se aleja, otra llega. No hay villanos: solo frecuencias que ya no cuadran.
+                    </blockquote>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-void-deep/50 rounded-2xl p-6 border border-red-500/30">
+                            <h4 class="text-red-400 font-semibold mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 bg-red-400 rounded-full"></span>
+                                Lo que se va
+                            </h4>
+                            <ul class="space-y-2 text-white/70">
+                                <li>• Relaciones superficiales</li>
+                                <li>• Máscaras y expectativas</li>
+                                <li>• El piloto automático</li>
+                                <li>• La zona de confort</li>
+                            </ul>
+                        </div>
+                        <div class="bg-void-deep/50 rounded-2xl p-6 border border-gold-light/30">
+                            <h4 class="text-gold-light font-semibold mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 bg-gold-light rounded-full"></span>
+                                Lo que llega
+                            </h4>
+                            <ul class="space-y-2 text-white/70">
+                                <li>• Conexiones auténticas</li>
+                                <li>• Claridad de propósito</li>
+                                <li>• Decisiones conscientes</li>
+                                <li>• Crecimiento real</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-gold-light/10 to-void-deep/20 rounded-2xl p-6 text-center">
+                        <p class="text-lg text-white/90 italic">
+                            "El caos no es el enemigo. Es el espacio entre lo que eras y lo que estás siendo."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="#nacimiento" class="inline-flex items-center gap-2 text-gold-light hover:text-white transition-colors">
+                    <span>El nacimiento de La Red de Luz</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 5: El Nacimiento de La Red de Luz -->
+    <section id="nacimiento" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-medium to-void-birth">
+        <div class="max-w-5xl mx-auto">
+            <div class="chapter-indicator">
+                <div class="chapter-number">05</div>
+                <span class="text-gold-light/80 font-medium tracking-wider uppercase text-sm">El Nacimiento</span>
+            </div>
+
+            <div class="liquid-enhanced rounded-3xl p-8 lg:p-12 space-y-8 bg-gradient-to-br from-white/5 to-gold-light/5">
+                <h2 class="font-playfair text-3xl md:text-5xl font-normal leading-tight text-white mb-8 text-center">
+                    <span class="text-gold-light italic">La Red de Luz</span> nace de ahí
+                </h2>
+
+                <div class="space-y-8">
+                    <blockquote class="story-quote text-center text-xl lg:text-2xl">
+                        De un hombre que se cansó de vivir en piloto automático y decidió volver a elegirse. 
+                        De alguien que no encontró un lugar donde sentirse parte… y entonces lo está construyendo.
+                    </blockquote>
+
+                    <div class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-6">
+                            <h3 class="text-2xl font-semibold text-white mb-4">Lo que NO es:</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3 text-white/70">
+                                    <span class="text-red-400">✗</span>
+                                    <span>Un altar de adoración</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-white/70">
+                                    <span class="text-red-400">✗</span>
+                                    <span>Un club de frases bonitas</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-white/70">
+                                    <span class="text-red-400">✗</span>
+                                    <span>Respuestas mágicas</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <h3 class="text-2xl font-semibold text-gold-light mb-4">Lo que SÍ es:</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3 text-white/90">
+                                    <span class="text-gold-light">✓</span>
+                                    <span>Un ecosistema de crecimiento</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-white/90">
+                                    <span class="text-gold-light">✓</span>
+                                    <span>Herramientas prácticas</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-white/90">
+                                    <span class="text-gold-light">✓</span>
+                                    <span>Comunidad auténtica</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-white/90">
+                                    <span class="text-gold-light">✓</span>
+                                    <span>Proyectos con propósito</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Los 4 Pilares en acción -->
+                    <div class="bg-void-deep/30 rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-gold-light mb-6 text-center">Para gente que siente:</h3>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="text-center p-4">
+                                <div class="w-12 h-12 bg-gold-light/20 rounded-full mx-auto mb-3 flex items-center justify-center">💭</div>
+                                <p class="text-white/80 text-sm">Un vacío interno</p>
+                            </div>
+                            <div class="text-center p-4">
+                                <div class="w-12 h-12 bg-gold-light/20 rounded-full mx-auto mb-3 flex items-center justify-center">📢</div>
+                                <p class="text-white/80 text-sm">Un llamado</p>
+                            </div>
+                            <div class="text-center p-4">
+                                <div class="w-12 h-12 bg-gold-light/20 rounded-full mx-auto mb-3 flex items-center justify-center">💬</div>
+                                <p class="text-white/80 text-sm">Un mensaje que compartir</p>
+                            </div>
+                            <div class="text-center p-4">
+                                <div class="w-12 h-12 bg-gold-light/20 rounded-full mx-auto mb-3 flex items-center justify-center">🔄</div>
+                                <p class="text-white/80 text-sm">Ganas de reorganizar su vida</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="#compromiso" class="inline-flex items-center gap-2 text-gold-light hover:text-white transition-colors">
+                    <span>Mi compromiso contigo</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 6: El Compromiso -->
+    <section id="compromiso" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-light-birth text-void-deep">
+        <div class="max-w-4xl mx-auto">
+            <div class="chapter-indicator">
+                <div class="chapter-number">06</div>
+                <span class="text-void-medium/80 font-medium tracking-wider uppercase text-sm">Mi Compromiso</span>
+            </div>
+
+            <div class="bg-white/80 backdrop-blur-lg rounded-3xl p-8 lg:p-12 space-y-8 border border-void-medium/20 shadow-2xl">
+                <h2 class="font-playfair text-3xl md:text-5xl font-normal leading-tight text-void-deep mb-8 text-center">
+                    No vengo a darte todas las <span class="text-gold-dark italic">respuestas</span>
+                </h2>
+
+                <div class="space-y-8">
+                    <div class="text-center">
+                        <p class="text-xl lg:text-2xl text-void-medium leading-relaxed font-light">
+                            Vengo a <span class="font-semibold text-gold-dark">compartir camino</span>: 
+                            lo que me sirvió, lo que no, y lo que aún estoy aprendiendo.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center p-6 bg-gradient-to-b from-gold-light/10 to-gold-dark/5 rounded-2xl">
+                            <div class="w-16 h-16 bg-gold-dark/20 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">✅</div>
+                            <h4 class="font-semibold text-void-deep mb-2">Lo que funcionó</h4>
+                            <p class="text-void-medium/80 text-sm">Experiencias reales y resultados medibles</p>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-b from-red-100 to-red-50 rounded-2xl">
+                            <div class="w-16 h-16 bg-red-200 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">❌</div>
+                            <h4 class="font-semibold text-void-deep mb-2">Lo que no funcionó</h4>
+                            <p class="text-void-medium/80 text-sm">Errores que puedes evitar</p>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-b from-blue-100 to-blue-50 rounded-2xl">
+                            <div class="w-16 h-16 bg-blue-200 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">🌱</div>
+                            <h4 class="font-semibold text-void-deep mb-2">Lo que estoy aprendiendo</h4>
+                            <p class="text-void-medium/80 text-sm">El viaje continúa, siempre</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-gold-dark/10 to-gold-light/10 rounded-2xl p-8 text-center border-l-4 border-gold-dark">
+                        <p class="text-lg text-void-medium leading-relaxed mb-4">
+                            Si te sientes en medio del temblor, no estás fallando:
+                        </p>
+                        <p class="text-xl font-semibold text-gold-dark">
+                            Estás <span class="italic">desprogramando</span> y <span class="italic">reprogramando</span>
+                        </p>
+                        <p class="text-void-medium/80 mt-4">
+                            Y sí, duele. Pero del otro lado hay más claridad, más honestidad y una vida que sí se siente tuya.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="#llamado-final" class="inline-flex items-center gap-2 text-gold-dark hover:text-void-deep transition-colors">
+                    <span>Tu momento de brillar</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL: El Llamado -->
+    <section id="llamado-final" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-light-birth to-gold-light">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="bg-white/90 backdrop-blur-lg rounded-3xl p-8 lg:p-12 border border-gold-dark/20 shadow-2xl mb-8">
+                <h2 class="font-playfair text-4xl md:text-6xl font-normal leading-tight text-void-deep mb-8">
+                    <span class="text-gold-dark italic">Tu brillo</span> importa
+                </h2>
+
+                <div class="space-y-8 text-void-medium">
+                    <p class="text-xl lg:text-2xl leading-relaxed">
+                        Si hoy sientes que no encajas, que ya se te acabó el guión que te dieron, 
+                        o que tu mensaje no logras sacarlo de la garganta...
+                    </p>
+
+                    <div class="bg-gradient-to-r from-gold-dark/10 to-gold-light/20 rounded-2xl p-8">
+                        <p class="text-2xl lg:text-3xl font-light text-gold-dark mb-4">
+                            Este lugar es para ti
+                        </p>
+                        <p class="text-lg text-void-medium/80">
+                            Aquí no venimos a competir por atención: <span class="font-semibold">venimos a encendernos</span>.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6 my-8">
+                        <div class="text-center p-6">
+                            <div class="text-4xl mb-3">✨</div>
+                            <h4 class="font-semibold text-void-deep mb-2">Para ti</h4>
+                            <p class="text-void-medium/70 text-sm">Tu crecimiento personal importa</p>
+                        </div>
+                        <div class="text-center p-6">
+                            <div class="text-4xl mb-3">❤️</div>
+                            <h4 class="font-semibold text-void-deep mb-2">Para los tuyos</h4>
+                            <p class="text-void-medium/70 text-sm">Tu familia y amigos te necesitan brillando</p>
+                        </div>
+                        <div class="text-center p-6">
+                            <div class="text-4xl mb-3">🌍</div>
+                            <h4 class="font-semibold text-void-deep mb-2">Para el mundo</h4>
+                            <p class="text-void-medium/70 text-sm">Tu luz puede encender otras luces</p>
+                        </div>
+                    </div>
+
+                    <blockquote class="text-2xl lg:text-3xl font-light text-gold-dark italic leading-relaxed">
+                        "Cuando una persona se enciende, recuerda a otras cómo hacerlo. 
+                        Esa es la red: luces que se conectan, luces que se multiplican."
+                    </blockquote>
+
+                    <div class="space-y-4 mt-8">
+                        <p class="text-lg text-void-medium">
+                            Habrá miedo. Habrá quien quiera bajarte la voz.
+                        </p>
+                        <p class="text-xl font-semibold text-gold-dark">
+                            Justo por eso, tenemos que brillar.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12">
+                    <a href="index.html#unete" class="bg-gradient-to-r from-gold-dark to-gold-light text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-gold-light/30 transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
+                        Únete a La Red de Luz
+                    </a>
+                    <a href="index.html" class="border-2 border-void-medium text-void-medium px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-void-medium hover:text-white transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
+                        Explorar los 4 Pilares
+                    </a>
+                </div>
+
+                <!-- Firma personal -->
+                <div class="mt-12 pt-8 border-t border-gold-dark/20">
+                    <div class="flex items-center justify-center gap-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-gold-dark to-gold-light rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            J
+                        </div>
+                        <div class="text-left">
+                            <p class="font-semibold text-void-deep">Javi</p>
+                            <p class="text-void-medium/70 text-sm italic">Encendedor de chispas</p>
+                        </div>
+                    </div>
+                    <p class="text-gold-dark mt-4 font-medium">
+                        Voy caminando contigo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="js/historia.js"></script>
+</body>
+</html>
