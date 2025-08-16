@@ -70,9 +70,6 @@
   background: rgba(228, 205, 133, 0.08);
   backdrop-filter: blur(24px) saturate(120%);
   border: 1px solid rgba(228, 205, 133, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(22, 51, 132, 0.12),
-    0 2px 16px 0 rgba(228, 205, 133, 0.08),
-    0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .liquid-glass:hover {
   background: rgba(228, 205, 133, 0.12);
@@ -81,7 +78,7 @@
 }
 
 .text-shadow {
-  text-shadow: 2px 2px 3px rgba(54, 51, 23, 0.356);
+  text-shadow: 2px 2px 3px rgba(87, 79, 23, 0.589);
 }
 
 .gradient-text {
@@ -141,7 +138,6 @@
   color: rgba(228, 205, 133, 0.95);
 }
 
-
 /* Nebula background animation */
 .nebula-bg {
   position: fixed;
@@ -200,25 +196,61 @@
 /* Avatar ring effect */
 .avatar-ring {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e4cd85, #163384);
-  padding: 4px;
+  
+  padding: 6px;
   margin: 0 auto 2rem;
+  box-shadow: 0 0 40px rgba(228, 205, 133, 0.4),
+    0 8px 32px rgba(22, 51, 132, 0.3);
+  animation: glow-pulse 3s ease-in-out infinite alternate;
 }
 .avatar-inner {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #0d0b16;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #e4cd85;
-  font-family: "Space Grotesk", sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+.avatar-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+  filter: brightness(1.1) contrast(1.05) saturate(1.1);
+  transition: all 0.4s ease;
+}
+.avatar-ring:hover .avatar-photo {
+  transform: scale(1.05);
+  filter: brightness(1.2) contrast(1.1) saturate(1.2);
+}
+.avatar-ring::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    transparent,
+    rgba(228, 205, 133, 0.2),
+    transparent
+  );
+  z-index: -1;
+  animation: rotate 8s linear infinite;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive refinements */

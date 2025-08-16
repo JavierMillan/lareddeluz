@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
 window.addEventListener('scroll', () => {
   parallaxEffect();
 
-});
+ });
 
 // Add click ripple effect
 document.querySelectorAll('.liquid-glass, .liquid-enhanced').forEach(element => {

@@ -50,7 +50,7 @@
 
 <body class="bg-void-deep text-white overflow-x-hidden">
     <!-- Starfield Background -->
-    <div class="starfield fixed inset-0 z-0 pointer-events-none">
+    <canvas class="network-canvas" id="networkCanvas"></canvas>
         <!-- Dynamic stars will be injected here -->
     </div>
 
@@ -60,11 +60,14 @@
             <div class="max-w-7xl mx-auto px-6 py-2">
                 <div class="flex justify-between items-center">
                     <!-- Logo -->
-                    <div class="flex items-center space-x-3">
-                        <img src="assets/logo.png" alt="" class="h-10 w-auto">
-                        <h2 class="font-space text-xl lg:text-2xl font-semibold text-gold-light tracking-tight">
-                            La Red de Luz
-                        </h2>
+                    <div class="space-x-3">
+                        <a class="flex items-center" href="index.html">
+                            <img src="assets/logo.png" alt="" class="h-10 w-auto mr-3">
+                            <h2
+                                class="text-shadow font-space text-xl lg:text-2xl font-bold text-gold-light tracking-tight">
+                                La Red de Luz
+                            </h2>
+                        </a>
                     </div>
 
                     <!-- Desktop Navigation -->
@@ -89,7 +92,7 @@
                         <a href="#testimonios" class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
                             Voces
                         </a> -->
-                        <a href="#unete"
+                        <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F" target="_blank"
                             class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-light/25 transition-all duration-300 transform hover:-translate-y-1">
                             Únete
                         </a>
@@ -117,12 +120,11 @@
                         class="block text-white/80 hover:text-gold-light transition-colors font-medium">La Fricción</a>
                     <a href="#mapa" class="block text-white/80 hover:text-gold-light transition-colors font-medium">El
                         Mapa</a>
-                    <a href="historia.html"
+                    <a href="#narrativa"
                         class="block text-white/80 hover:text-gold-light transition-colors font-medium">Nuestra
                         Historia</a>
-                    <a href="#testimonios"
-                        class="block text-white/80 hover:text-gold-light transition-colors font-medium">Voces</a>
-                    <a href="#unete"
+                    <!-- <a href="#testimonios" class="block text-white/80 hover:text-gold-light transition-colors font-medium">Voces</a> -->
+                    <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F"
                         class="block bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold text-center">Únete</a>
                 </div>
             </div>
@@ -468,40 +470,60 @@
     </section>
 
     <!-- Story Section - Narrativa de Transformación -->
+    <!-- Story Section - Narrativa de Transformación -->
     <section id="narrativa"
         class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-medium to-deep-blue">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="font-playfair text-3xl md:text-5xl lg:text-6xl font-normal leading-tight mb-8 text-white">
-                Del <span class="text-gold-light italic">misterio</span> a la
-                <span class="text-gold-light italic">luz</span>
+                Del <span class="text-gold-light italic">aislamiento</span> al
+                <span class="text-gold-light italic">encuentro</span>
             </h2>
 
             <div class="space-y-8 text-lg lg:text-xl text-white/80 font-light leading-relaxed">
                 <p>
-                    Durante mucho tiempo, hice todo "lo correcto": estudiar, trabajar, lograr, aparentar…
-                    pero por dentro, algo faltaba. Había ruido, pero no propósito. Había logros, pero no plenitud.
+                    "Durante años creí que podía con todo... solo. Trabajo en casa, hobbies en casa, planes en casa.
+                    Hubo días en que literalmente no me dio el sol."
                 </p>
 
                 <p class="text-gold-light italic text-xl lg:text-2xl font-medium">
-                    "¿Esto es todo? ¿Y si hay algo más?"
+                    "La realidad me golpeó con cuatro palabras: 'te estás aislando'."
                 </p>
 
                 <p>
-                    Fue en ese silencio incómodo donde nació La Red de Luz. No como un proyecto, sino como un refugio.
-                    Un mapa para regresar a mí. Y al compartir mi búsqueda, entendí algo más profundo:
-                    <span class="text-white font-medium">otros también estaban buscando.</span>
+                    Me dolió aceptarlo. Pero ahí entendí algo: si me quedaba callado, también se quedaba apagado
+                    el mensaje que traigo. No porque yo sea "importante", sino porque
+                    <span class="text-white font-medium">mi historia importa igual que la tuya.</span>
                 </p>
 
+                <div class="grid md:grid-cols-2 gap-8 my-12">
+                    <div class="liquid-glass rounded-2xl p-6 text-left">
+                        <h3 class="text-gold-light font-semibold mb-4">De 3 pilares a 4</h3>
+                        <p class="text-white/70 leading-relaxed">
+                            Por mucho tiempo viví solo con lo mental, emocional y físico.
+                            Lo espiritual lo dejé fuera por creer que era cosa de clichés.
+                            Hasta que me permití abrir esa puerta —sin fanatismos— y encontré balance real.
+                        </p>
+                    </div>
+                    <div class="liquid-glass rounded-2xl p-6 text-left">
+                        <h3 class="text-gold-light font-semibold mb-4">El caos transformador</h3>
+                        <p class="text-white/70 leading-relaxed">
+                            Cuando rompes el "software de fábrica", duelen los desapegos.
+                            Gente se aleja, otra llega. No hay villanos: solo frecuencias que ya no cuadran.
+                        </p>
+                    </div>
+                </div>
+
                 <p>
-                    Así, paso a paso, se fue tejiendo esta red… no perfecta, pero real.
-                    No brillante por fuera, sino <span class="text-gold-light font-medium">luminosa por dentro.</span>
+                    <span class="text-gold-light font-medium">La Red de Luz</span> nace de ahí.
+                    De un hombre que se cansó de vivir en piloto automático y decidió volver a elegirse.
+                    De alguien que no encontró un lugar donde sentirse parte... y entonces lo está construyendo.
                 </p>
             </div>
 
             <div class="mt-12">
                 <a href="historia.html"
                     class="inline-flex items-center gap-3 liquid-glass px-8 py-4 rounded-full text-white hover:text-gold-light transition-all duration-500 font-semibold group">
-                    Conoce la historia completa
+                    Leer mi historia completa
                     <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -658,7 +680,7 @@
                     class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-8 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-gold-light/30 transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
                     Descargar Guía IKIGAI
                 </a>
-                <a href="mailto:hola@lareddeluz.com"
+                <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F"
                     class="border-2 border-void-medium text-void-medium px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-void-medium hover:text-white transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
                     Unirme a la comunidad
                 </a>
@@ -708,5 +730,7 @@
 
     <!-- JavaScript for Interactions -->
     <script src="js/main.js"></script>
+    <script src="js/network.js"></script>
 </body>
+
 </html>

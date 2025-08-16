@@ -1,0 +1,441 @@
+/* ==========================================
+   DESPEGA - La Red de Luz CSS Styles
+   ========================================== */
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 20px rgba(228, 205, 133, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(228, 205, 133, 0.6), 0 0 80px rgba(228, 205, 133, 0.2);
+  }
+}
+
+@keyframes liquidFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes stepReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes airplaneFly {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+}
+
+/* Elementos base */
+.liquid-glass {
+  background: rgba(228, 205, 133, 0.08);
+  backdrop-filter: blur(24px) saturate(120%);
+  border: 1px solid rgba(228, 205, 133, 0.15);
+}
+
+.liquid-glass:hover {
+  background: rgba(228, 205, 133, 0.12);
+  box-shadow: 0 16px 64px 0 rgba(228, 205, 133, 0.15), 0 4px 24px 0 rgba(22, 51, 132, 0.08);
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 3px rgba(54, 51, 23, 0.356);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #e4cd85 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Starfield */
+.starfield::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      circle at 20% 30%,
+      rgba(228, 205, 133, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(22, 51, 132, 0.05) 0%,
+      transparent 50%
+    );
+}
+
+.floating-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #e4cd85;
+  border-radius: 50%;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+/* Enhanced liquid glass for methodology steps */
+.step-card {
+  background: linear-gradient(
+    135deg,
+    rgba(228, 205, 133, 0.1) 0%,
+    rgba(22, 51, 132, 0.08) 100%
+  );
+  backdrop-filter: blur(28px) saturate(140%);
+  border: 1.5px solid rgba(228, 205, 133, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(22, 51, 132, 0.12),
+    0 2px 16px 0 rgba(228, 205, 133, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+}
+
+.step-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 64px 0 rgba(228, 205, 133, 0.2),
+    0 8px 32px 0 rgba(22, 51, 132, 0.15);
+}
+
+.step-letter {
+  background: linear-gradient(135deg, #e4cd85, #c08a2d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  font-size: 4rem;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.step-progress {
+  height: 4px;
+  background: linear-gradient(90deg, #e4cd85 0%, #163384 100%);
+  border-radius: 2px;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.8s ease-out;
+}
+
+.step-progress.active {
+  transform: scaleX(1);
+}
+
+/* Airplane illustration */
+.airplane-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.airplane {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  animation: airplaneFly 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(228, 205, 133, 0.3));
+}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  opacity: 0.6;
+  animation: float 8s ease-in-out infinite;
+}
+
+.cloud-1 {
+  width: 60px;
+  height: 30px;
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.cloud-2 {
+  width: 80px;
+  height: 40px;
+  top: 60%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.cloud-3 {
+  width: 50px;
+  height: 25px;
+  bottom: 30%;
+  left: 70%;
+  animation-delay: 4s;
+}
+
+/* Journey path visualization */
+.journey-path {
+  position: relative;
+  height: 50px;
+  background: linear-gradient(
+    90deg,
+    #0d0b16 0%,
+    #232a3d 25%,
+    #163384 50%,
+    #e4cd85 75%,
+    #f9f4e3 100%
+  );
+  border-radius: 100px;
+  margin: 2rem 0;
+  overflow: hidden;
+}
+
+.journey-path::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(228, 205, 133, 0.8) 50%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  transform: translateY(-50%);
+}
+
+.journey-marker {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: #e4cd85;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 20px rgba(228, 205, 133, 0.8);
+}
+
+/* Enhanced Navigation Responsiva */
+.methodology-nav {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  background: rgba(13, 11, 22, 0.8);
+  backdrop-filter: blur(16px);
+  border-radius: 12px;
+  padding: 1rem 0.5rem;
+  border: 1px solid rgba(228, 205, 133, 0.2);
+  transition: all 0.3s ease;
+}
+
+.methodology-nav.collapsed {
+  right: -6rem;
+}
+
+.methodology-nav-toggle {
+  position: absolute;
+  left: -2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(228, 205, 133, 0.9);
+  color: #0d0b16;
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  font-weight: bold;
+  z-index: 50;
+}
+
+.methodology-nav.collapsed .methodology-nav-toggle {
+  left: -4.3rem;
+  background: rgba(228, 205, 133, 1);
+  box-shadow: 0 4px 12px rgba(228, 205, 133, 0.3);
+}
+
+.methodology-nav-toggle:hover {
+  background: rgba(228, 205, 133, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 0.25rem;
+}
+
+.nav-step:hover {
+  background: rgba(228, 205, 133, 0.1);
+}
+
+.nav-step.active {
+  background: rgba(228, 205, 133, 0.2);
+  border-left: 3px solid #e4cd85;
+}
+
+.nav-step-indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  background: rgba(228, 205, 133, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.nav-step.active .nav-step-indicator {
+  background: #e4cd85;
+  box-shadow: 0 0 8px rgba(228, 205, 133, 0.6);
+}
+
+.nav-step-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-step.active .nav-step-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Bitácora Viva styling */
+.bitacora-card {
+  background: linear-gradient(
+    135deg,
+    rgba(249, 244, 227, 0.95) 0%,
+    rgba(228, 205, 133, 0.1) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(228, 205, 133, 0.3);
+  color: #0d0b16;
+}
+
+.ritual-box {
+  background: rgba(22, 51, 132, 0.1);
+  border: 1px solid rgba(228, 205, 133, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.ritual-box::before {
+  content: "🔮";
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: #262631;
+  padding: 0 0.5rem;
+  font-size: 1.2rem;
+  border: 2px solid rgba(228, 205, 133, 0.3);
+  border-radius: 999px;
+}
+
+/* Responsive breakpoints mejorados */
+@media (max-width: 1536px) {
+  .methodology-nav {
+    display: block;
+  }
+}
+
+@media (max-width: 1280px) {
+  .methodology-nav {
+    right: 1rem;
+    padding: 0.75rem 0.25rem;
+  }
+  
+  .nav-step-text {
+    display: none;
+  }
+  
+  .nav-step {
+    padding: 0.5rem 0.25rem;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .methodology-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .step-letter {
+    font-size: 3rem;
+  }
+  
+  .airplane-container {
+    width: 150px;
+    height: 150px;
+  }
+}
