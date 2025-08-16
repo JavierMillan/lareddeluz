@@ -51,7 +51,7 @@
 <body class="bg-void-deep text-white overflow-x-hidden">
     <!-- Starfield Background -->
     <canvas class="network-canvas" id="networkCanvas"></canvas>
-        <!-- Dynamic stars will be injected here -->
+    <!-- Dynamic stars will be injected here -->
     </div>
 
     <!-- Navigation -->
@@ -92,7 +92,8 @@
                         <a href="#testimonios" class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
                             Voces
                         </a> -->
-                        <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F" target="_blank"
+                        <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F"
+                            target="_blank"
                             class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-light/25 transition-all duration-300 transform hover:-translate-y-1">
                             Únete
                         </a>
@@ -459,8 +460,9 @@
                                 <span class="text-gold-light">¿Tienes una idea?</span>
                             </p>
                             <a href="mailto:hola@lareddeluz.com"
-                                class="inline-block text-gold-light text-sm font-medium hover:text-white transition-colors">
-                                Propón una constelación →
+                                class="inline-block text-gold-light text-sm font-medium hover:text-white transition-colors relative group animate-[pulse_1.5s_ease-in-out_infinite] hover:scale-105 hover:animate-none">
+                                <span class="relative z-10">Propón una constelación →</span>
+                                <span class="absolute inset-0 bg-gold-light/20 rounded-lg blur-sm group-hover:bg-gold-light/30 transition-all duration-300"></span>
                             </a>
                         </div>
                     </div>
@@ -469,7 +471,6 @@
         </div>
     </section>
 
-    <!-- Story Section - Narrativa de Transformación -->
     <!-- Story Section - Narrativa de Transformación -->
     <section id="narrativa"
         class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-medium to-deep-blue">
@@ -486,7 +487,7 @@
                 </p>
 
                 <p class="text-gold-light italic text-xl lg:text-2xl font-medium">
-                    "La realidad me golpeó con cuatro palabras: 'te estás aislando'."
+                    "La realidad me golpeó con tres palabras: 'te estás aislando'."
                 </p>
 
                 <p>
@@ -731,6 +732,111 @@
     <!-- JavaScript for Interactions -->
     <script src="js/main.js"></script>
     <script src="js/network.js"></script>
+
+    <!-- Modal Proponer Constelación -->
+    <div id="constelacionModal"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden opacity-0 transition-all duration-300">
+        <div class="flex items-center justify-center min-h-screen px-4 py-2">
+            <div class="liquid-glass rounded-3xl py-3 px-8 max-w-md w-full mx-auto transform scale-95 transition-all duration-300"
+                id="modalContent">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="font-playfair text-2xl font-semibold text-white">
+                        Proponer <span class="text-gold-light italic">Constelación</span>
+                    </h3>
+                    <button id="closeModal" class="text-white/60 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Formulario -->
+                <form id="constelacionForm" class="space-y-6">
+                    <!-- Nombre -->
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-white/80 mb-2">
+                            Nombre *
+                        </label>
+                        <input type="text" id="nombre" name="nombre" required
+                            class="w-full px-4 py-3 bg-void-deep/50 border border-gold-light/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold-light/50 focus:border-gold-light transition-all duration-300"
+                            placeholder="Tu nombre">
+                    </div>
+
+                    <!-- Correo -->
+                    <div>
+                        <label for="correo" class="block text-sm font-medium text-white/80 mb-2">
+                            Correo electrónico *
+                        </label>
+                        <input type="email" id="correo" name="correo" required
+                            class="w-full px-4 py-3 bg-void-deep/50 border border-gold-light/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold-light/50 focus:border-gold-light transition-all duration-300"
+                            placeholder="tu@email.com">
+                    </div>
+
+                    <!-- Pilares (Selección múltiple) -->
+                    <div>
+                        <label class="block text-sm font-medium text-white/80 mb-3">
+                            Pilares relacionados *
+                        </label>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" name="pilares" value="Mental"
+                                    class="w-5 h-5 bg-void-deep/50 border-2 border-gold-light/30 rounded text-gold-light focus:ring-2 focus:ring-gold-light/50 transition-all duration-300">
+                                <span class="text-white/80 group-hover:text-white transition-colors">
+                                    🧠 Mental - Aprendizaje técnico y desarrollo cognitivo
+                                </span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" name="pilares" value="Emocional"
+                                    class="w-5 h-5 bg-void-deep/50 border-2 border-gold-light/30 rounded text-gold-light focus:ring-2 focus:ring-gold-light/50 transition-all duration-300">
+                                <span class="text-white/80 group-hover:text-white transition-colors">
+                                    ❤️ Emocional - Autoconocimiento y gestión emocional
+                                </span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" name="pilares" value="Físico"
+                                    class="w-5 h-5 bg-void-deep/50 border-2 border-gold-light/30 rounded text-gold-light focus:ring-2 focus:ring-gold-light/50 transition-all duration-300">
+                                <span class="text-white/80 group-hover:text-white transition-colors">
+                                    ⚡ Físico - Salud como base para el crecimiento
+                                </span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" name="pilares" value="Espiritual"
+                                    class="w-5 h-5 bg-void-deep/50 border-2 border-gold-light/30 rounded text-gold-light focus:ring-2 focus:ring-gold-light/50 transition-all duration-300">
+                                <span class="text-white/80 group-hover:text-white transition-colors">
+                                    🌟 Espiritual - Propósito y conexión con algo mayor
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Contexto de la idea -->
+                    <div>
+                        <label for="contexto" class="block text-sm font-medium text-white/80">
+                            Contexto de la idea *
+                        </label>
+                        <textarea id="contexto" name="contexto" required rows="4"
+                            class="w-full px-4 py-3 bg-void-deep/50 border border-gold-light/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold-light/50 focus:border-gold-light transition-all duration-300 resize-none"
+                            placeholder="Describe tu idea de constelación. ¿Qué problema resuelve? ¿Cómo ayudaría a la comunidad? ¿Qué formato tendría?"></textarea>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="flex gap-4">
+                        <button type="button" id="cancelBtn"
+                            class="flex-1 px-6 py-3 border border-white/30 text-white/80 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="flex-1 px-6 py-3 bg-gradient-to-r from-gold-light to-gold-dark text-void-deep font-semibold rounded-xl hover:shadow-lg hover:shadow-gold-light/25 transition-all duration-300 transform hover:-translate-y-1">
+                            Enviar propuesta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

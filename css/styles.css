@@ -204,3 +204,251 @@
     font-size: 2rem;
   }
 }
+
+/* Modal Constelación - Estilos CSS */
+
+/* Backdrop del modal */
+#constelacionModal {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Contenido del modal */
+#modalContent {
+    background: linear-gradient(
+        135deg,
+        rgba(228, 205, 133, 0.1) 0%,
+        rgba(22, 51, 132, 0.08) 100%
+    );
+    backdrop-filter: blur(32px) saturate(150%);
+    border: 1.5px solid rgba(228, 205, 133, 0.3);
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 8px 32px 0 rgba(228, 205, 133, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Inputs del formulario */
+#constelacionForm input[type="text"],
+#constelacionForm input[type="email"],
+#constelacionForm textarea {
+    background: rgba(13, 11, 22, 0.6);
+    border: 1px solid rgba(228, 205, 133, 0.3);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#constelacionForm input[type="text"]:focus,
+#constelacionForm input[type="email"]:focus,
+#constelacionForm textarea:focus {
+    background: rgba(13, 11, 22, 0.8);
+    border-color: rgba(228, 205, 133, 0.8);
+    box-shadow: 
+        0 0 0 3px rgba(228, 205, 133, 0.1),
+        0 4px 12px rgba(228, 205, 133, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Checkboxes personalizados */
+#constelacionForm input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(13, 11, 22, 0.6);
+    border: 2px solid rgba(228, 205, 133, 0.3);
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#constelacionForm input[type="checkbox"]:checked {
+    background: rgba(228, 205, 133, 0.9);
+    border-color: rgba(228, 205, 133, 1);
+    transform: scale(1.05);
+}
+
+#constelacionForm input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #0d0b16;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#constelacionForm input[type="checkbox"]:hover {
+    border-color: rgba(228, 205, 133, 0.6);
+    box-shadow: 0 0 8px rgba(228, 205, 133, 0.2);
+}
+
+/* Labels de los checkboxes */
+#constelacionForm label:has(input[type="checkbox"]) {
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+#constelacionForm label:has(input[type="checkbox"]):hover {
+    background: rgba(228, 205, 133, 0.05);
+    border-color: rgba(228, 205, 133, 0.2);
+}
+
+#constelacionForm label:has(input[type="checkbox"]:checked) {
+    background: rgba(228, 205, 133, 0.1);
+    border-color: rgba(228, 205, 133, 0.3);
+}
+
+/* Botones */
+#constelacionForm button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#constelacionForm button:hover {
+    transform: translateY(-2px);
+}
+
+#constelacionForm button[type="submit"]:hover {
+    box-shadow: 
+        0 10px 25px -5px rgba(228, 205, 133, 0.4),
+        0 8px 20px -6px rgba(228, 205, 133, 0.3);
+}
+
+/* Animaciones del modal */
+.modal-enter {
+    animation: modalEnter 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal-exit {
+    animation: modalExit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes modalEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes modalExit {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+}
+
+/* Notificaciones */
+.notification {
+    max-width: 400px;
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(8px);
+}
+
+/* Contador de caracteres */
+.character-counter {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: right;
+    margin-top: 4px;
+    transition: color 0.3s ease;
+}
+
+.character-counter.warning {
+    color: #fbbf24;
+}
+
+.character-counter.danger {
+    color: #ef4444;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    #modalContent {
+        margin: 16px;
+        padding: 24px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    #constelacionForm .flex {
+        flex-direction: column;
+    }
+    
+    #constelacionForm button {
+        width: 100%;
+    }
+}
+
+/* Scrollbar personalizado para el textarea */
+#constelacionForm textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+#constelacionForm textarea::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+#constelacionForm textarea::-webkit-scrollbar-thumb {
+    background: rgba(228, 205, 133, 0.5);
+    border-radius: 3px;
+}
+
+#constelacionForm textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(228, 205, 133, 0.7);
+}
+
+/* Estados de loading para el botón de envío */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Efecto de glassmorphism más pronunciado en hover */
+#modalContent:hover {
+    box-shadow: 
+        0 32px 64px -12px rgba(0, 0, 0, 0.25),
+        0 12px 40px 0 rgba(228, 205, 133, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Animación sutil para las etiquetas */
+#constelacionForm label {
+    transition: all 0.2s ease;
+}
+
+#constelacionForm label:hover {
+    transform: translateX(2px);
+}
