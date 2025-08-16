@@ -12,7 +12,7 @@ class RedDeLuzBackground {
         this.config = {
             nodeCount: window.innerWidth < 768 ? 40 : 60,
             maxDistance: window.innerWidth < 768 ? 120 : 150,
-            nodeSpeed: 0.5,
+            nodeSpeed: 0.35,
             pulseIntensity: 0.8,
             colors: {
                 gold: '#e4cd85',
@@ -78,14 +78,6 @@ class RedDeLuzBackground {
         window.addEventListener('mousemove', (e) => {
             this.mouseX = e.clientX;
             this.mouseY = e.clientY;
-        });
-
-        // Touch events for mobile
-        window.addEventListener('touchmove', (e) => {
-            if (e.touches[0]) {
-                this.mouseX = e.touches[0].clientX;
-                this.mouseY = e.touches[0].clientY;
-            }
         });
     }
 

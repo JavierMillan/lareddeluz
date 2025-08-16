@@ -172,7 +172,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   opacity: 0.8;
 }
 .chapter-number {

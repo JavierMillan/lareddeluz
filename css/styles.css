@@ -94,13 +94,6 @@
   background-clip: text;
 }
 
-.gradient-text-dark {
-  background: linear-gradient(135deg, #0d0b16 0%, #163384 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 /* Starfield personalizado */
 .starfield::before {
   content: "";
