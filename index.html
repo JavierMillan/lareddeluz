@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="La Red de Luz - Comunidad para despertar tu luz interior y trabajar en lo que amas">
-    <title>La Red de Luz - Menos perfección. Más verdad.</title>
+        content="La Red de Luz — Infraestructura para tu luz. Empiezas como una estrella sola. Bajas, y nace una red. Ninguna luz debería crecer sola.">
+    <title>La Red de Luz — Ninguna luz debería crecer sola</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="google-site-verification" content="KhXF0Dw8hfstOvTFpBBbFNP1ukttRM1tDcrciXTNPfA" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
     <script>
         tailwind.config = {
@@ -25,818 +25,427 @@
                         'gold-dark': '#c08a2d',
                         'deep-blue': '#163384',
                         'void-deep': '#0d0b16',
-                        'void-medium': '#232a3d',
+                        'void-medium': '#161423',
                         'light-birth': '#f9f4e3',
                     },
                     fontFamily: {
-                        'playfair': ['Playfair Display', 'serif'],
+                        'display': ['Spectral', 'serif'],
                         'inter': ['Inter', 'sans-serif'],
-                        'space': ['Space Grotesk', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
-                        'twinkle': 'twinkle 3s infinite ease-in-out',
-                        'loneliness': 'loneliness 4s infinite ease-in-out',
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow-pulse': 'glowPulse 2s ease-in-out infinite alternate',
-                    },
-                    backdropBlur: {
-                        'xs': '2px',
-                    }
                 }
             }
         }
     </script>
 </head>
 
-<body class="bg-void-deep text-white overflow-x-hidden">
-    <!-- Starfield Background -->
-    <canvas class="network-canvas" id="networkCanvas"></canvas>
-    <!-- Dynamic stars will be injected here -->
+<body class="bg-void-deep text-white overflow-x-hidden font-inter antialiased">
+    <!-- Living constellation — evoluciona capítulo a capítulo -->
+    <canvas class="network-canvas" id="networkCanvas" aria-hidden="true"></canvas>
+
+    <!-- Scroll progress rail -->
+    <div class="scroll-rail" aria-hidden="true">
+        <span class="scroll-rail-fill" id="scrollRailFill"></span>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-2">
-        <div class="liquid-glass rounded-2xl">
-            <div class="max-w-7xl mx-auto px-6 py-2">
-                <div class="flex justify-between items-center">
-                    <!-- Logo -->
-                    <div class="space-x-3">
-                        <a class="flex items-center" href="index.html">
-                            <img src="assets/logo.png" alt="" class="h-10 w-auto mr-3">
-                            <h2
-                                class="text-shadow font-space text-xl lg:text-2xl font-bold text-gold-light tracking-tight">
-                                La Red de Luz
-                            </h2>
-                        </a>
-                    </div>
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-3">
+        <div class="liquid-glass rounded-2xl max-w-7xl mx-auto">
+            <div class="px-6 py-3 flex justify-between items-center">
+                <a class="flex items-center gap-3" href="index.html" aria-label="La Red de Luz, inicio">
+                    <img src="assets/logo.png" alt="" width="40" height="40" class="h-9 w-auto">
+                    <span class="font-display text-lg lg:text-xl font-bold text-gold-light tracking-tight">
+                        La Red de Luz
+                    </span>
+                </a>
 
-                    <!-- Desktop Navigation -->
-                    <div class="hidden lg:flex items-center space-x-8">
-                        <a href="#llamado"
-                            class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
-                            El Llamado
-                        </a>
-                        <a href="#friccion"
-                            class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
-                            La Fricción
-                        </a>
-                        <a href="#mapa"
-                            class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
-                            El Mapa
-                        </a>
-                        <a href="#narrativa"
-                            class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
-                            Nuestra Historia
-                        </a>
-                        <!-- WIP
-                        <a href="#testimonios" class="text-white/80 hover:text-gold-light transition-colors duration-300 font-medium">
-                            Voces
-                        </a> -->
-                        <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F"
-                            target="_blank"
-                            class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-light/25 transition-all duration-300 transform hover:-translate-y-1">
-                            Únete
-                        </a>
-                    </div>
-
-                    <!-- Mobile Menu Button -->
-                    <button class="lg:hidden text-white/80 hover:text-gold-light transition-colors"
-                        id="mobile-menu-btn">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+                <div class="hidden lg:flex items-center gap-8">
+                    <a href="#vinculo" class="nav-link" data-nav="vinculo">El vínculo</a>
+                    <a href="#constelacion" class="nav-link" data-nav="constelacion">Constelaciones</a>
+                    <a href="#red" class="nav-link" data-nav="red">La Red</a>
+                    <a href="historia.html" class="nav-link">Historia</a>
+                    <a href="https://chat.whatsapp.com/LQwZxtrJSmNECZEyIwO9az"
+                        target="_blank" rel="noopener" class="btn-primary">
+                        Ocupa tu lugar
+                    </a>
                 </div>
+
+                <button class="lg:hidden text-white/80 hover:text-gold-light transition-colors p-2 -mr-2"
+                    id="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                        </path>
+                    </svg>
+                </button>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
-        <div class="lg:hidden hidden mt-4" id="mobile-menu">
-            <div class="liquid-glass rounded-2xl mx-4">
-                <div class="px-6 py-4 space-y-4">
-                    <a href="#llamado"
-                        class="block text-white/80 hover:text-gold-light transition-colors font-medium">El Llamado</a>
-                    <a href="#friccion"
-                        class="block text-white/80 hover:text-gold-light transition-colors font-medium">La Fricción</a>
-                    <a href="#mapa" class="block text-white/80 hover:text-gold-light transition-colors font-medium">El
-                        Mapa</a>
-                    <a href="#narrativa"
-                        class="block text-white/80 hover:text-gold-light transition-colors font-medium">Nuestra
-                        Historia</a>
-                    <!-- <a href="#testimonios" class="block text-white/80 hover:text-gold-light transition-colors font-medium">Voces</a> -->
-                    <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F"
-                        class="block bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold text-center">Únete</a>
-                </div>
+        <div class="lg:hidden hidden mt-3" id="mobile-menu">
+            <div class="liquid-glass rounded-2xl mx-1 px-6 py-5 space-y-4">
+                <a href="#vinculo" class="block nav-link">El vínculo</a>
+                <a href="#constelacion" class="block nav-link">Constelaciones</a>
+                <a href="#red" class="block nav-link">La Red</a>
+                <a href="historia.html" class="block nav-link">Historia</a>
+                <a href="https://chat.whatsapp.com/LQwZxtrJSmNECZEyIwO9az"
+                    target="_blank" rel="noopener" class="block btn-primary text-center">Ocupa tu lugar</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section - El Llamado -->
-    <section id="llamado" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8">
-        <div class="max-w-5xl mx-auto text-center">
-            <!-- Overline -->
-            <div class="flex flex-col items-center justify-center mb-6">
-                <img src="assets/logo.png" alt="" class="h-24 w-auto mb-4 animate-fade-in-up">
-                <h1 class="font-space text-sm lg:text-base font-medium text-gold-light tracking-widest uppercase mb-6 opacity-0 animate-fade-in-up"
-                    style="animation-delay: 0.3s;">
-                    Comunidad de Propósito
-                </h1>
-            </div>
+    <!-- ════════════════════════════════════════
+         CAP 00 · Llegas. Eres una luz sola.
+         ════════════════════════════════════════ -->
+    <section id="inicio" class="chapter chapter-hero" data-chapter="0" data-section="hero">
+        <div class="chapter-inner text-center max-w-4xl">
+            <p class="coord coord-center reveal" style="--d:0s">
+                <span class="coord-mark">CAP 00</span>
+                <span class="coord-line"></span>
+                <span>Una luz en el vacío</span>
+            </p>
 
-            <!-- Main Title -->
-            <h1 class="font-playfair text-4xl md:text-6xl lg:text-7xl font-normal leading-tight mb-8 gradient-text opacity-0 animate-fade-in-up"
-                style="animation-delay: 0.6s;">
-                Imagina un mundo donde todos trabajan en lo que
-                <span class="italic">aman</span>
+            <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mt-8 mb-8 reveal"
+                style="--d:.15s">
+                Brillar solo<br>cansa.
             </h1>
 
-            <!-- Subtitle -->
-            <p class="text-lg lg:text-xl text-white/80 font-light leading-relaxed mb-12 max-w-3xl mx-auto opacity-0 animate-fade-in-up"
-                style="animation-delay: 0.9s;">
-                No es una utopía. Es el despertar de tu verdadero propósito.
-                <br class="hidden lg:block">
-                Este es tu momento de soltar el piloto automático y recordar quién eres realmente.
+            <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-xl mx-auto mb-4 reveal"
+                style="--d:.3s">
+                Ahora mismo eres esa luz de ahí arriba. Una sola.
+                Latiendo en mitad de la nada.
+            </p>
+            <p class="text-lg lg:text-xl text-white/50 font-light leading-relaxed max-w-xl mx-auto mb-12 reveal"
+                style="--d:.4s">
+                Y aunque brillas, sabes lo que se siente. El frío de estar suelto.
             </p>
 
-            <!-- CTA Button -->
-            <div class="opacity-0 animate-fade-in-up" style="animation-delay: 1.2s;">
-                <a href="#friccion"
-                    class="inline-flex items-center gap-3 liquid-glass px-8 py-4 rounded-full text-white hover:text-gold-light transition-all duration-500 font-semibold text-lg group hover:shadow-xl hover:shadow-gold-light/20 hover:-translate-y-2">
-                    Comenzar mi despertar
-                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            <div class="reveal" style="--d:.55s">
+                <a href="#reflejo" class="btn-ghost btn-lg group">
+                    Quédate. Déjame contarte algo
+                    <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                        </path>
                     </svg>
                 </a>
             </div>
         </div>
 
-        <!-- Floating Elements -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden">
-            <div class="floating-particle top-1/4 left-1/4" style="animation-delay: 0s;"></div>
-            <div class="floating-particle top-1/3 right-1/4" style="animation-delay: 1s;"></div>
-            <div class="floating-particle bottom-1/4 left-1/3" style="animation-delay: 2s;"></div>
-            <div class="floating-particle top-1/2 right-1/3" style="animation-delay: 1.5s;"></div>
-        </div>
+        <a href="#reflejo" class="scroll-cue" aria-label="Bajar">
+            <span class="mono-label">baja conmigo</span>
+            <span class="scroll-cue-dot"></span>
+        </a>
     </section>
 
-    <!-- Pain Section - La Fricción -->
-    <section id="friccion"
-        class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-deep to-void-medium">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <!-- Content -->
-                <div class="space-y-8">
-                    <h2 class="font-playfair text-3xl md:text-5xl lg:text-6xl font-normal leading-tight text-white">
-                        Muchos siguen el guion que se
-                        <span class="text-gold-light italic">esperaba</span> de ellos...
-                    </h2>
-
-                    <p class="text-xl lg:text-2xl text-white/70 font-light leading-relaxed">
-                        Pero por dentro, están vacíos.
-                    </p>
-
-                    <!-- Pain Points -->
-                    <div class="space-y-4">
-                        <div
-                            class="flex items-start gap-4 p-6 liquid-glass rounded-2xl border-l-4 border-gold-light/30">
-                            <div class="text-gold-light text-xl mt-1">✦</div>
-                            <p class="text-white/90 text-lg">
-                                <strong class="text-white">Sonríes cuando no sientes alegría</strong><br>
-                                <span class="text-white/70">Las máscaras pesan más cada día</span>
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex items-start gap-4 p-6 liquid-glass rounded-2xl border-l-4 border-gold-light/30">
-                            <div class="text-gold-light text-xl mt-1">✦</div>
-                            <p class="text-white/90 text-lg">
-                                <strong class="text-white">Aplaudes metas que no son tuyas</strong><br>
-                                <span class="text-white/70">Viviendo sueños ajenos</span>
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex items-start gap-4 p-6 liquid-glass rounded-2xl border-l-4 border-gold-light/30">
-                            <div class="text-gold-light text-xl mt-1">✦</div>
-                            <p class="text-white/90 text-lg">
-                                <strong class="text-white">Te preguntas: "¿Esto es todo?"</strong><br>
-                                <span class="text-white/70">Esa voz interna que no puedes callar</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="pt-6">
-                        <p class="text-xl lg:text-2xl text-white/80 font-light italic">
-                            Quizá no estás perdido... solo estás recordando el camino de vuelta a casa.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Visual -->
-                <div class="flex items-center justify-center mb-6">
-                    <div class="relative">
-                        <!-- Lonely Node -->
-                        <div
-                            class="w-48 h-48 lg:w-64 lg:h-64 border-2 border-gold-light rounded-full relative animate-loneliness">
-                            <div
-                                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-gold-light rounded-full opacity-60">
-                            </div>
-                        </div>
-
-                        <!-- Constellation lines radiating out but broken -->
-                        <div class="constellation-line w-24 top-1/2 -right-24" style="animation-delay: 0s;"></div>
-                        <div class="constellation-line w-20 top-1/4 -left-20 rotate-45" style="animation-delay: 1s;">
-                        </div>
-                        <div class="constellation-line w-16 bottom-1/4 -right-16 -rotate-45"
-                            style="animation-delay: 2s;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pillars Section - Los 4 Pilares -->
-    <section id="mapa"
-        class="min-h-screen flex flex-col justify-center relative z-10 px-4 lg:px-8 py-10 bg-void-medium">
-        <div class="max-w-7xl mx-auto">
-            <!-- Header -->
-            <div class="text-center mb-16 lg:mb-24">
-                <h2 class="font-playfair text-3xl md:text-5xl lg:text-6xl font-normal leading-tight mb-6 gradient-text">
-                    Los 4 Pilares
-                </h2>
-                <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-3xl mx-auto">
-                    Un refugio para quienes creen que el verdadero éxito es ser un 1% mejor cada día
-                    en todas las dimensiones de tu vida: <span class="text-gold-light">mente ágil, emociones sanas,
-                        cuerpo fuerte y espíritu conectado.</span>
-                </p>
-                <div class="mt-8 text-gold-light/80 italic">
-                    "Si un pilar se debilita, toda la estructura tiembla. Aquí no descuidamos ninguna parte de ti."
-                </div>
-            </div>
-
-            <!-- The 4 Pillars Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-                <!-- Pilar Mental -->
-                <div
-                    class="liquid-glass rounded-2xl p-8 text-center hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer group">
-                    <div
-                        class="w-16 h-16 bg-gold-light/10 rounded-full mx-auto mb-6 flex items-center justify-center group-hover:bg-gold-light/20 transition-all duration-300">
-                        <svg class="w-8 h-8 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="font-space text-xl font-semibold text-white mb-4">MENTAL</h3>
-                    <p class="text-white/70 text-sm leading-relaxed">Aprendizaje técnico y desarrollo cognitivo. Mente
-                        clara para decisiones inteligentes.</p>
-                </div>
-
-                <!-- Pilar Emocional -->
-                <div
-                    class="liquid-glass rounded-2xl p-8 text-center hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer group">
-                    <div
-                        class="w-16 h-16 bg-gold-light/10 rounded-full mx-auto mb-6 flex items-center justify-center group-hover:bg-gold-light/20 transition-all duration-300">
-                        <svg class="w-8 h-8 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="font-space text-xl font-semibold text-white mb-4">EMOCIONAL</h3>
-                    <p class="text-white/70 text-sm leading-relaxed">Autoconocimiento y gestión de emociones. Integra lo
-                        que sientes sin perderte.</p>
-                </div>
-
-                <!-- Pilar Físico -->
-                <div
-                    class="liquid-glass rounded-2xl p-8 text-center hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer group">
-                    <div
-                        class="w-16 h-16 bg-gold-light/10 rounded-full mx-auto mb-6 flex items-center justify-center group-hover:bg-gold-light/20 transition-all duration-300">
-                        <svg class="w-8 h-8 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="font-space text-xl font-semibold text-white mb-4">FÍSICO</h3>
-                    <p class="text-white/70 text-sm leading-relaxed">Salud como base para el crecimiento. Tu cuerpo es
-                        tu primer hogar: cuídalo.</p>
-                </div>
-
-                <!-- Pilar Espiritual -->
-                <div
-                    class="liquid-glass rounded-2xl p-8 text-center hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer group">
-                    <div
-                        class="w-16 h-16 bg-gold-light/10 rounded-full mx-auto mb-6 flex items-center justify-center group-hover:bg-gold-light/20 transition-all duration-300">
-                        <svg class="w-8 h-8 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="font-space text-xl font-semibold text-white mb-4">ESPIRITUAL</h3>
-                    <p class="text-white/70 text-sm leading-relaxed">Propósito y conexión con algo mayor. Coherencia
-                        interna y paz en movimiento.</p>
-                </div>
-            </div>
-
-            <!-- Constelaciones Section -->
-            <div class="border-t border-gold-light/20 pt-16">
-                <div class="text-center mb-12">
-                    <h3 class="font-playfair text-2xl md:text-4xl font-normal leading-tight mb-4 text-white">
-                        Nuestras <span class="text-gold-light italic">Constelaciones</span>
-                    </h3>
-                    <p class="text-lg text-white/70 font-light leading-relaxed max-w-2xl mx-auto">
-                        Proyectos y espacios reales donde cada pilar cobra vida a través de experiencias concretas.
-                    </p>
-                </div>
-
-                <!-- Real Constelaciones -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    <!-- VitalBeat -->
-                    <div
-                        class="liquid-glass rounded-2xl p-8 text-left hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer group">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div
-                                class="w-3 h-3 bg-gold-light rounded-full group-hover:shadow-lg group-hover:shadow-gold-light/50 transition-all duration-300">
-                            </div>
-                            <span class="text-xs text-gold-light font-medium tracking-wide">PILAR FÍSICO</span>
-                            <span
-                                class="text-xs text-gold-light font-bold bg-gold-light/20 px-2 py-1 rounded-full">ACTIVO</span>
-                        </div>
-                        <h4 class="font-space text-xl font-semibold text-white mb-3">VitalBeat</h4>
-                        <p class="text-white/70 text-sm leading-relaxed mb-4">
-                            Pilates + Kickboxing + nutrición celular. Centro boutique para recuperar el cuerpo que
-                            sostiene tu propósito.
-                        </p>
-                        <a href="https://vitalbeat.lareddeluz.com"
-                            class="text-gold-light text-sm font-medium hover:text-white transition-colors">
-                            Conocer VitalBeat →
-                        </a>
-                    </div>
-
-                    <!-- DTMM -->
-                    <div
-                        class="liquid-glass rounded-2xl p-8 text-left hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer group">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div
-                                class="w-3 h-3 bg-gold-light rounded-full group-hover:shadow-lg group-hover:shadow-gold-light/50 transition-all duration-300">
-                            </div>
-                            <span class="text-xs text-gold-light font-medium tracking-wide">PILAR MENTAL</span>
-                            <span
-                                class="text-xs text-gold-light font-bold bg-gold-light/20 px-2 py-1 rounded-full">ACTIVO</span>
-                        </div>
-                        <h4 class="font-space text-xl font-semibold text-white mb-3">De tu Mente al Mundo</h4>
-                        <p class="text-white/70 text-sm leading-relaxed mb-4">
-                            De idea a web funcional con HTML/CSS/JS + IA. Lanza tu presencia digital sin complicarte.
-                        </p>
-                        <a href="https://detumentealmundo.lareddeluz.com"
-                            class="text-gold-light text-sm font-medium hover:text-white transition-colors">
-                            Ir a DTMM →
-                        </a>
-                    </div>
-
-                    <!-- DESPEGA -->
-                    <div
-                        class="liquid-glass rounded-2xl p-8 text-left hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer group">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div
-                                class="w-3 h-3 bg-gold-light rounded-full group-hover:shadow-lg group-hover:shadow-gold-light/50 transition-all duration-300">
-                            </div>
-                            <span class="text-xs text-gold-light font-medium tracking-wide">PILAR ESPIRITUAL</span>
-                            <span
-                                class="text-xs text-gold-light font-bold bg-gold-light/20 px-2 py-1 rounded-full">ACTIVO</span>
-                        </div>
-                        <h4 class="font-space text-xl font-semibold text-white mb-3">DESPEGA</h4>
-                        <p class="text-white/70 text-sm leading-relaxed mb-4">
-                            Metodología ágil para encontrarte. 7 pasos: Descubre, Envía calma, Selecciona, Planifica,
-                            Ejecuta, Gestiona, Alinea.
-                        </p>
-                        <a href="despega.html"
-                            class="text-gold-light text-sm font-medium hover:text-white transition-colors">
-                            Explorar DESPEGA →
-                        </a>
-                    </div>
-
-                    <!-- Círculo Emocional -->
-                    <div
-                        class="liquid-glass rounded-2xl p-8 text-left hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer group md:col-span-2 lg:col-span-1">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div
-                                class="w-3 h-3 bg-white/30 rounded-full group-hover:shadow-lg group-hover:shadow-white/20 transition-all duration-300">
-                            </div>
-                            <span class="text-xs text-white/50 font-medium tracking-wide">PILAR EMOCIONAL</span>
-                            <span
-                                class="text-xs text-white/50 font-bold bg-white/10 px-2 py-1 rounded-full">PRÓXIMAMENTE</span>
-                        </div>
-                        <h4 class="font-space text-xl font-semibold text-white/80 mb-3">Círculo Emocional</h4>
-                        <p class="text-white/60 text-sm leading-relaxed mb-4">
-                            Acompañamiento práctico y medible. Herramientas para sostenerte en días reales.
-                        </p>
-                        <a href="/contacto"
-                            class="text-white/50 text-sm font-medium hover:text-gold-light transition-colors">
-                            Quiero saber cuándo abre →
-                        </a>
-                    </div>
-
-                    <!-- Call to Action para más constelaciones -->
-                    <div
-                        class="md:col-span-2 lg:col-span-2 liquid-glass rounded-2xl p-8 text-center hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer border-2 border-dashed border-gold-light/30">
-                        <div class="space-y-4">
-                            <div
-                                class="w-12 h-12 bg-gold-light/10 rounded-full mx-auto flex items-center justify-center">
-                                <svg class="w-6 h-6 text-gold-light" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                </svg>
-                            </div>
-                            <h4 class="font-space text-lg font-semibold text-white">Más constelaciones en camino</h4>
-                            <p class="text-white/70 text-sm leading-relaxed max-w-md mx-auto">
-                                Cada constelación nace desde la comunidad, para la comunidad.
-                                <span class="text-gold-light">¿Tienes una idea?</span>
-                            </p>
-                            <a href="mailto:hola@lareddeluz.com"
-                                class="inline-block text-gold-light text-sm font-medium hover:text-white transition-colors relative group animate-[pulse_1.5s_ease-in-out_infinite] hover:scale-105 hover:animate-none">
-                                <span class="relative z-10">Propón una constelación →</span>
-                                <span class="absolute inset-0 bg-gold-light/20 rounded-lg blur-sm group-hover:bg-gold-light/30 transition-all duration-300"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Story Section - Narrativa de Transformación -->
-    <section id="narrativa"
-        class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-medium to-deep-blue">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="font-playfair text-3xl md:text-5xl lg:text-6xl font-normal leading-tight my-4 text-white">
-                Del <span class="text-gold-light italic">aislamiento</span> al
-                <span class="text-gold-light italic">encuentro</span>
-            </h2>
-
-            <div class="space-y-8 text-lg lg:text-xl text-white/80 font-light leading-relaxed">
-                <p>
-                    "Durante años creí que podía con todo... solo. Trabajo en casa, hobbies en casa, planes en casa.
-                    Hubo días en que literalmente no me dio el sol."
-                </p>
-
-                <p class="text-gold-light italic text-xl lg:text-2xl font-medium">
-                    "La realidad me golpeó con tres palabras: 'te estás aislando'."
-                </p>
-
-                <p>
-                    Me dolió aceptarlo. Pero ahí entendí algo: si me quedaba callado, también se quedaba apagado
-                    el mensaje que traigo. No porque yo sea "importante", sino porque
-                    <span class="text-white font-medium">mi historia importa igual que la tuya.</span>
-                </p>
-
-                <div class="grid md:grid-cols-2 gap-8 my-12">
-                    <div class="liquid-glass rounded-2xl p-6 text-left">
-                        <h3 class="text-gold-light font-semibold mb-4">De 3 pilares a 4</h3>
-                        <p class="text-white/70 leading-relaxed">
-                            Por mucho tiempo viví solo con lo mental, emocional y físico.
-                            Lo espiritual lo dejé fuera por creer que era cosa de clichés.
-                            Hasta que me permití abrir esa puerta —sin fanatismos— y encontré balance real.
-                        </p>
-                    </div>
-                    <div class="liquid-glass rounded-2xl p-6 text-left">
-                        <h3 class="text-gold-light font-semibold mb-4">El caos transformador</h3>
-                        <p class="text-white/70 leading-relaxed">
-                            Cuando rompes el "software de fábrica", duelen los desapegos.
-                            Gente se aleja, otra llega. No hay villanos: solo frecuencias que ya no cuadran.
-                        </p>
-                    </div>
-                </div>
-
-                <p>
-                    <span class="text-gold-light font-medium">La Red de Luz</span> nace de ahí.
-                    De un hombre que se cansó de vivir en piloto automático y decidió volver a elegirse.
-                    De alguien que no encontró un lugar donde sentirse parte... y entonces lo está construyendo.
-                </p>
-            </div>
-
-            <div class="mt-12">
-                <a href="historia.html"
-                    class="inline-flex items-center gap-3 liquid-glass px-8 py-4 mb-4 rounded-full text-white hover:text-gold-light transition-all duration-500 font-semibold group">
-                    Leer mi historia completa
-                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section - Voces que ya brillan 
-    <section id="testimonios" class="min-h-screen flex flex-col justify-center relative z-10 px-4 lg:px-8 py-20 bg-deep-blue">
-        <div class="max-w-6xl mx-auto">
-
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-3xl md:text-5xl lg:text-6xl font-normal leading-tight mb-6 text-white">
-                    Voces que ya <span class="text-gold-light italic">brillan</span>
-                </h2>
-                <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-3xl mx-auto">
-                    Historias reales de personas que encontraron su luz interior
-                </p>
-            </div>
-
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2">
-                    <div class="mb-6">
-                        <p class="font-playfair text-lg italic text-white leading-relaxed">
-                            "No tengo que correr más. Solo tengo que volver a mí."
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-gold-light to-gold-dark rounded-full flex items-center justify-center font-semibold text-void-deep text-lg">
-                            M
-                        </div>
-                        <div>
-                            <div class="font-semibold text-gold-light">María Elena</div>
-                            <div class="text-white/60 text-sm">Emprendedora</div>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2">
-                    <div class="mb-6">
-                        <p class="font-playfair text-lg italic text-white leading-relaxed">
-                            "Aquí no me exigen que brille... me recuerdan cómo hacerlo."
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-gold-light to-gold-dark rounded-full flex items-center justify-center font-semibold text-void-deep text-lg">
-                            C
-                        </div>
-                        <div>
-                            <div class="font-semibold text-gold-light">Carlos</div>
-                            <div class="text-white/60 text-sm">Desarrollador</div>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2">
-                    <div class="mb-6">
-                        <p class="font-playfair text-lg italic text-white leading-relaxed">
-                            "Mi trabajo ahora es una extensión de mi alma."
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-gold-light to-gold-dark rounded-full flex items-center justify-center font-semibold text-void-deep text-lg">
-                            A
-                        </div>
-                        <div>
-                            <div class="font-semibold text-gold-light">Ana</div>
-                            <div class="text-white/60 text-sm">Diseñadora</div>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 md:col-span-2 lg:col-span-1">
-                    <div class="mb-6">
-                        <p class="font-playfair text-lg italic text-white leading-relaxed">
-                            "Dejé de fingir fuerza cuando necesitaba descansar. Ahora soy real."
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-gold-light to-gold-dark rounded-full flex items-center justify-center font-semibold text-void-deep text-lg">
-                            L
-                        </div>
-                        <div>
-                            <div class="font-semibold text-gold-light">Luis</div>
-                            <div class="text-white/60 text-sm">Consultor</div>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="liquid-glass rounded-2xl p-8 hover:shadow-xl hover:shadow-gold-light/10 transition-all duration-500 hover:-translate-y-2 lg:col-span-2">
-                    <div class="mb-6">
-                        <p class="font-playfair text-xl italic text-white leading-relaxed">
-                            "La Red de Luz se convirtió en hogar. En espacio para hablar sin máscaras, crear sin juicio, crecer sin prisa. Ya no caminaba solo."
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-gold-light to-gold-dark rounded-full flex items-center justify-center font-semibold text-void-deep text-lg">
-                            R
-                        </div>
-                        <div>
-                            <div class="font-semibold text-gold-light">Roberto</div>
-                            <div class="text-white/60 text-sm">Mentor de comunidad</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="mt-16 grid md:grid-cols-3 gap-8 text-center">
-                <div class="space-y-2">
-                    <div class="text-3xl lg:text-4xl font-bold text-gold-light">500+</div>
-                    <div class="text-white/70">Almas despiertas</div>
-                </div>
-                <div class="space-y-2">
-                    <div class="text-3xl lg:text-4xl font-bold text-gold-light">4</div>
-                    <div class="text-white/70">Pilares de crecimiento</div>
-                </div>
-                <div class="space-y-2">
-                    <div class="text-3xl lg:text-4xl font-bold text-gold-light">∞</div>
-                    <div class="text-white/70">Posibilidades</div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- Final CTA Section - Tu momento de brillar -->
-    <section id="unete"
-        class="min-h-screen flex flex-col justify-center items-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-deep-blue to-light-birth text-center">
-        <div class="max-w-4xl mx-auto">
-            <!-- Main Message -->
-            <h2
-                class="font-playfair text-4xl md:text-6xl lg:text-7xl font-normal leading-tight my-4 gradient-text">
-                Tú también <span class="italic">brillas</span>.<br>
-                Solo lo habías <span class="italic">olvidado</span>.
-            </h2>
-
-            <p class="text-xl lg:text-2xl text-white leading-relaxed mb-12 max-w-3xl mx-auto">
-                Este es tu momento. Tu luz interior te está esperando.<br>
-                No prometemos milagros. Prometemos movimiento.
+    <!-- ════════════════════════════════════════
+         CAP 01 · El reflejo. No estás perdido.
+         ════════════════════════════════════════ -->
+    <section id="reflejo" class="chapter" data-chapter="1" data-section="reflejo">
+        <div class="chapter-inner max-w-5xl">
+            <p class="coord reveal">
+                <span class="coord-mark">CAP 01</span>
+                <span class="coord-line"></span>
+                <span>El reflejo</span>
             </p>
 
-            <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-                <a href="assets/ikigai.pdf" target="_blank"
-                    class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-8 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-gold-light/30 transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
-                    Descargar Guía IKIGAI
-                </a>
-                <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F"
-                    class="border-2 border-void-medium text-void-medium px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-void-medium hover:text-white transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
-                    Unirme a la comunidad
-                </a>
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
+                No estás perdido.<br>
+                <span class="text-gold-light">Estás sin estructura.</span>
+            </h2>
+
+            <p class="text-lg text-white/60 font-light max-w-2xl mb-12 reveal">
+                Te lo digo porque yo estuve ahí. Y porque tu frío tiene tres formas.
+                Lee. A ver en cuál te reconoces.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-5">
+                <article class="friction-card reveal" style="--d:0s">
+                    <span class="mono-label text-gold-light/70">así se ve · 01</span>
+                    <h3 class="font-display text-xl font-bold text-white mt-3 mb-3">Ya llegaste</h3>
+                    <p class="text-white/60 leading-relaxed">
+                        Cumpliste las metas. Marcaste las casillas. Y por dentro, bajito, una voz pregunta:
+                        <em class="text-white/85 not-italic">"¿esto era todo?"</em>
+                    </p>
+                </article>
+
+                <article class="friction-card reveal" style="--d:.1s">
+                    <span class="mono-label text-gold-light/70">así se ve · 02</span>
+                    <h3 class="font-display text-xl font-bold text-white mt-3 mb-3">Traes la idea</h3>
+                    <p class="text-white/60 leading-relaxed">
+                        Sabes que llevas algo dentro. Talento. Una visión. Pero no despega.
+                        <em class="text-white/85 not-italic">Tu idea no está muerta. Está sola.</em>
+                    </p>
+                </article>
+
+                <article class="friction-card reveal" style="--d:.2s">
+                    <span class="mono-label text-gold-light/70">así se ve · 03</span>
+                    <h3 class="font-display text-xl font-bold text-white mt-3 mb-3">Creces solo</h3>
+                    <p class="text-white/60 leading-relaxed">
+                        Avanzas. Cambias. Y la gente alrededor ya no vibra donde tú vibras.
+                        <em class="text-white/85 not-italic">Creces, sí. Pero crecer solo pesa.</em>
+                    </p>
+                </article>
             </div>
 
-            <!-- Philosophy -->
-            <div class="liquid-glass rounded-2xl p-8 lg:p-12 max-w-3xl mx-auto border border-void-medium/20">
-                <h3 class="font-space text-xl lg:text-2xl font-semibold text-void-medium mb-6">
-                    Nuestro Manifiesto
+            <p class="text-xl lg:text-2xl text-white/80 font-light italic mt-12 max-w-2xl reveal">
+                No te falta luz. Eso nunca te faltó. Te falta dónde conectarla.
+            </p>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 02 · El primer vínculo. Dos luces se encuentran.
+         ════════════════════════════════════════ -->
+    <section id="vinculo" class="chapter chapter-frame" data-chapter="2" data-section="vinculo">
+        <div class="chapter-inner max-w-4xl text-center">
+            <p class="coord coord-center reveal">
+                <span class="coord-mark">CAP 02</span>
+                <span class="coord-line"></span>
+                <span>El primer vínculo</span>
+            </p>
+
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-8 reveal">
+                Mira lo que pasa<br>cuando dos luces
+                <span class="constellate-word" data-word="se encuentran">se&nbsp;encuentran</span>.
+            </h2>
+
+            <!-- Demo in-situ: el vínculo dibujándose -->
+            <div class="demo-link reveal" style="--d:.15s" aria-hidden="true">
+                <span class="demo-star demo-star-a"></span>
+                <span class="demo-star demo-star-b"></span>
+                <span class="demo-line"></span>
+            </div>
+
+            <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-xl mx-auto mt-10 mb-8 reveal" style="--d:.3s">
+                Acaba de nacer un vínculo. Una línea entre dos personas que crean, se apoyan o avanzan juntas.
+                Antes eran dos luces sueltas. Ahora son algo.
+            </p>
+
+            <p class="font-display text-2xl md:text-3xl italic text-gold-light leading-snug max-w-xl mx-auto reveal" style="--d:.45s">
+                "La luz circula antes de regresar."
+            </p>
+
+            <p class="mono-label text-white/40 mt-4 reveal" style="--d:.5s">
+                la única regla — antes de pedir, aporta
+            </p>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 03 · La constelación. Un proyecto se vuelve red humana.
+         ════════════════════════════════════════ -->
+    <section id="constelacion" class="chapter" data-chapter="3" data-section="constelacion">
+        <div class="chapter-inner max-w-6xl">
+            <p class="coord reveal">
+                <span class="coord-mark">CAP 03</span>
+                <span class="coord-line"></span>
+                <span>La constelación</span>
+            </p>
+
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
+                Suma vínculos y mira:<br>
+                nace una <span class="constellate-word" data-word="constelación">constelación</span>.
+            </h2>
+
+            <p class="text-lg text-white/60 font-light max-w-2xl mb-4 reveal">
+                Una constelación es un proyecto convertido en red humana. No una audiencia. No un grupo.
+                Una misión que varias estrellas comparten.
+            </p>
+            <p class="text-base text-white/45 font-light max-w-2xl mb-10 reveal">
+                Cada una equilibra una dimensión de quien la habita. Acércate a una y mira cómo se enciende.
+            </p>
+
+            <ul class="pillar-legend reveal" aria-label="Las cuatro dimensiones que equilibran las constelaciones">
+                <li><span class="pillar-dot"></span> Mente</li>
+                <li><span class="pillar-dot"></span> Emoción</li>
+                <li><span class="pillar-dot"></span> Cuerpo</li>
+                <li><span class="pillar-dot"></span> Espíritu</li>
+            </ul>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12" id="constellationGrid">
+                <a href="https://vitalbeat.lareddeluz.com" target="_blank" rel="noopener" class="constellation-card reveal" style="--d:0s">
+                    <div class="constellation-mini" aria-hidden="true"></div>
+                    <div class="constellation-meta">
+                        <span class="mono-label text-gold-light/70">dimensión · cuerpo</span>
+                        <span class="status-pill status-active">activa</span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mt-3 mb-2">VitalBeat</h3>
+                    <p class="text-white/55 text-sm leading-relaxed mb-4">
+                        Pilates, kickboxing y nutrición celular. El cuerpo que sostiene tu propósito, de vuelta en forma.
+                    </p>
+                    <span class="card-link">Conocer VitalBeat <span aria-hidden="true">→</span></span>
+                </a>
+
+                <a href="https://detumentealmundo.lareddeluz.com" target="_blank" rel="noopener" class="constellation-card reveal" style="--d:.08s">
+                    <div class="constellation-mini" aria-hidden="true"></div>
+                    <div class="constellation-meta">
+                        <span class="mono-label text-gold-light/70">dimensión · mente</span>
+                        <span class="status-pill status-active">activa</span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mt-3 mb-2">De tu Mente al Mundo</h3>
+                    <p class="text-white/55 text-sm leading-relaxed mb-4">
+                        De idea a web real con HTML, CSS, JS e IA. Tu presencia digital, lanzada sin complicarte.
+                    </p>
+                    <span class="card-link">Ir a DTMM <span aria-hidden="true">→</span></span>
+                </a>
+
+                <a href="despega.html" class="constellation-card reveal" style="--d:.16s">
+                    <div class="constellation-mini" aria-hidden="true"></div>
+                    <div class="constellation-meta">
+                        <span class="mono-label text-gold-light/70">dimensión · espíritu</span>
+                        <span class="status-pill status-active">activa</span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mt-3 mb-2">DESPEGA</h3>
+                    <p class="text-white/55 text-sm leading-relaxed mb-4">
+                        Método ágil para encontrarte. Siete pasos para ordenar el mundo interno y volver a elegirte.
+                    </p>
+                    <span class="card-link">Explorar DESPEGA <span aria-hidden="true">→</span></span>
+                </a>
+
+                <div class="constellation-card constellation-card-soon reveal" style="--d:.24s">
+                    <div class="constellation-mini" aria-hidden="true"></div>
+                    <div class="constellation-meta">
+                        <span class="mono-label text-white/40">dimensión · emoción</span>
+                        <span class="status-pill status-soon">próximamente</span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white/80 mt-3 mb-2">Círculo Emocional</h3>
+                    <p class="text-white/45 text-sm leading-relaxed mb-4">
+                        Acompañamiento práctico y medible. Herramientas para sostenerte en los días reales.
+                    </p>
+                    <a href="https://wa.me/526221424577?text=Quiero%20saber%20cu%C3%A1ndo%20abre%20el%20C%C3%ADrculo%20Emocional"
+                        target="_blank" rel="noopener" class="card-link card-link-muted">Avísame cuándo abre <span aria-hidden="true">→</span></a>
+                </div>
+
+                <div class="constellation-card constellation-card-new reveal" style="--d:.32s">
+                    <span class="def-glyph text-gold-light" aria-hidden="true">+</span>
+                    <h3 class="font-display text-lg font-bold text-white mt-3 mb-2">Tu constelación</h3>
+                    <p class="text-white/55 text-sm leading-relaxed mb-4">
+                        Cada constelación nace desde la comunidad, para la comunidad. ¿Traes una idea con misión?
+                    </p>
+                    <a href="https://wa.me/526221424577?text=Hola%2C%20tengo%20una%20idea%20de%20constelaci%C3%B3n%20para%20La%20Red%20de%20Luz"
+                        target="_blank" rel="noopener" class="card-link">Proponla <span aria-hidden="true">→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 04 · La Red. Muchas constelaciones, un mismo cielo.
+         ════════════════════════════════════════ -->
+    <section id="red" class="chapter chapter-frame" data-chapter="4" data-section="red">
+        <div class="chapter-inner max-w-5xl">
+            <p class="coord reveal">
+                <span class="coord-mark">CAP 04</span>
+                <span class="coord-line"></span>
+                <span>La Red</span>
+            </p>
+
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
+                Y cuando muchas constelaciones<br>
+                comparten <span class="text-gold-light">el mismo cielo</span>...
+            </h2>
+
+            <p class="text-lg text-white/60 font-light max-w-2xl mb-4 reveal">
+                ...eso es La Red de Luz. No una comunidad. Un ecosistema entero, vivo,
+                donde ninguna luz tiene que crecer sola.
+            </p>
+            <p class="text-base text-white/45 font-light max-w-2xl mb-14 reveal">
+                Y aquí no llegas a una lista. Llegas a un camino. Cinco niveles, para que sepas
+                dónde estás parado y hacia dónde se mueve la luz.
+            </p>
+
+            <ol class="levels-track">
+                <li class="level-step reveal" style="--d:0s">
+                    <span class="level-num mono-label">nivel 01</span>
+                    <h3 class="font-display text-lg font-bold text-white">Estrella</h3>
+                    <p class="text-white/55 text-sm">"¿Qué quiero construir?" Buscas claridad.</p>
+                </li>
+                <li class="level-step reveal" style="--d:.08s">
+                    <span class="level-num mono-label">nivel 02</span>
+                    <h3 class="font-display text-lg font-bold text-white">Navegante</h3>
+                    <p class="text-white/55 text-sm">"¿Cómo lo construyo?" Exploras posibilidades.</p>
+                </li>
+                <li class="level-step reveal" style="--d:.16s">
+                    <span class="level-num mono-label">nivel 03</span>
+                    <h3 class="font-display text-lg font-bold text-white">Constructor</h3>
+                    <p class="text-white/55 text-sm">"¿Cómo lo vuelvo real?" Ejecutas y creas.</p>
+                </li>
+                <li class="level-step reveal" style="--d:.24s">
+                    <span class="level-num mono-label">nivel 04</span>
+                    <h3 class="font-display text-lg font-bold text-white">Catalizador</h3>
+                    <p class="text-white/55 text-sm">"¿Cómo ayudo a otros?" Generas conexiones.</p>
+                </li>
+                <li class="level-step level-step-gold reveal" style="--d:.32s">
+                    <span class="level-num mono-label text-gold-light">nivel 05</span>
+                    <h3 class="font-display text-lg font-bold text-gold-light">Faro</h3>
+                    <p class="text-white/70 text-sm">"¿Qué legado dejo?" Orientas a nuevas estrellas.</p>
+                </li>
+            </ol>
+
+            <!-- El cartógrafo -->
+            <div class="cartographer reveal">
+                <span class="mono-label text-gold-light">quién traza el mapa</span>
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+                    No encontré un lugar donde encajar.<br>Así que lo estoy construyendo.
                 </h3>
-                <div class="space-y-4 text-void-medium/80 leading-relaxed">
-                    <p>
-                        <strong>Creemos que</strong> el crecimiento debe ser integral (no solo técnico o espiritual).
-                    </p>
-                    <p>
-                        <strong>Creemos que</strong> pequeños pasos diarios (el 1%) construyen revoluciones silenciosas.
-                    </p>
-                    <p>
-                        <strong>Creemos que</strong> la competencia sana es contra tus límites, no contra las personas.
-                    </p>
-                    <p>
-                        <strong>Creemos que</strong> todos tenemos algo que enseñar y algo que aprender.
-                    </p>
-                    <p class="font-medium text-void-medium">
-                        Tu cuerpo es tu primer hogar: cuídalo para crear con plenitud.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Footer Message -->
-            <div class="mt-16 text-void-medium/60">
-                <p class="font-space text-sm lg:text-base tracking-wide">
-                    LA RED DE LUZ — MENOS PERFECCIÓN, MÁS VERDAD.
+                <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
+                    Soy Javi. Diseñador, ingeniero, y alguien que durante años creyó que podía con todo solo.
+                    Hubo días en que ni me dio el sol. Hasta que entendí algo: las personas no brillan solas.
+                    Forman constelaciones. La Red de Luz nace de ahí.
                 </p>
+                <a href="historia.html" class="card-link">Leer mi historia completa <span aria-hidden="true">→</span></a>
             </div>
-        </div>
-
-        <!-- Decorative Elements -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-            <div class="floating-particle top-1/4 left-1/4 bg-void-medium" style="animation-delay: 0s;"></div>
-            <div class="floating-particle top-1/3 right-1/4 bg-void-medium" style="animation-delay: 1s;"></div>
-            <div class="floating-particle bottom-1/4 left-1/3 bg-void-medium" style="animation-delay: 2s;"></div>
-            <div class="floating-particle top-1/2 right-1/3 bg-void-medium" style="animation-delay: 1.5s;"></div>
         </div>
     </section>
 
-    <!-- JavaScript for Interactions -->
-    <script src="js/main.js"></script>
-    <script src="js/network.js"></script>
+    <!-- ════════════════════════════════════════
+         CAP 05 · Tu umbral. Toma tu lugar.
+         ════════════════════════════════════════ -->
+    <section id="umbral" class="chapter chapter-threshold" data-chapter="5" data-section="umbral">
+        <div class="chapter-inner max-w-3xl text-center">
+            <p class="coord coord-center reveal">
+                <span class="coord-mark">CAP 05</span>
+                <span class="coord-line"></span>
+                <span>Tu umbral</span>
+            </p>
 
-    <!-- Modal Proponer Constelación -->
-    <div id="constelacionModal"
-        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden opacity-0 transition-all duration-300">
-        <div class="flex items-center justify-center min-h-screen px-4 py-2">
-            <div class="liquid-glass rounded-3xl py-3 px-8 max-w-md w-full mx-auto transform scale-95 transition-all duration-300"
-                id="modalContent">
-                <!-- Header -->
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="font-playfair text-2xl font-semibold text-white">
-                        Proponer <span class="text-gold-light italic">Constelación</span>
-                    </h3>
-                    <button id="closeModal" class="text-white/60 hover:text-white transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
+            <h2 class="font-display text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight mt-10 mb-8 reveal">
+                Empezaste como una luz suelta.<br>
+                <span class="text-gold-light">Ya no tienes que serlo.</span>
+            </h2>
 
-                <!-- Formulario -->
-                <form id="constelacionForm" class="space-y-6">
-                    <!-- Nombre -->
-                    <div>
-                        <label for="nombre" class="block text-sm font-medium text-white/80 mb-2">
-                            Nombre *
-                        </label>
-                        <input type="text" id="nombre" name="nombre" required
-                            class="w-full px-4 py-3 bg-void-deep/50 border border-gold-light/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold-light/50 focus:border-gold-light transition-all duration-300"
-                            placeholder="Tu nombre">
-                    </div>
+            <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed mb-12 reveal" style="--d:.15s">
+                Mira el cielo ahora. Está tejido. Y hay un lugar esperándote dentro.
+                No prometemos milagros. Prometemos movimiento, estructura y gente que rema hacia el mismo lado.
+            </p>
 
-                    <!-- Correo -->
-                    <div>
-                        <label for="correo" class="block text-sm font-medium text-white/80 mb-2">
-                            Correo electrónico *
-                        </label>
-                        <input type="email" id="correo" name="correo" required
-                            class="w-full px-4 py-3 bg-void-deep/50 border border-gold-light/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold-light/50 focus:border-gold-light transition-all duration-300"
-                            placeholder="tu@email.com">
-                    </div>
-
-                    <!-- Pilares (Selección múltiple) -->
-                    <div>
-                        <label class="block text-sm font-medium text-white/80 mb-3">
-                            Pilares relacionados *
-                        </label>
-                        <div class="space-y-3">
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="pilares" value="Mental"
-                                    class="w-5 h-5 bg-void-deep/50 border-2 border-gold-light/30 rounded text-gold-light focus:ring-2 focus:ring-gold-light/50 transition-all duration-300">
-                                <span class="text-white/80 group-hover:text-white transition-colors">
-                                    🧠 Mental - Aprendizaje técnico y desarrollo cognitivo
-                                </span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="pilares" value="Emocional"
-                                    class="w-5 h-5 bg-void-deep/50 border-2 border-gold-light/30 rounded text-gold-light focus:ring-2 focus:ring-gold-light/50 transition-all duration-300">
-                                <span class="text-white/80 group-hover:text-white transition-colors">
-                                    ❤️ Emocional - Autoconocimiento y gestión emocional
-                                </span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="pilares" value="Físico"
-                                    class="w-5 h-5 bg-void-deep/50 border-2 border-gold-light/30 rounded text-gold-light focus:ring-2 focus:ring-gold-light/50 transition-all duration-300">
-                                <span class="text-white/80 group-hover:text-white transition-colors">
-                                    ⚡ Físico - Salud como base para el crecimiento
-                                </span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="pilares" value="Espiritual"
-                                    class="w-5 h-5 bg-void-deep/50 border-2 border-gold-light/30 rounded text-gold-light focus:ring-2 focus:ring-gold-light/50 transition-all duration-300">
-                                <span class="text-white/80 group-hover:text-white transition-colors">
-                                    🌟 Espiritual - Propósito y conexión con algo mayor
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Contexto de la idea -->
-                    <div>
-                        <label for="contexto" class="block text-sm font-medium text-white/80">
-                            Contexto de la idea *
-                        </label>
-                        <textarea id="contexto" name="contexto" required rows="4"
-                            class="w-full px-4 py-3 bg-void-deep/50 border border-gold-light/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold-light/50 focus:border-gold-light transition-all duration-300 resize-none"
-                            placeholder="Describe tu idea de constelación. ¿Qué problema resuelve? ¿Cómo ayudaría a la comunidad? ¿Qué formato tendría?"></textarea>
-                    </div>
-
-                    <!-- Botones -->
-                    <div class="flex gap-4">
-                        <button type="button" id="cancelBtn"
-                            class="flex-1 px-6 py-3 border border-white/30 text-white/80 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300">
-                            Cancelar
-                        </button>
-                        <button type="submit"
-                            class="flex-1 px-6 py-3 bg-gradient-to-r from-gold-light to-gold-dark text-void-deep font-semibold rounded-xl hover:shadow-lg hover:shadow-gold-light/25 transition-all duration-300 transform hover:-translate-y-1">
-                            Enviar propuesta
-                        </button>
-                    </div>
-                </form>
+            <div class="reveal" style="--d:.3s">
+                <a href="https://chat.whatsapp.com/LQwZxtrJSmNECZEyIwO9az"
+                    target="_blank" rel="noopener" class="btn-primary btn-lg">
+                    Ocupa tu lugar en la red
+                </a>
+                <p class="mono-label text-white/40 mt-5">grupo de avisos · gratis · pronto, comunidad en Skool</p>
             </div>
-        </div>
-    </div>
 
+            <!-- Manifiesto · credo a gran escala -->
+            <div class="manifesto reveal" style="--d:.45s">
+                <span class="mono-label text-gold-light">en qué creemos</span>
+                <div class="creed">
+                    <p><strong>El crecimiento es integral.</strong> No solo técnico. No solo espiritual.</p>
+                    <p>Los pasos pequeños —<em>el 1% diario</em>— construyen revoluciones silenciosas.</p>
+                    <p>Compites contra tus límites, <strong>nunca contra las personas</strong>.</p>
+                    <p>Todos tenemos algo que enseñar y algo que aprender.</p>
+                    <p>Ninguna idea muere por ser mala. Muere por no tener <em>un ecosistema donde crecer</em>.</p>
+                </div>
+            </div>
+
+            <p class="mono-label text-white/30 mt-16 tracking-[0.3em]">
+                LA RED DE LUZ — MENOS PERFECCIÓN, MÁS VERDAD
+            </p>
+        </div>
+    </section>
+
+    <script src="js/network.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
