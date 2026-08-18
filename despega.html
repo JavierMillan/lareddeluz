@@ -5,16 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="DESPEGA: Metodología ágil de autodescubrimiento y acción consciente. 7 pasos para salir del piloto automático y encontrar tu rumbo auténtico.">
-    <title>DESPEGA - Metodología Ágil | La Red de Luz</title>
+        content="DESPEGA — metodología ágil para soltar la vida que no es tuya. 7 pasos, 20 ejercicios, escritos por Javier Millán desde su propio proceso. Parte de La Red de Luz.">
+    <title>DESPEGA — La Red de Luz</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/png" href="assets/cuadrado.png">
-    <link rel="stylesheet" href="css/despega.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
     <script>
         tailwind.config = {
@@ -25,864 +24,552 @@
                         'gold-dark': '#c08a2d',
                         'deep-blue': '#163384',
                         'void-deep': '#0d0b16',
-                        'void-medium': '#232a3d',
+                        'void-medium': '#161423',
                         'light-birth': '#f9f4e3',
                     },
                     fontFamily: {
-                        'playfair': ['Playfair Display', 'serif'],
+                        'display': ['Spectral', 'serif'],
                         'inter': ['Inter', 'sans-serif'],
-                        'space': ['Space Grotesk', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
-                        'twinkle': 'twinkle 3s infinite ease-in-out',
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow-pulse': 'glowPulse 2s ease-in-out infinite alternate',
-                        'liquid-flow': 'liquidFlow 20s linear infinite',
-                        'step-reveal': 'stepReveal 0.8s ease-out forwards',
-                        'airplane-fly': 'airplaneFly 3s ease-in-out infinite',
-                    },
-                    backdropBlur: {
-                        'xs': '2px',
-                    }
                 }
             }
         }
     </script>
 </head>
 
-<body class="bg-void-deep text-white overflow-x-hidden">
-    <!-- Starfield Background -->
-    <div class="starfield fixed inset-0 z-0 pointer-events-none">
-        <!-- Dynamic stars will be injected here -->
+<body class="bg-void-deep text-white overflow-x-hidden font-inter antialiased">
+    <!-- Living constellation -->
+    <canvas class="network-canvas" id="networkCanvas" aria-hidden="true"></canvas>
+
+    <!-- Scroll progress rail -->
+    <div class="scroll-rail" aria-hidden="true">
+        <span class="scroll-rail-fill" id="scrollRailFill"></span>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-2">
-        <div class="liquid-glass rounded-2xl">
-            <div class="max-w-7xl mx-auto px-6 py-2">
-                <div class="flex justify-between items-center">
-                    <!-- Logo -->
-                    <div class="space-x-3">
-                        <a class="flex items-center" href="index.html">
-                            <img src="assets/logo.png" alt="" class="h-10 w-auto mr-3">
-                            <h2
-                                class="text-shadow font-space text-xl lg:text-2xl font-bold text-gold-light tracking-tight">
-                                La Red de Luz
-                            </h2>
-                        </a>
-                    </div>
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-3">
+        <div class="liquid-glass rounded-2xl max-w-7xl mx-auto">
+            <div class="px-6 py-3 flex justify-between items-center">
+                <a class="flex items-center gap-3" href="index.html" aria-label="La Red de Luz, inicio">
+                    <img src="assets/logo.png" alt="" width="40" height="40" class="h-9 w-auto">
+                    <span class="font-display text-lg lg:text-xl font-bold text-gold-light tracking-tight">
+                        La Red de Luz
+                    </span>
+                </a>
 
-                    <!-- Desktop Navigation -->
-                    <div class="hidden lg:flex items-center space-x-8">
-                        <a href="index.html"
-                            class="text-shadow text-white hover:text-gold-light transition-colors duration-300 font-medium">
-                            Inicio
-                        </a>
-                        <a href="historia.html"
-                            class="text-shadow text-white hover:text-gold-light transition-colors duration-300 font-medium">
-                            Historia
-                        </a>
-                        <a href="index.html#mapa"
-                            class="text-shadow text-white hover:text-gold-light transition-colors duration-300 font-medium">
-                            Los 4 Pilares
-                        </a>
-                        <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F"
-                            target="_blank"
-                            class="bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-light/25 transition-all duration-300 transform hover:-translate-y-1">
-                            Únete
-                        </a>
-                    </div>
-
-                    <!-- Mobile Menu Button -->
-                    <button class="lg:hidden text-gold-dark hover:text-gold-light transition-colors"
-                        id="mobile-menu-btn">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+                <div class="hidden lg:flex items-center gap-8">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                    <a href="index.html#constelacion" class="nav-link">Constelaciones</a>
+                    <a href="historia.html" class="nav-link">Historia</a>
+                    <a href="#pasos" class="nav-link" data-nav="pasos">Los 7 pasos</a>
+                    <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20información%20sobre%20DESPEGA"
+                        target="_blank" rel="noopener" class="btn-primary">
+                        Conseguir DESPEGA
+                    </a>
                 </div>
+
+                <button class="lg:hidden text-white/80 hover:text-gold-light transition-colors p-2 -mr-2"
+                    id="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                        </path>
+                    </svg>
+                </button>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
-        <div class="text-shadow lg:hidden hidden mt-4" id="mobile-menu">
-            <div class="liquid-glass rounded-2xl mx-4">
-                <div class="px-6 py-4 space-y-4">
-                    <a href="index.html"
-                        class="block text-gold-dark hover:text-gold-light transition-colors font-medium">Inicio</a>
-                    <a href="historia.html"
-                        class="block text-gold-dark hover:text-gold-light transition-colors font-medium">Mi Historia</a>
-                    <a href="index.html#mapa"
-                        class="block text-gold-dark hover:text-gold-light transition-colors font-medium">Los 4
-                        Pilares</a>
-                    <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20unirme%20a%20La%20Red%20de%20Luz%20%F0%9F%8C%9F"
-                        class="block bg-gradient-to-r from-gold-light to-gold-dark text-void-deep px-6 py-3 rounded-xl font-semibold text-center">Únete</a>
-                </div>
+        <div class="lg:hidden hidden mt-3" id="mobile-menu">
+            <div class="liquid-glass rounded-2xl mx-1 px-6 py-5 space-y-4">
+                <a href="index.html" class="block nav-link">Inicio</a>
+                <a href="index.html#constelacion" class="block nav-link">Constelaciones</a>
+                <a href="historia.html" class="block nav-link">Historia</a>
+                <a href="#pasos" class="block nav-link">Los 7 pasos</a>
+                <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20información%20sobre%20DESPEGA"
+                    target="_blank" rel="noopener" class="block btn-primary text-center">Conseguir DESPEGA</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO Section -->
-    <section id="hero" class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8">
-        <div class="max-w-6xl mx-auto text-center">
-            <!-- Airplane Illustration -->
-            <div class="airplane-container mb-8 opacity-0 animate-fade-in-up">
-                <div class="airplane">✈️</div>
-                <div class="cloud cloud-1"></div>
-                <div class="cloud cloud-2"></div>
-                <div class="cloud cloud-3"></div>
-            </div>
+    <!-- ════════════════════════════════════════
+         CAP 00 · Hero
+         ════════════════════════════════════════ -->
+    <section id="inicio" class="chapter chapter-hero" data-chapter="0" data-section="inicio">
+        <div class="chapter-inner text-center max-w-4xl">
+            <p class="coord coord-center reveal" style="--d:0s">
+                <span class="coord-mark">DESPEGA</span>
+                <span class="coord-line"></span>
+                <span>Metodología ágil</span>
+            </p>
 
-            <!-- Main Title -->
-            <h1 class="font-playfair text-4xl md:text-6xl lg:text-7xl font-normal leading-tight mb-8 gradient-text opacity-0 animate-fade-in-up"
-                style="animation-delay: 0.3s;">
-                <span class="italic">DESPEGA</span>
+            <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mt-8 mb-8 reveal"
+                style="--d:.15s">
+                Suelta la vida<br>que no es tuya.
             </h1>
 
-            <!-- Subtitle -->
-            <p class="text-lg lg:text-xl text-white/80 font-light leading-relaxed mb-6 max-w-4xl mx-auto opacity-0 animate-fade-in-up"
-                style="animation-delay: 0.6s;">
-                Metodología Ágil de Autodescubrimiento y Acción Consciente
+            <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-xl mx-auto mb-4 reveal"
+                style="--d:.3s">
+                Un día me quedé viendo una pantalla apagada, esperando a que cargara, y no reconocí
+                al que me devolvió la mirada. Tenía todo: título, sueldo, home office. Y los ojos apagados.
+            </p>
+            <p class="text-lg lg:text-xl text-white/50 font-light leading-relaxed max-w-xl mx-auto mb-12 reveal"
+                style="--d:.4s">
+                Me tomó años entender qué me estaba pasando ese día. DESPEGA es lo que encontré.
             </p>
 
-            <p class="text-xl lg:text-2xl text-gold-light font-medium leading-relaxed mb-12 max-w-3xl mx-auto opacity-0 animate-fade-in-up"
-                style="animation-delay: 0.9s;">
-                Tu viaje comienza aquí. Donde lo complicado se vuelve sencillo, y lo pesado, ligero.
-            </p>
-
-            <!-- Journey Path Visualization -->
-            <div class="journey-path opacity-0 animate-fade-in-up" style="animation-delay: 1.2s;">
-                <div class="journey-marker" style="left: 5%;"></div>
-                <div class="journey-marker" style="left: 20%;"></div>
-                <div class="journey-marker" style="left: 35%;"></div>
-                <div class="journey-marker" style="left: 50%;"></div>
-                <div class="journey-marker" style="left: 65%;"></div>
-                <div class="journey-marker" style="left: 80%;"></div>
-                <div class="journey-marker" style="left: 95%;"></div>
-            </div>
-
-            <!-- CTA Button -->
-            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12">
-                <div class="opacity-0 animate-fade-in-up" style="animation-delay: 1.5s;">
-                    <a href="#metodologia"
-                        class="inline-flex items-center gap-3 liquid-glass px-8 py-4 rounded-full text-white hover:text-gold-light transition-all duration-500 font-semibold text-lg group hover:shadow-xl hover:shadow-gold-light/20 hover:-translate-y-2">
-                        Comenzar mi despegue
-                        <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Introduction Quote -->
-            <div class="mt-16 max-w-4xl mx-auto opacity-0 animate-fade-in-up" style="animation-delay: 1.8s;">
-                <blockquote class="text-lg lg:text-xl text-white/70 italic leading-relaxed">
-                    "¿Alguna vez has sentido que la vida va en piloto automático?
-                    Como cuando repites rutinas, sigues caminos ajenos, o sonríes sin ganas…
-                    <span class="text-gold-light font-medium">DESPEGA es tu copiloto.</span>"
-                </blockquote>
-            </div>
-        </div>
-
-        <!-- Floating Elements -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden">
-            <div class="floating-particle top-1/4 left-1/4" style="animation-delay: 0s;"></div>
-            <div class="floating-particle top-1/3 right-1/4" style="animation-delay: 1s;"></div>
-            <div class="floating-particle bottom-1/4 left-1/3" style="animation-delay: 2s;"></div>
-            <div class="floating-particle top-1/2 right-1/3" style="animation-delay: 1.5s;"></div>
-        </div>
-    </section>
-
-    <!-- What is DESPEGA Section -->
-    <section id="metodologia"
-        class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-deep to-void-medium">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-8">
-                <h2 class="font-playfair text-3xl md:text-5xl lg:text-6xl font-normal leading-tight my-4 text-white">
-                    ¿Qué es <span class="text-gold-light italic">DESPEGA</span>?
-                </h2>
-                <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-4xl mx-auto">
-                    Una brújula ágil para que encuentres tu rumbo, no desde la obligación,
-                    sino desde la curiosidad salvaje que llevas dentro.
-                </p>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Content -->
-                <div class="space-y-8">
-                    <div class="step-card rounded-3xl p-8">
-                        <h3 class="text-2xl font-semibold text-gold-light mb-6">Lo que NO encontrarás aquí:</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3 text-white/70">
-                                <span class="text-red-400">✗</span>
-                                <span>Frases hechas como "Sé tu mejor versión"</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-white/70">
-                                <span class="text-red-400">✗</span>
-                                <span>Listas interminables de "deberías"</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-white/70">
-                                <span class="text-red-400">✗</span>
-                                <span>Promesas de cambios mágicos en 7 días</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step-card rounded-3xl p-8">
-                        <h3 class="text-2xl font-semibold text-gold-light mb-6">Lo que SÍ encontrarás:</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3 text-white/90">
-                                <span class="text-gold-light">✓</span>
-                                <span>Preguntas incómodas que despiertan tu verdad</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-white/90">
-                                <span class="text-gold-light">✓</span>
-                                <span>Rituales inusuales para salir del piloto automático</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-white/90">
-                                <span class="text-gold-light">✓</span>
-                                <span>Mapas flexibles que se adaptan a tus temporadas emocionales</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Content -->
-                <div class="space-y-6">
-                    <div class="step-card rounded-3xl p-8 text-center">
-                        <h3 class="text-2xl font-semibold text-white mb-6">Los Pilares de DESPEGA</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="text-center p-4">
-                                <div
-                                    class="w-16 h-16 bg-gold-light/20 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl">
-                                    🧭</div>
-                                <p class="text-white/80 text-sm font-medium">Kaizen</p>
-                                <p class="text-white/60 text-xs">Mejorar 1% cada día</p>
-                            </div>
-                            <div class="text-center p-4">
-                                <div
-                                    class="w-16 h-16 bg-gold-light/20 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl">
-                                    🎯</div>
-                                <p class="text-white/80 text-sm font-medium">Ikigai</p>
-                                <p class="text-white/60 text-xs">Tu razón de ser</p>
-                            </div>
-                            <div class="text-center p-4">
-                                <div
-                                    class="w-16 h-16 bg-gold-light/20 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl">
-                                    🌸</div>
-                                <p class="text-white/80 text-sm font-medium">Wabi-Sabi</p>
-                                <p class="text-white/60 text-xs">Belleza en lo imperfecto</p>
-                            </div>
-                            <div class="text-center p-4">
-                                <div
-                                    class="w-16 h-16 bg-gold-light/20 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl">
-                                    🧠</div>
-                                <p class="text-white/80 text-sm font-medium">Neuroplasticidad</p>
-                                <p class="text-white/60 text-xs">Tu cerebro puede cambiar</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ritual-box relative">
-                        <h4 class="text-gold-light font-semibold mb-3">RITUAL DE DESPEGUE</h4>
-                        <ol class="space-y-2 text-white/80 text-sm">
-                            <li>1. Aprieta los puños con fuerza. Siente la tensión.</li>
-                            <li>2. Abre las manos lentamente, como liberando lastre.</li>
-                            <li>3. Susurra: "Hoy vuelo ligero. Hoy elijo mi altitud."</li>
-                        </ol>
-                        <p class="text-white/60 text-xs mt-4 italic">
-                            Guarda este gesto en tu memoria: será tu ancla cada vez que dudes.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- The 7 Steps Section -->
-    <section id="pasos" class="min-h-screen py-20 relative z-10 px-4 lg:px-8 bg-void-medium">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-3xl md:text-5xl lg:text-6xl font-normal leading-tight mb-8 text-white">
-                    Los 7 Pasos de <span class="text-gold-light italic">DESPEGA</span>
-                </h2>
-                <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-4xl mx-auto">
-                    Siete escalas en este viaje de autodescubrimiento y acción consciente
-                </p>
-            </div>
-
-            <!-- Progress Tracker -->
-            <div class="mb-12">
-                <div class="step-progress active" id="global-progress"></div>
-            </div>
-
-            <!-- Steps Grid -->
-            <div class="space-y-8">
-                <!-- Step D: Descubre -->
-                <div class="step-card rounded-3xl p-8 lg:p-12 opacity-0" id="step-d">
-                    <div class="grid lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-2 text-center">
-                            <div class="step-letter">D</div>
-                            <div class="w-full h-1 bg-gold-light/30 rounded mt-4"></div>
-                        </div>
-                        <div class="lg:col-span-10 space-y-6">
-                            <div>
-                                <h3 class="text-2xl lg:text-3xl font-bold text-gold-light mb-2">DESCUBRE</h3>
-                                <p class="text-xl text-white/90 font-medium mb-4">Descubre tu realidad sin filtros</p>
-                                <p class="text-white/70 leading-relaxed">
-                                    Este no es otro manual para llenar tu agenda de tareas perfectas. Es un espejo sin
-                                    filtros,
-                                    una invitación a quitarte las máscaras que incluso tú creíste reales.
-                                </p>
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3">🧠 Neuroplasticidad</h4>
-                                    <p class="text-white/70 text-sm">Rediseña rutas neuronales con pequeños cambios
-                                        conscientes</p>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3">🔍 Autoconocimiento</h4>
-                                    <p class="text-white/70 text-sm">Identifica creencias limitantes y patrones
-                                        automáticos</p>
-                                </div>
-                            </div>
-
-                            <div class="ritual-box relative">
-                                <h4 class="text-gold-light font-semibold mb-3">EJERCICIO PRÁCTICO</h4>
-                                <p class="text-white/80 text-sm mb-3">Cierra los ojos y respira hondo. Imagina que tu
-                                    vida es un río:</p>
-                                <ul class="text-white/70 text-sm space-y-1">
-                                    <li>• ¿Fluye tranquilo, está estancado o se desborda?</li>
-                                    <li>• No lo juzgues. Solo obsérvalo.</li>
-                                    <li>• Escribe una palabra que describa esa imagen</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step E: Envía -->
-                <div class="step-card rounded-3xl p-8 lg:p-12 opacity-0" id="step-e1">
-                    <div class="grid lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-2 text-center">
-                            <div class="step-letter">E</div>
-                            <div class="w-full h-1 bg-gold-light/30 rounded mt-4"></div>
-                        </div>
-                        <div class="lg:col-span-10 space-y-6">
-                            <div>
-                                <h3 class="text-2xl lg:text-3xl font-bold text-gold-light mb-2">ENVÍA</h3>
-                                <p class="text-xl text-white/90 font-medium mb-4">Envía calma a tu cuerpo</p>
-                                <p class="text-white/70 leading-relaxed">
-                                    Tu cuerpo no es un enemigo. Es un instrumento que vibra con cada emoción.
-                                    Aprende a tocar este instrumento con delicadeza, respeto y curiosidad.
-                                </p>
-                            </div>
-
-                            <div class="grid md:grid-cols-3 gap-4">
-                                <div class="bg-void-deep/50 rounded-xl p-4 text-center">
-                                    <div class="text-2xl mb-2">🫁</div>
-                                    <h5 class="text-gold-light font-medium text-sm">Respiración</h5>
-                                    <p class="text-white/60 text-xs">4-4-8 para calmar el sistema nervioso</p>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-4 text-center">
-                                    <div class="text-2xl mb-2">🧘</div>
-                                    <h5 class="text-gold-light font-medium text-sm">Mindfulness</h5>
-                                    <p class="text-white/60 text-xs">Presencia sin juicio en el momento</p>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-4 text-center">
-                                    <div class="text-2xl mb-2">💆</div>
-                                    <h5 class="text-gold-light font-medium text-sm">Autocuidado</h5>
-                                    <p class="text-white/60 text-xs">Escucha las señales de tu cuerpo</p>
-                                </div>
-                            </div>
-
-                            <div class="ritual-box relative">
-                                <h4 class="text-gold-light font-semibold mb-3">TÉCNICA S.O.S.</h4>
-                                <div class="grid md:grid-cols-3 gap-4 text-sm">
-                                    <div><strong>S</strong>ilencio: Para todo por 10 segundos</div>
-                                    <div><strong>O</strong>xígeno: 3 respiraciones profundas</div>
-                                    <div><strong>S</strong>implifica: Elige solo la siguiente acción</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step S: Selecciona -->
-                <div class="step-card rounded-3xl p-8 lg:p-12 opacity-0" id="step-s">
-                    <div class="grid lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-2 text-center">
-                            <div class="step-letter">S</div>
-                            <div class="w-full h-1 bg-gold-light/30 rounded mt-4"></div>
-                        </div>
-                        <div class="lg:col-span-10 space-y-6">
-                            <div>
-                                <h3 class="text-2xl lg:text-3xl font-bold text-gold-light mb-2">SELECCIONA</h3>
-                                <p class="text-xl text-white/90 font-medium mb-4">Selecciona tus tesoros</p>
-                                <p class="text-white/70 leading-relaxed">
-                                    Rescata lo que vibra con tu verdad y suelta lo que te encoge el alma disfrazada de
-                                    obligación.
-                                    No se trata de renunciar a todo, sino de elegir conscientemente.
-                                </p>
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-red-400 font-semibold mb-3 flex items-center gap-2">
-                                        <span class="w-3 h-3 bg-red-400 rounded-full"></span>
-                                        Lo que soltar
-                                    </h4>
-                                    <ul class="space-y-2 text-white/70 text-sm">
-                                        <li>• Piedras pintadas de oro ("tengo que ser productivo")</li>
-                                        <li>• Mapas ajenos ("esto es lo que se espera de mí")</li>
-                                        <li>• Herramientas oxidadas ("miedo al qué dirán")</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3 flex items-center gap-2">
-                                        <span class="w-3 h-3 bg-gold-light rounded-full"></span>
-                                        Lo que conservar
-                                    </h4>
-                                    <ul class="space-y-2 text-white/70 text-sm">
-                                        <li>• Conexiones auténticas que te nutren</li>
-                                        <li>• Actividades que te dan energía</li>
-                                        <li>• Valores que realmente resuenan contigo</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="ritual-box relative">
-                                <h4 class="text-gold-light font-semibold mb-3">IKIGAI PERSONAL</h4>
-                                <p class="text-white/80 text-sm mb-3">Encuentra tu punto de encuentro:</p>
-                                <div class="grid grid-cols-2 gap-3 text-xs text-white/70">
-                                    <div>🎯 Lo que amas</div>
-                                    <div>⚡ Lo que haces bien</div>
-                                    <div>🌍 Lo que el mundo necesita</div>
-                                    <div>💰 Por lo que te pueden pagar</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step P: Planifica -->
-                <div class="step-card rounded-3xl p-8 lg:p-12 opacity-0" id="step-p">
-                    <div class="grid lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-2 text-center">
-                            <div class="step-letter">P</div>
-                            <div class="w-full h-1 bg-gold-light/30 rounded mt-4"></div>
-                        </div>
-                        <div class="lg:col-span-10 space-y-6">
-                            <div>
-                                <h3 class="text-2xl lg:text-3xl font-bold text-gold-light mb-2">PLANIFICA</h3>
-                                <p class="text-xl text-white/90 font-medium mb-4">Planifica tu ruta con intención</p>
-                                <p class="text-white/70 leading-relaxed">
-                                    No se trata de dibujar líneas rectas en un mapa. Es aprender a bailar con lo
-                                    impredecible,
-                                    a ajustar las velas cuando el viento cambia y a confiar en que tu brújula interna
-                                    sabe hacia dónde girar.
-                                </p>
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3">🌱 Jardín de Metas</h4>
-                                    <p class="text-white/70 text-sm mb-3">Siembra objetivos que cosechen futuro</p>
-                                    <ul class="text-white/60 text-xs space-y-1">
-                                        <li>• Metas SMART con alma, no solo técnicas</li>
-                                        <li>• Raíces fuertes antes que cosechas rápidas</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3">🎯 Odómetro Personal</h4>
-                                    <p class="text-white/70 text-sm mb-3">Mide tu avance sin castigos</p>
-                                    <ul class="text-white/60 text-xs space-y-1">
-                                        <li>• Registra cada kilómetro emocional</li>
-                                        <li>• Celebra el movimiento, no la perfección</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="ritual-box relative">
-                                <h4 class="text-gold-light font-semibold mb-3">MINIVIAJES (1-3 SEMANAS)</h4>
-                                <p class="text-white/80 text-sm mb-3">Define tramos conscientes y sostenibles:</p>
-                                <div class="grid md:grid-cols-3 gap-3 text-xs text-white/70">
-                                    <div>📋 ¿Qué quiero lograr?</div>
-                                    <div>💫 ¿Cómo quiero sentirme?</div>
-                                    <div>⏰ ¿Cuántos días reales puedo dedicar?</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step E2: Ejecuta -->
-                <div class="step-card rounded-3xl p-8 lg:p-12 opacity-0" id="step-e2">
-                    <div class="grid lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-2 text-center">
-                            <div class="step-letter">E</div>
-                            <div class="w-full h-1 bg-gold-light/30 rounded mt-4"></div>
-                        </div>
-                        <div class="lg:col-span-10 space-y-6">
-                            <div>
-                                <h3 class="text-2xl lg:text-3xl font-bold text-gold-light mb-2">EJECUTA</h3>
-                                <p class="text-xl text-white/90 font-medium mb-4">Ejecuta con foco y ritmo propio</p>
-                                <p class="text-white/70 leading-relaxed">
-                                    No se trata de apurarse, sino de respetar tu cadencia. Encuentra tu ritmo natural
-                                    y construye desde la autenticidad, no desde la presión externa.
-                                </p>
-                            </div>
-
-                            <div class="grid md:grid-cols-3 gap-4">
-                                <div class="bg-void-deep/50 rounded-xl p-4 text-center">
-                                    <div class="text-2xl mb-2">🎵</div>
-                                    <h5 class="text-gold-light font-medium text-sm">Ritmos de Creación</h5>
-                                    <p class="text-white/60 text-xs">Tu cadencia, no tu velocidad</p>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-4 text-center">
-                                    <div class="text-2xl mb-2">📊</div>
-                                    <h5 class="text-gold-light font-medium text-sm">Puntos de Progreso</h5>
-                                    <p class="text-white/60 text-xs">Energía en unidades tangibles</p>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-4 text-center">
-                                    <div class="text-2xl mb-2">🌬️</div>
-                                    <h5 class="text-gold-light font-medium text-sm">Viento a Favor</h5>
-                                    <p class="text-white/60 text-xs">Pivota con humildad, sin culpas</p>
-                                </div>
-                            </div>
-
-                            <div class="ritual-box relative">
-                                <h4 class="text-gold-light font-semibold mb-3">SISTEMA DE PUNTOS PERSONALIZADO</h4>
-                                <div class="text-white/80 text-sm space-y-2">
-                                    <div><strong>1 punto:</strong> Acciones simples (leer, anotar ideas)</div>
-                                    <div><strong>2 puntos:</strong> Acciones con enfoque (crear, diseñar)</div>
-                                    <div><strong>3 puntos:</strong> Resistencia emocional (exponerte, decidir)</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step G: Guarda -->
-                <div class="step-card rounded-3xl p-8 lg:p-12 opacity-0" id="step-g">
-                    <div class="grid lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-2 text-center">
-                            <div class="step-letter">G</div>
-                            <div class="w-full h-1 bg-gold-light/30 rounded mt-4"></div>
-                        </div>
-                        <div class="lg:col-span-10 space-y-6">
-                            <div>
-                                <h3 class="text-2xl lg:text-3xl font-bold text-gold-light mb-2">GUARDA</h3>
-                                <p class="text-xl text-white/90 font-medium mb-4">Guarda aprendizajes con ternura</p>
-                                <p class="text-white/70 leading-relaxed">
-                                    Atesora las lecciones que brotan de cada paso. No acumules culpas ni rencores,
-                                    sino las fortalezas y destellos que descubriste en el camino.
-                                </p>
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3">🪞 Espejo del Corazón</h4>
-                                    <p class="text-white/70 text-sm mb-3">Reflexiona con ternura</p>
-                                    <ul class="text-white/60 text-xs space-y-1">
-                                        <li>• Oasis Interior: mindfulness express</li>
-                                        <li>• Reencuadre Alegre: desafía miedos con gratitud</li>
-                                        <li>• Voz Aliada: diálogo que nutre tu alma</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3">✨ Pequeños Triunfos</h4>
-                                    <p class="text-white/70 text-sm mb-3">Chispas de cambio Gaman</p>
-                                    <ul class="text-white/60 text-xs space-y-1">
-                                        <li>• Pasos de menos de 5 minutos</li>
-                                        <li>• Tocamientos Kaizen diarios</li>
-                                        <li>• Ceremonia de Rendición consciente</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="ritual-box relative">
-                                <h4 class="text-gold-light font-semibold mb-3">HANSEI NOCTURNO</h4>
-                                <p class="text-white/80 text-sm mb-3">Reflexión para cerrar cada día:</p>
-                                <div class="grid md:grid-cols-3 gap-3 text-xs text-white/70">
-                                    <div>🏆 3 avances para celebrar</div>
-                                    <div>🔧 2 ajustes para mañana</div>
-                                    <div>🙏 1 gratitud del día</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step A: Ajusta -->
-                <div class="step-card rounded-3xl p-8 lg:p-12 opacity-0" id="step-a">
-                    <div class="grid lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-2 text-center">
-                            <div class="step-letter">A</div>
-                            <div class="w-full h-1 bg-gold-light/30 rounded mt-4"></div>
-                        </div>
-                        <div class="lg:col-span-10 space-y-6">
-                            <div>
-                                <h3 class="text-2xl lg:text-3xl font-bold text-gold-light mb-2">AJUSTA</h3>
-                                <p class="text-xl text-white/90 font-medium mb-4">Ajusta tu rumbo con sabiduría</p>
-                                <p class="text-white/70 leading-relaxed">
-                                    El verdadero poder no está en la dirección perfecta, sino en la capacidad de
-                                    recalibrar
-                                    tu brújula cuando el camino se vuelve incierto. Cada ajuste te acerca más a tu norte
-                                    auténtico.
-                                </p>
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3">🧘 Portal de Silencio</h4>
-                                    <p class="text-white/70 text-sm mb-3">Postura vital y reconexión</p>
-                                    <ul class="text-white/60 text-xs space-y-1">
-                                        <li>• Ritual del faro: columna erguida, respiración consciente</li>
-                                        <li>• 5 minutos diarios de calibración interna</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-void-deep/50 rounded-xl p-6">
-                                    <h4 class="text-gold-light font-semibold mb-3">⚡ Micro Ajustes</h4>
-                                    <p class="text-white/70 text-sm mb-3">Kaizen y Mottainai energético</p>
-                                    <ul class="text-white/60 text-xs space-y-1">
-                                        <li>• Reset de 3 minutos cuando te desvíes</li>
-                                        <li>• No desperdicies tu energía vital</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="ritual-box relative">
-                                <h4 class="text-gold-light font-semibold mb-3">MÉTODO C.R.E.C.E</h4>
-                                <p class="text-white/80 text-sm mb-3">Tu ritual de reconexión interior:</p>
-                                <div class="space-y-2 text-xs text-white/70">
-                                    <div><strong>C</strong>onciencia: Reconoce lo que sientes sin juicio</div>
-                                    <div><strong>R</strong>espira: Calma tu sistema nervioso</div>
-                                    <div><strong>E</strong>valúa: ¿Qué me enseña esta situación?</div>
-                                    <div><strong>C</strong>omprométete: Decide desde la intención, no el miedo</div>
-                                    <div><strong>E</strong>voluciona: Aprende, ajusta y sigue</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Enhanced Methodology Navigation -->
-    <div class="methodology-nav" id="methodologyNav">
-        <button class="methodology-nav-toggle" id="navToggle" aria-label="Toggle navigation">
-            <span id="navToggleIcon">◀</span>
-        </button>
-        <div class="nav-step active" data-target="step-d">
-            <div class="nav-step-indicator"></div>
-            <span class="nav-step-text">D</span>
-        </div>
-        <div class="nav-step" data-target="step-e1">
-            <div class="nav-step-indicator"></div>
-            <span class="nav-step-text">E</span>
-        </div>
-        <div class="nav-step" data-target="step-s">
-            <div class="nav-step-indicator"></div>
-            <span class="nav-step-text">S</span>
-        </div>
-        <div class="nav-step" data-target="step-p">
-            <div class="nav-step-indicator"></div>
-            <span class="nav-step-text">P</span>
-        </div>
-        <div class="nav-step" data-target="step-e2">
-            <div class="nav-step-indicator"></div>
-            <span class="nav-step-text">E</span>
-        </div>
-        <div class="nav-step" data-target="step-g">
-            <div class="nav-step-indicator"></div>
-            <span class="nav-step-text">G</span>
-        </div>
-        <div class="nav-step" data-target="step-a">
-            <div class="nav-step-indicator"></div>
-            <span class="nav-step-text">A</span>
-        </div>
-    </div>
-
-    <!-- Bitácora Viva Section -->
-    <section id="bitacora"
-        class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-gradient-to-b from-void-medium to-light-birth">
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="bitacora-card rounded-3xl p-8 lg:p-12 space-y-8">
-                <h2 class="font-playfair text-3xl md:text-5xl font-normal leading-tight text-void-deep mb-8">
-                    Tu <span class="text-gold-dark italic">Bitácora Viva</span>
-                </h2>
-
-                <p class="text-lg lg:text-xl text-void-medium leading-relaxed mb-8">
-                    Hay cosas que sentimos, pero no sabemos nombrar. Momentos que vivimos tan rápido que se nos escapan.
-                    La Bitácora Viva es ese espacio íntimo donde todo eso encuentra lugar.
-                </p>
-
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <div class="text-center p-6 bg-white/50 rounded-2xl">
-                        <div class="text-3xl mb-3">📖</div>
-                        <h4 class="font-semibold text-void-deep mb-2">Tu Espejo</h4>
-                        <p class="text-void-medium/70 text-sm">Sin juicio, sin filtros, solo verdad</p>
-                    </div>
-                    <div class="text-center p-6 bg-white/50 rounded-2xl">
-                        <div class="text-3xl mb-3">🛠️</div>
-                        <h4 class="font-semibold text-void-deep mb-2">Herramientas</h4>
-                        <p class="text-void-medium/70 text-sm">Recursos prácticos para cada paso</p>
-                    </div>
-                    <div class="text-center p-6 bg-white/50 rounded-2xl">
-                        <div class="text-3xl mb-3">🌱</div>
-                        <h4 class="font-semibold text-void-deep mb-2">Crecimiento</h4>
-                        <p class="text-void-medium/70 text-sm">Registro de tu evolución personal</p>
-                    </div>
-                </div>
-
-                <div class="bg-gold-dark/10 rounded-2xl p-8 border-l-4 border-gold-dark">
-                    <h3 class="text-xl font-semibold text-gold-dark mb-4">Lo que NO es tu Bitácora:</h3>
-                    <div class="grid md:grid-cols-2 gap-4 text-void-medium/80">
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                                <span class="text-red-500">✗</span>
-                                <span class="text-sm">Un diario común</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-red-500">✗</span>
-                                <span class="text-sm">Una agenda rígida</span>
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                                <span class="text-red-500">✗</span>
-                                <span class="text-sm">Un examen de progreso</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-red-500">✗</span>
-                                <span class="text-sm">Un lugar para juzgarte</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-gold-dark/10 rounded-2xl p-8 border-l-4 border-gold-dark">
-                    <h3 class="text-xl font-semibold text-gold-dark mb-4">Lo que SÍ es tu Bitácora:</h3>
-                    <div class="grid md:grid-cols-2 gap-4 text-void-medium/80">
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                                <span class="text-gold-dark">✓</span>
-                                <span class="text-sm">Tu espacio sagrado</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-gold-dark">✓</span>
-                                <span class="text-sm">Un lugar de honestidad</span>
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-2 text-left">
-                                <span class="text-gold-dark">✓</span>
-                                <span class="text-sm">Tu caja de herramientas emocionales</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-gold-dark">✓</span>
-                                <span class="text-sm">Un mapa de tu crecimiento</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="text-lg text-gold-dark font-medium italic">
-                    "Cuando registras lo que vives, lo haces real. Cuando lo ves en papel, lo puedes transformar."
-                </p>
-            </div>
-
-            <div class="my-4 text-center">
-                <a href="assets/ikigai.pdf" target="_blank"
-                    class="inline-flex items-center gap-3 bg-gradient-to-r from-gold-dark to-gold-light text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl hover:shadow-gold-light/30 transition-all duration-300 transform hover:-translate-y-2">
-                    Quiero empezar mi IKIGAI
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 10v6m0 0l-4-4m4 4l4-4m-6 8h8a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z">
+            <div class="reveal" style="--d:.55s">
+                <a href="#extrano" class="btn-ghost btn-lg group">
+                    Empieza por el principio
+                    <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
                         </path>
                     </svg>
                 </a>
             </div>
         </div>
+
+        <a href="#extrano" class="scroll-cue" aria-label="Bajar">
+            <span class="mono-label">baja conmigo</span>
+            <span class="scroll-cue-dot"></span>
+        </a>
     </section>
 
-    <!-- Call to Action -->
-    <section id="comenzar"
-        class="min-h-screen flex items-center justify-center relative z-10 px-4 lg:px-8 bg-light-birth">
-        <div class="max-w-4xl mx-auto text-center">
-            <div
-                class="bg-white/90 backdrop-blur-lg rounded-3xl p-8 lg:p-12 border border-void-medium/20 shadow-2xl mb-6">
-                <h2 class="font-playfair text-4xl md:text-6xl font-normal leading-tight text-void-deep mb-8">
-                    ¿Listo para <span class="text-gold-dark italic">despegar</span>?
-                </h2>
+    <!-- ════════════════════════════════════════
+         CAP 01 · El extraño de la pantalla
+         ════════════════════════════════════════ -->
+    <section id="extrano" class="chapter" data-chapter="1" data-section="extrano">
+        <div class="chapter-inner max-w-4xl">
+            <p class="coord reveal">
+                <span class="coord-mark">ANTES DE EMPEZAR</span>
+                <span class="coord-line"></span>
+                <span>Hay dos vidas</span>
+            </p>
 
-                <p class="text-xl lg:text-2xl text-void-medium leading-relaxed mb-8">
-                    Ajusta tu cinturón. Tu viaje interior está por comenzar.
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
+                No soy psicólogo.<br>
+                <span class="text-gold-light">Soy ingeniero de software.</span>
+            </h2>
+
+            <p class="text-lg text-white/60 font-light max-w-2xl mb-6 reveal">
+                Llevo casi diez años resolviendo problemas de sistemas, y un día me di cuenta de que el
+                sistema que tenía sin revisar era el mío. Lo que traigo en este libro no salió de un
+                solo lugar: de libros que me cambiaron el piso, de mentores, de negocios que arranqué
+                y de golpes que me llevé en el camino.
+            </p>
+            <p class="text-lg text-white/60 font-light max-w-2xl mb-12 reveal">
+                Al final todo se resumía en una idea: las metodologías ágiles que uso para entregar
+                sistemas sirven igual para algo que no se entrega nunca, que es uno mismo.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-5 mb-12">
+                <article class="friction-card reveal" style="--d:0s">
+                    <span class="mono-label text-gold-light/70">la primera vida</span>
+                    <p class="text-white/70 leading-relaxed mt-3">
+                        La que te dieron. La armaste con lo que te dijeron que había que hacer: estudia,
+                        termina una carrera, consigue un buen trabajo, juega seguro. Si esa vida te llena,
+                        quédate ahí. En serio.
+                    </p>
+                </article>
+                <article class="friction-card reveal" style="--d:.1s">
+                    <span class="mono-label text-gold-light/70">la segunda vida</span>
+                    <p class="text-white/70 leading-relaxed mt-3">
+                        Empieza cuando te das cuenta de que puedes escoger. A partir de ahí cada decisión
+                        que tomas va formando a la persona que quieres ser, y ya no hay vuelta atrás,
+                        porque una vez que lo ves no se puede desver.
+                    </p>
+                </article>
+            </div>
+
+            <p class="text-xl lg:text-2xl text-white/80 font-light italic max-w-2xl mb-6 reveal">
+                Hay una diferencia entre estar feliz y estar cómodo, y de lejos se ven igual.
+                Cómodo es que nada duela.
+            </p>
+            <p class="text-lg text-white/60 font-light max-w-2xl reveal">
+                La prueba es fácil: si te imaginas cinco años más de exactamente esto, ¿qué sientes?
+                Si sientes tranquilidad, en serio, quédate. Si sientes un huequito, ese huequito es el
+                tema de este libro.
+            </p>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 02 · Lo que no es tu culpa
+         ════════════════════════════════════════ -->
+    <section id="culpa" class="chapter chapter-frame" data-chapter="2" data-section="culpa">
+        <div class="chapter-inner max-w-4xl text-center">
+            <p class="coord coord-center reveal">
+                <span class="coord-mark">LO QUE NO ES TU CULPA</span>
+                <span class="coord-line"></span>
+                <span>Y lo que sí</span>
+            </p>
+
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-8 reveal">
+                Probablemente llevas años<br>
+                echándote la culpa de que <span class="constellate-word" data-word="te falta disciplina">te&nbsp;falta&nbsp;disciplina</span>.
+            </h2>
+
+            <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-xl mx-auto mt-6 mb-10 reveal" style="--d:.15s">
+                Fíjate en lo que sí sostienes: aguantas un trabajo que te drena. Cumples con gente que
+                no te devuelve nada. Sostienes proyectos que ya no te emocionan, y encima los sostienes
+                bien. Si de verdad te faltara disciplina, esas cosas también se te caerían.
+            </p>
+
+            <p class="font-display text-2xl md:text-3xl italic text-gold-light leading-snug max-w-xl mx-auto reveal" style="--d:.3s">
+                "No te falta disciplina. La estás gastando toda en sostener cosas que no son tuyas."
+            </p>
+
+            <p class="mono-label text-white/40 mt-6 reveal" style="--d:.4s">
+                por eso llegas sin nada al final del día para lo que sí te importa
+            </p>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 03 · Los 7 pasos
+         ════════════════════════════════════════ -->
+    <section id="pasos" class="chapter" data-chapter="3" data-section="pasos">
+        <div class="chapter-inner max-w-5xl">
+            <p class="coord reveal">
+                <span class="coord-mark">EL MÉTODO</span>
+                <span class="coord-line"></span>
+                <span>Siete letras, un viaje</span>
+            </p>
+
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
+                DESPEGA no es un acrónimo bonito.<br>
+                <span class="text-gold-light">Es el orden en que me pasó a mí.</span>
+            </h2>
+
+            <p class="text-lg text-white/60 font-light max-w-2xl mb-14 reveal">
+                No puedes llegar a ningún lado si no sabes de dónde estás partiendo. Por eso el libro
+                tiene este orden y no otro: primero prendes la luz y ves, luego le bajas al ruido del
+                cuerpo, y hasta el tercer paso, ya en frío, decides qué se queda.
+            </p>
+
+            <!-- D · Descubre -->
+            <article class="cartographer reveal mb-8">
+                <span class="mono-label text-gold-light">paso 01 · d</span>
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+                    Descubre tu realidad
+                </h3>
+                <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
+                    Vas en un barco a media agua y no te acuerdas de cuándo dejaste de llevar el timón.
+                    Este capítulo empieza con algo chiquito: una frase absurda sobre pingüinos que bailan
+                    cumbia los martes. La lees, y algo adentro de tu cabeza la lee en voz alta sin que tú
+                    lo pidas. Si eso pasa con una tontería, imagínate el poder que tienen las frases que
+                    llevas escuchando toda la vida.
                 </p>
+                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
+                    "Lo que tu mente te dice no es una orden."
+                </p>
+                <p class="mono-label text-white/40">4 ejercicios · esa voz, su nombre, sus frases, tu cuerpo en video</p>
+            </article>
 
-                <div class="grid md:grid-cols-3 gap-6 mb-12">
-                    <div class="text-center p-6 bg-gradient-to-b from-gold-light/10 to-gold-dark/5 rounded-2xl">
-                        <div class="text-4xl mb-4">🚀</div>
-                        <h4 class="font-semibold text-void-deep mb-2">Sin atajos</h4>
-                        <p class="text-void-medium/70 text-sm">Pero sí senderos que yo mismo recorrí</p>
-                    </div>
-                    <div class="text-center p-6 bg-gradient-to-b from-gold-light/10 to-gold-dark/5 rounded-2xl">
-                        <div class="text-4xl mb-4">🛤️</div>
-                        <h4 class="font-semibold text-void-deep mb-2">Pasos humanos</h4>
-                        <p class="text-void-medium/70 text-sm">Flexibles, imperfectos. Como tú.</p>
-                    </div>
-                    <div class="text-center p-6 bg-gradient-to-b from-gold-light/10 to-gold-dark/5 rounded-2xl">
-                        <div class="text-4xl mb-4">✨</div>
-                        <h4 class="font-semibold text-void-deep mb-2">Tu altitud</h4>
-                        <p class="text-void-medium/70 text-sm">Tú eliges a qué altura volar</p>
-                    </div>
-                </div>
+            <!-- E · Envía -->
+            <article class="cartographer reveal mb-8" style="--d:.05s">
+                <span class="mono-label text-gold-light">paso 02 · e</span>
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+                    Envía calma a tu cuerpo
+                </h3>
+                <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
+                    Cuando vives en piloto automático, tu sistema nervioso está sobreestimulado, y un
+                    sistema nervioso así no razona: reacciona. Antes de decidir qué sueltas de tu vida,
+                    necesito que quien tome esa decisión seas tú, y no el personaje viejo que se formó
+                    cuando eras chiquito. El presente es el único lugar donde puedes decidir algo.
+                </p>
+                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
+                    "La factura no llega el día que te sobreexiges. Llega después, cuando ya bajaste la guardia."
+                </p>
+                <p class="mono-label text-white/40">2 ejercicios · tu respiración, tu auditoría de energía</p>
+            </article>
 
-                <div class="bg-gradient-to-r from-gold-dark/10 to-gold-light/20 rounded-2xl p-8 mb-8">
-                    <blockquote class="text-xl lg:text-2xl text-gold-dark italic leading-relaxed">
-                        "Este camino no tiene prisa, ni meta final.
-                        Solo tiene pasos reales, humanos, honestos.
-                        Y cada uno te lleva un poco más cerca de ti."
-                    </blockquote>
-                </div>
+            <!-- S · Selecciona -->
+            <article class="cartographer reveal mb-8" style="--d:.1s">
+                <span class="mono-label text-gold-light">paso 03 · s</span>
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+                    Selecciona tus tesoros
+                </h3>
+                <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
+                    Yo solté la escalera corporativa que llevaba años construyendo, y lo que sentí no fue
+                    miedo: fue alivio. Ese alivio es de los indicadores más confiables que conozco. El
+                    criterio es simple: no se trata de lo que cuesta trabajo —el gimnasio cuesta y vale
+                    la pena—, sino de lo que drena de manera constante y no devuelve nada.
+                </p>
+                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
+                    "Si de solo imaginar que lo sueltas te da paz, ya sabes la respuesta."
+                </p>
+                <p class="mono-label text-white/40">4 ejercicios · qué drena, decirlo en voz alta, la despedida, se va o se queda</p>
+            </article>
 
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                    <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20información%20sobre%20la%20metodología%20DESPEGA%20%F0%9F%9A%80"
-                        class="bg-gradient-to-r from-gold-dark to-gold-light text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-gold-light/30 transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
-                        Conseguir la Metodología DESPEGA
-                    </a>
-                    <a href="assets/ikigai.pdf" target="_blank"
-                        class="border-2 border-void-medium text-void-medium px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-void-medium hover:text-white transition-all duration-300 transform hover:-translate-y-2 min-w-64 text-center">
-                        Empezar con mi IKIGAI
-                    </a>
-                </div>
+            <!-- P · Planifica -->
+            <article class="cartographer reveal mb-8" style="--d:.15s">
+                <span class="mono-label text-gold-light">paso 04 · p</span>
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+                    Planifica tu ruta
+                </h3>
+                <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
+                    Con un punto de partida no se traza ninguna ruta: hace falta un destino. Aquí escribes
+                    a tu súper tú, la mejor versión posible de ti, empezando cada frase con "soy" en vez de
+                    "algún día seré". Tu súper tú casi siempre vive del otro lado de tu creencia más vieja
+                    —y por eso arrancar de ahí sí sirve.
+                </p>
+                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
+                    "Tu súper tú vive del otro lado de tu creencia más vieja."
+                </p>
+                <p class="mono-label text-white/40">4 ejercicios · súper tú, la brecha, tu territorio, tu primer miniviaje</p>
+            </article>
 
-                <!-- Final Message -->
-                <div class="mt-12 pt-8 border-t border-gold-dark/20">
-                    <p class="text-void-medium/80 font-medium">
-                        Recuerda: <span class="text-gold-dark">DESPEGA</span> no es otro manual de instrucciones. Es tu
-                        copiloto.
+            <!-- EJ · Ejecuta -->
+            <article class="cartographer reveal mb-8" style="--d:.2s">
+                <span class="mono-label text-gold-light">paso 05 · ej</span>
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+                    Ejecuta con foco
+                </h3>
+                <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
+                    Grababa el mismo audio de WhatsApp veinticinco veces. Nadie del otro lado, nadie
+                    escuchando todavía, y aun así: manos temblando, pecho apretado. El problema nunca fue
+                    el teléfono. Era escucharme a mí mismo y no creerme. Empecé por lo más chiquito que se
+                    me ocurrió: los vecinos.
+                </p>
+                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
+                    "Veinticinco tomas, temblando. Ahí está la prueba de que el problema no era la otra persona."
+                </p>
+                <p class="mono-label text-white/40">2 ejercicios · pesa lo que haces, el pivote</p>
+            </article>
+
+            <!-- G · Guarda -->
+            <article class="cartographer reveal mb-8" style="--d:.25s">
+                <span class="mono-label text-gold-light">paso 06 · g</span>
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+                    Guarda aprendizajes
+                </h3>
+                <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
+                    Diez imágenes de la vida de mis sueños, diez de mis traumas. Cuando por fin conecté
+                    cada sueño con la herida de la que nació, entendí algo que llevaba toda la vida sin
+                    ver: no tendría ese sueño si no hubiera tenido ese trauma. Cuando integras tu sombra
+                    no te vuelves oscuro. Te vuelves completo.
+                </p>
+                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
+                    "Gracias a esos traumas tengo los sueños que tengo hoy."
+                </p>
+                <p class="mono-label text-white/40">2 ejercicios · tu retrospectiva, tu registro mínimo</p>
+            </article>
+
+            <!-- A · Ajusta -->
+            <article class="cartographer reveal" style="--d:.3s">
+                <span class="mono-label text-gold-light">paso 07 · a</span>
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+                    Ajusta a tu rumbo
+                </h3>
+                <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
+                    Guardar y ajustar no son la misma cosa: guardar es entender qué pasó, ajustar es
+                    cambiar por eso. Estás parado en la orilla de un risco, ya decidiste saltar, y aun así
+                    no te mueves. Esa misma sensación la sentí después frente a un teléfono. El jalón no
+                    se quita antes. Se quita después, y solo si saltas.
+                </p>
+                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
+                    "Dejas de buscar la técnica correcta y aceptas lo único que funciona: te vas a aventar con el jalón puesto."
+                </p>
+                <p class="mono-label text-white/40">2 ejercicios · analiza tu sistema, la decisión que traes atorada</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 04 · Método CRECE (bolsillo)
+         ════════════════════════════════════════ -->
+    <section id="crece" class="chapter chapter-frame" data-chapter="4" data-section="crece">
+        <div class="chapter-inner max-w-3xl text-center">
+            <p class="coord coord-center reveal">
+                <span class="coord-mark">DE BOLSILLO</span>
+                <span class="coord-line"></span>
+                <span>El método CRECE</span>
+            </p>
+
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 reveal">
+                DESPEGA es para la vida.<br>
+                <span class="text-gold-light">CRECE es para el momento.</span>
+            </h2>
+
+            <p class="text-lg text-white/60 font-light max-w-2xl mx-auto mb-12 reveal">
+                Semanas o meses, con libreta y tiempo, es DESPEGA. CRECE es cuando algo te agarra
+                desprevenido y necesitas volver al presente antes de decidir. El punto es memorizarlo,
+                porque el día que lo necesitas no vas a poder consultar nada.
+            </p>
+
+            <ol class="levels-track text-left">
+                <li class="level-step reveal" style="--d:0s">
+                    <span class="level-num mono-label">c</span>
+                    <h3 class="font-display text-lg font-bold text-white">Conciencia</h3>
+                    <p class="text-white/55 text-sm">Reconoce lo que sientes sin juzgar.</p>
+                </li>
+                <li class="level-step reveal" style="--d:.08s">
+                    <span class="level-num mono-label">r</span>
+                    <h3 class="font-display text-lg font-bold text-white">Respira</h3>
+                    <p class="text-white/55 text-sm">Pausa. Calma el cuerpo antes de actuar.</p>
+                </li>
+                <li class="level-step reveal" style="--d:.16s">
+                    <span class="level-num mono-label">e</span>
+                    <h3 class="font-display text-lg font-bold text-white">Explora</h3>
+                    <p class="text-white/55 text-sm">¿Qué me enseña esta situación?</p>
+                </li>
+                <li class="level-step reveal" style="--d:.24s">
+                    <span class="level-num mono-label">c</span>
+                    <h3 class="font-display text-lg font-bold text-white">Comprométete</h3>
+                    <p class="text-white/55 text-sm">Elige actuar desde el crecimiento, no el miedo.</p>
+                </li>
+                <li class="level-step level-step-gold reveal" style="--d:.32s">
+                    <span class="level-num mono-label text-gold-light">e</span>
+                    <h3 class="font-display text-lg font-bold text-gold-light">Evoluciona</h3>
+                    <p class="text-white/70 text-sm">Aprende, ajusta y sigue.</p>
+                </li>
+            </ol>
+
+            <p class="mono-label text-white/40 mt-10 reveal">
+                la frase que lo dispara — "esta situación me está pidiendo crecer"
+            </p>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 05 · El cuaderno de trabajo
+         ════════════════════════════════════════ -->
+    <section id="cuaderno" class="chapter" data-chapter="5" data-section="cuaderno">
+        <div class="chapter-inner max-w-4xl text-center">
+            <p class="coord coord-center reveal">
+                <span class="coord-mark">EL LIBRO TRAE TAREA</span>
+                <span class="coord-line"></span>
+                <span>El cuaderno de trabajo</span>
+            </p>
+
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 reveal">
+                20 ejercicios.<br>
+                <span class="text-gold-light">Con espacio para escribirlos.</span>
+            </h2>
+
+            <p class="text-lg text-white/60 font-light max-w-2xl mx-auto mb-4 reveal">
+                Cada hoja corresponde a un ejercicio del libro y lleva su mismo código, para saltar
+                del libro a la hoja sin buscar. No tienes que hacerlos en orden ni todos de una vez.
+                El que te llame hoy es el que te toca.
+            </p>
+            <p class="text-base text-white/45 font-light max-w-2xl mx-auto mb-10 reveal">
+                Los renglones son una sugerencia, no un límite. Si se te acaba el espacio, sigue en tu
+                cuaderno: lo que importa es que salga, no que quepa.
+            </p>
+
+            <p class="mono-label text-gold-light reveal">
+                imprímelo, escríbelo a mano, y quédatelo
+            </p>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 06 · Ikigai (lead magnet)
+         ════════════════════════════════════════ -->
+    <section id="ikigai" class="chapter chapter-frame" data-chapter="6" data-section="ikigai">
+        <div class="chapter-inner max-w-4xl">
+            <p class="coord reveal">
+                <span class="coord-mark">HERRAMIENTA</span>
+                <span class="coord-line"></span>
+                <span>Cómo encontrar tu Ikigai</span>
+            </p>
+
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-2xl reveal">
+                El cruce entre lo que amas,<br>
+                <span class="text-gold-light">lo que se te da y lo que hace falta.</span>
+            </h2>
+
+            <p class="text-lg text-white/60 font-light max-w-2xl mb-10 reveal">
+                Ikigai junta "iki" (vida) y "gai" (valor): tu razón para levantarte cada mañana. No es
+                una respuesta mágica ni una sola frase perfecta. Es el cruce de cuatro pilares —lo que
+                amas, en lo que eres bueno, por lo que te pueden pagar, lo que el mundo necesita— y casi
+                nunca los tienes alineados desde el inicio. Por eso se explora por fases.
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-5 mb-12">
+                <article class="def-card reveal" style="--d:0s">
+                    <span class="def-glyph" aria-hidden="true">◇</span>
+                    <p class="text-white/70 text-sm leading-relaxed">
+                        <strong class="text-white">Lo que amas</strong> — esas actividades donde se te va
+                        el tiempo sin darte cuenta.
                     </p>
-                    <p class="text-void-medium/60 text-sm mt-2 italic">
-                        Una brújula ágil para que encuentres tu rumbo, desde la curiosidad salvaje que llevas dentro.
+                </article>
+                <article class="def-card reveal" style="--d:.06s">
+                    <span class="def-glyph" aria-hidden="true">◇</span>
+                    <p class="text-white/70 text-sm leading-relaxed">
+                        <strong class="text-white">En lo que eres bueno</strong> — lo que haces con
+                        facilidad, aunque tú mismo lo subestimes.
                     </p>
-                </div>
+                </article>
+                <article class="def-card reveal" style="--d:.12s">
+                    <span class="def-glyph" aria-hidden="true">◇</span>
+                    <p class="text-white/70 text-sm leading-relaxed">
+                        <strong class="text-white">Por lo que te pueden pagar</strong> — habilidades o
+                        servicios que hoy o a futuro tienen demanda real.
+                    </p>
+                </article>
+                <article class="def-card reveal" style="--d:.18s">
+                    <span class="def-glyph" aria-hidden="true">◇</span>
+                    <p class="text-white/70 text-sm leading-relaxed">
+                        <strong class="text-white">Lo que el mundo necesita</strong> — problemas cercanos
+                        o causas que de verdad te muevan a actuar.
+                    </p>
+                </article>
+            </div>
+
+            <div class="reciprocity text-center reveal">
+                <p class="mono-label text-gold-light mb-3">descarga gratis</p>
+                <h3 class="font-display text-xl md:text-2xl font-bold text-white mb-4">
+                    Cómo encontrar tu Ikigai
+                </h3>
+                <p class="text-white/60 max-w-xl mx-auto mb-6">
+                    Siete capítulos con espacio para escribir: explora los cuatro pilares, crúzalos, mira
+                    dónde hay fricción, y ponlo todo en una frase que puedas decir en voz alta.
+                </p>
+                <a href="assets/ikigai.pdf" target="_blank" rel="noopener" class="btn-primary btn-lg">
+                    Descargar mi Ikigai
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         CAP 07 · Umbral / CTA final
+         ════════════════════════════════════════ -->
+    <section id="umbral" class="chapter chapter-threshold" data-chapter="7" data-section="umbral">
+        <div class="chapter-inner max-w-3xl text-center">
+            <p class="coord coord-center reveal">
+                <span class="coord-mark">ESTO NO SE ACABA AQUÍ</span>
+                <span class="coord-line"></span>
+                <span>Tu umbral</span>
+            </p>
+
+            <h2 class="font-display text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight mt-10 mb-8 reveal">
+                Si algo de lo que leíste<br>
+                <span class="text-gold-light">te resonó, te dejo la puerta abierta.</span>
+            </h2>
+
+            <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed mb-12 reveal" style="--d:.15s">
+                No te voy a pedir que te unas a nada. Nada más que sepas que del otro lado hay gente
+                haciendo lo mismo que tú, y que eso hace toda la diferencia.
+            </p>
+
+            <div class="reveal" style="--d:.3s">
+                <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20información%20sobre%20la%20metodología%20DESPEGA"
+                    target="_blank" rel="noopener" class="btn-primary btn-lg">
+                    Conseguir DESPEGA
+                </a>
+                <p class="mono-label text-white/40 mt-5">
+                    escrito por Javier Millán · una constelación de La Red de Luz
+                </p>
             </div>
         </div>
     </section>
 
     <!-- JavaScript -->
-    <script src="js/despega.js"></script>
+    <script src="js/network.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

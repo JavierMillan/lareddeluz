@@ -24,7 +24,9 @@ class RedDeLuzSky {
         // Densidad de conexión objetivo por capítulo (la historia).
         // 0 sola · 1 reflejo (otras aparecen, sin unir) · 2 primer vínculo ·
         // 3 constelación · 4 red densa · 5 red + tú al centro
-        this.chapterDensity = [0.0, 0.0, 0.22, 0.5, 0.9, 1.0];
+        // (index.html usa 0–5; páginas más largas como despega.html reusan
+        // el mismo arco y sostienen la densidad máxima en los capítulos extra.)
+        this.chapterDensity = [0.0, 0.0, 0.22, 0.5, 0.9, 1.0, 1.0, 1.0];
 
         this.config = {
             nodeCount: window.innerWidth < 768 ? 40 : 72,
