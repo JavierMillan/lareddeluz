@@ -19,7 +19,7 @@
 .despega-nav__brand img { width: 28px; height: 28px; object-fit: contain; }
 .despega-nav__map { color: rgba(255,255,255,.52); font: .62rem/1 var(--font-mono); text-transform: uppercase; letter-spacing: .17em; transition: color .25s; }
 .despega-nav__map:hover { color: #fff; }
-.despega-nav__cta,.despega-start,.despega-final__cta,.instrument>button { border: 1px solid rgba(212,130,63,.45); background: var(--copper); color: #17100a; }
+.despega-nav__cta,.despega-start,.despega-final__cta { border: 1px solid rgba(212,130,63,.45); background: var(--copper); color: #17100a; }
 .despega-nav__cta { justify-self: end; padding: .75rem 1.2rem; border-radius: 99px; font-size: .78rem; }
 .despega-hero { position: relative; z-index: 1; min-height: 100svh; min-height: 100dvh; display: grid; place-items: center; padding: calc(var(--despega-nav-height) + 4rem) 1.5rem 6rem; text-align: center; isolation: isolate; }
 .despega-hero__copy { position: relative; z-index: 2; width: min(100%,60rem); }
@@ -125,18 +125,18 @@
 /* Dos zonas, no una: la letra ocupa la banda de arriba, el instrumento
    la de abajo. Se tocan por transparencia, nunca por encimarse. */
 .chapter-scene__instrument { position: relative; min-height: 0; height: 100%; max-height: min(58vh,36rem); display: grid; grid-template-rows: minmax(0,auto) min-content; align-content: center; justify-items: center; gap: clamp(.6rem,2vh,1.75rem); isolation: isolate; }
-.letter-instrument { position: relative; width: min(60%,26vh,17rem); min-height: 0; margin-right: -8%; translate: 0 -9%; color: #d4823f; opacity: .55; z-index: -1; overflow: visible; pointer-events: none; }
+.letter-instrument { position: relative; width: min(64%,28vh,18rem); min-height: 0; margin-right: -8%; translate: 0 -9%; color: #d4823f; opacity: .78; z-index: -1; overflow: visible; pointer-events: none; }
 /* La orbita se traza sola cuando entra el capitulo. */
-.letter-instrument__orbit { fill: none; stroke: currentColor; stroke-width: .5; stroke-dasharray: .055 .03; opacity: .3; animation: orbit-draw 1.9s cubic-bezier(.22,1,.36,1) both; }
-@keyframes orbit-draw { from { stroke-dasharray:.001 .999; opacity:0 } 55% { opacity:.3 } to { stroke-dasharray:.055 .03; opacity:.3 } }
+.letter-instrument__orbit { fill: none; stroke: currentColor; stroke-width: .5; stroke-dasharray: .055 .03; opacity: .4; animation: orbit-draw 1.9s cubic-bezier(.22,1,.36,1); }
+@keyframes orbit-draw { from { stroke-dasharray:.001 .999 } to { stroke-dasharray:.055 .03 } }
 
 /* El glifo tiene cuerpo: relleno de metal + contorno encima. */
 .letter-instrument text { font: 176px/1 var(--font-display,"Instrument Serif"),serif; }
-.letter-instrument__fill { stroke: none; opacity: .95; animation: glyph-in 1.4s cubic-bezier(.22,1,.36,1) both; }
-.letter-instrument__edge { fill: none; stroke: currentColor; stroke-width: .85; opacity: .4; animation: glyph-in 1.4s cubic-bezier(.22,1,.36,1) .08s both; }
-@keyframes glyph-in { from { opacity:0; transform:translateY(9px) scale(.985) } to { transform:none } }
+.letter-instrument__fill { stroke: none; opacity: 1; animation: glyph-in 1.4s cubic-bezier(.22,1,.36,1); }
+.letter-instrument__edge { fill: none; stroke: currentColor; stroke-width: 1; opacity: .55; animation: glyph-in 1.4s cubic-bezier(.22,1,.36,1) .08s; }
+@keyframes glyph-in { from { transform:translateY(9px) scale(.985) } to { transform:none } }
 .letter-instrument[data-active="true"] .letter-instrument__fill { animation: glyph-in 1.4s cubic-bezier(.22,1,.36,1) both, glyph-breathe 11s ease-in-out 1.4s infinite; }
-@keyframes glyph-breathe { 0%,100% { opacity:.95 } 50% { opacity:.66 } }
+@keyframes glyph-breathe { 0%,100% { opacity:1 } 50% { opacity:.78 } }
 
 .letter-instrument__mark { fill: #f0ad6c; opacity: .5; animation: mark-pulse 6s ease-in-out infinite; }
 .letter-instrument__mark:nth-of-type(3) { animation-delay: 1.6s }
@@ -147,22 +147,33 @@
 .letter-instrument__sat { fill: #f7d7ae; filter: drop-shadow(0 0 5px rgba(239,172,105,.9)); opacity: .8; }
 
 /* Un instrumento se lee como aparato: fondo propio, borde tenue, aire dentro. */
-.instrument { width: min(100%,29rem); max-height: 100%; overflow: auto; position: relative; z-index: 2; padding: clamp(.85rem,2vh,1.9rem) clamp(1rem,2.6vw,1.9rem); border: 1px solid rgba(212,130,63,.16); border-radius: 2px; background: linear-gradient(180deg,rgba(22,19,32,.82),rgba(13,11,22,.88)); backdrop-filter: blur(6px); box-shadow: 0 24px 60px -30px rgba(0,0,0,.9); }
+/* Sin caja: el instrumento flota en la escena. El recuadro existia para
+   separarlo de la letra cuando se encimaban; ahora viven en bandas
+   distintas y el marco solo cortaba el aire. */
+.instrument { width: min(100%,29rem); max-height: 100%; position: relative; z-index: 2; padding: clamp(.5rem,1.4vh,1rem) 0; }
 
-/* Accion primaria del instrumento: se invita, no se ordena. */
-.instrument>button { justify-self: start; min-height: 46px; padding: .8rem 1.4rem; border: 1px solid rgba(212,130,63,.5); border-radius: 99px; color: #f4eee4; background: rgba(212,130,63,.12); font: 500 .82rem/1.3 system-ui,sans-serif; letter-spacing: .005em; text-transform: none; cursor: pointer; transition: border .25s,color .25s,background .25s,transform .25s; }
-.instrument>button:hover:not(:disabled) { border-color: #e6a668; background: rgba(212,130,63,.24); transform: translateY(-2px); }
-.instrument button { min-height: 44px; padding: .75rem 1rem; border: 1px solid rgba(212,130,63,.28); color: rgba(255,255,255,.78); background: rgba(13,11,22,.55); font: .78rem/1.35 system-ui,sans-serif; letter-spacing: 0; text-transform: none; cursor: pointer; transition: border .25s,color .25s,background .25s,opacity .25s; }
-.instrument button:hover:not(:disabled) { border-color: #d4823f; color: #fff; }
-/* Deshabilitado = tarea cumplida, no boton roto. */
-.instrument button:disabled { cursor: default; opacity: .45; border-color: rgba(212,130,63,.14); background: transparent; }
+/* Mismo metal que los medallones del mapa: bisel arriba, sombra abajo,
+   y el cobre se enciende al tocarlo. Un solo material en toda la pagina. */
+.instrument button { min-height: 46px; padding: .8rem 1.5rem; border: 0; border-radius: 99px; color: rgba(244,238,228,.82);
+  background: radial-gradient(circle at 34% 24%,rgba(255,220,180,.1),transparent 60%), linear-gradient(155deg,#241a24,#15111d 64%,#100d18);
+  box-shadow: inset 0 1px 0 rgba(240,190,140,.18), inset 0 -1px 0 rgba(0,0,0,.6), 0 0 0 1px rgba(212,130,63,.3), 0 4px 14px -8px rgba(0,0,0,.9);
+  font: 500 .84rem/1.3 system-ui,sans-serif; letter-spacing: .005em; cursor: pointer;
+  transition: box-shadow .4s cubic-bezier(.22,1,.36,1), color .35s, transform .4s cubic-bezier(.22,1,.36,1), background .4s; }
+.instrument button:hover { color: #fbe6cd; transform: translateY(-2px);
+  background: radial-gradient(circle at 34% 24%,rgba(255,226,186,.2),transparent 62%), linear-gradient(155deg,#5a331a,#2b1a1a 68%,#171021);
+  box-shadow: inset 0 1px 0 rgba(255,224,180,.34), inset 0 -2px 3px rgba(0,0,0,.5), 0 0 0 1px rgba(230,166,104,.6), 0 0 22px rgba(212,130,63,.26); }
+.instrument button:active { transform: translateY(0); }
 /* ---- Los siete instrumentos --------------------------------------------
    Ninguno arranca con un boton; ninguno termina en gris. */
 
 /* D - la aguja va sola; se aquieta mientras la sostienes. */
 .compass { display: grid; justify-items: center; gap: .9rem; }
-.compass__dial { position: relative; width: min(52vw,24vh,12rem); aspect-ratio: 1; border: 1px solid rgba(212,130,63,.4); border-radius: 50%; background: repeating-conic-gradient(from 0deg,rgba(212,130,63,.2) 0 1deg,transparent 1deg 15deg); cursor: grab; touch-action: none; transition: box-shadow .5s, border-color .5s; }
-.compass[data-held="true"] .compass__dial { cursor: grabbing; border-color: rgba(230,166,104,.8); box-shadow: 0 0 0 4px rgba(212,130,63,.08), 0 0 34px rgba(212,130,63,.26); }
+.compass__dial { position: relative; width: min(52vw,24vh,12rem); aspect-ratio: 1; border: 0; border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg,rgba(212,130,63,.2) 0 1deg,transparent 1deg 15deg), linear-gradient(155deg,#241a24,#15111d 64%,#100d18);
+  box-shadow: inset 0 1px 0 rgba(240,190,140,.16), inset 0 -1px 0 rgba(0,0,0,.6), 0 0 0 1px rgba(212,130,63,.32), 0 6px 20px -10px rgba(0,0,0,.9);
+  cursor: grab; touch-action: none; transition: box-shadow .5s cubic-bezier(.22,1,.36,1); }
+.compass[data-held="true"] .compass__dial { cursor: grabbing;
+  box-shadow: inset 0 1px 0 rgba(255,224,180,.4), inset 0 -2px 3px rgba(0,0,0,.5), 0 0 0 1px rgba(230,166,104,.75), 0 0 0 5px rgba(212,130,63,.1), 0 0 30px rgba(212,130,63,.3); }
 .compass__dial:after { content:""; position:absolute; inset: 12%; border: 1px solid rgba(255,255,255,.12); border-radius:50%; }
 /* sin transition: la aguja la mueve rAF cuadro a cuadro */
 .compass__needle { position:absolute; left:calc(50% - 1px); top:17%; width:2px; height:66%; transform:rotate(var(--bearing)); background:linear-gradient(#efac69 0 50%,rgba(255,255,255,.25) 50%); transform-origin:center; }
@@ -172,7 +183,8 @@
 
 /* E - respira desde que llegas. */
 .breath { display:grid; justify-items:center; gap:1rem; }
-.breath__orb { width:min(52vw,24vh,12rem); aspect-ratio:1; display:grid; place-items:center; border:1px solid rgba(87,119,190,.5); border-radius:50%; }
+.breath__orb { width:min(52vw,24vh,12rem); aspect-ratio:1; display:grid; place-items:center; border:0; border-radius:50%;
+  box-shadow: inset 0 1px 0 rgba(200,214,245,.2), inset 0 -1px 0 rgba(0,0,0,.55), 0 0 0 1px rgba(87,119,190,.45), 0 6px 22px -12px rgba(0,0,0,.9); }
 .breath__orb span { width:62%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,rgba(91,129,211,.38),rgba(60,82,150,.04)); box-shadow:0 0 45px rgba(72,103,184,.25); animation:breathe 7.2s ease-in-out infinite; }
 @keyframes breathe { 0%,100%{transform:scale(.72)} 34%{transform:scale(1)} 66%{transform:scale(1)} }
 .breath__cue { min-height:1.6em; color:#cfd8ef; font-family:var(--font-display,"Instrument Serif"),serif; font-size:1.35rem; letter-spacing:.02em; }
@@ -182,7 +194,8 @@
 .weigh { display:grid; justify-items:center; gap:1.1rem; text-align:center; }
 .weigh__count { color:rgba(255,255,255,.4); font:.72rem var(--font-mono); letter-spacing:.14em; }
 .weigh__item { min-height:3.4em; display:grid; align-items:center; max-width:22ch; color:var(--ink); font-family:var(--font-display,"Instrument Serif"),serif; font-size:clamp(1.1rem,2.1vw,1.45rem); line-height:1.3; }
-.weigh__sides { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; width:min(100%,22rem); }
+.weigh__sides { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; width:min(100%,24rem); }
+.weigh__sides button { padding-inline:.9rem; }
 .weigh__closing { display:grid; gap:.8rem; }
 .weigh__tally { color:#e6a668; font-family:var(--font-display,"Instrument Serif"),serif; font-size:clamp(1.2rem,2.4vw,1.6rem); }
 .weigh__ask { max-width:30ch; margin-inline:auto; color:var(--muted); font-size:.92rem; line-height:1.5; }
@@ -266,7 +279,7 @@
   .chapter-scene blockquote { margin-top:1.2rem; }
   .chapter-scene__instrument { min-height:0; height:auto; max-height:none; }
   .instrument { max-height:none; overflow:visible; }
-  .letter-instrument { width:min(52vw,13rem); margin-right:0; opacity:.45; }
+  .letter-instrument { width:min(56vw,14rem); margin-right:0; opacity:.7; }
   .instrument { width:min(100%,25rem); }
   .weigh-list li button { font-size:.76rem; padding:.66rem .7rem; }
   .weigh-list small { max-width:5.5rem; text-align:right; }
