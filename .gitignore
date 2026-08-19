@@ -3,4 +3,5 @@ dist
 *.local
 *.tsbuildinfo
 .claude/settings.local.json
+.superpowers/
 .DS_Store
