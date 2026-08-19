@@ -59,8 +59,8 @@ export function SkyField({ phase, active }: Props) {
             <motion.path
               key={d}
               d={d}
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
               transition={{ duration: 1.4, delay: index * 0.08 }}
             />
           ))}

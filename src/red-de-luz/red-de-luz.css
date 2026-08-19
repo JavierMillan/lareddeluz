@@ -69,15 +69,15 @@
   filter: blur(110px); transform: translate3d(-10%,-8%,0); transition: opacity 1.6s ease;
 }
 .rdl-sky svg { position: absolute; top: 50%; left: 50%; width: max(100vw,1100px); height: 72vh; overflow: visible; transform: translate(-50%,-50%) scale(1.04); transition: transform 1.8s cubic-bezier(.22,1,.36,1); }
-.rdl-sky__links path { fill: none; stroke: url("#rdl-star"); stroke-width: .7; opacity: 0; transition: opacity 1.2s ease; }
-.rdl-sky__nodes circle { fill: url("#rdl-star"); filter: url("#rdl-glow"); opacity: .08; transform-box: fill-box; transform-origin: center; animation: rdl-breathe 5s ease-in-out infinite; transition: opacity 1.2s ease; }
-.rdl-sky[data-phase="link"] .rdl-sky__nodes circle:nth-child(-n + 2) { opacity: .3; }
-.rdl-sky[data-phase="link"] .rdl-sky__links path:first-child { opacity: .16; }
-.rdl-sky[data-phase="constellation"] .rdl-sky__nodes circle { opacity: .22; }
-.rdl-sky[data-phase="constellation"] .rdl-sky__links path { opacity: .08; }
-.rdl-sky[data-phase="ecosystem"] .rdl-sky__nodes circle { opacity: .15; }
-.rdl-sky[data-phase="ecosystem"] .rdl-sky__links path { opacity: .055; }
-.rdl-sky[data-phase="ecosystem"] .rdl-sky__aurora { opacity: .16; }
+.rdl-sky__links path { fill: none; stroke: url("#rdl-star"); stroke-width: .45; opacity: 0; transition: opacity 1.2s ease; }
+.rdl-sky__nodes circle { fill: url("#rdl-star"); filter: url("#rdl-glow"); opacity: .035; transform-box: fill-box; transform-origin: center; animation: rdl-breathe 5s ease-in-out infinite; transition: opacity 1.2s ease; }
+.rdl-sky[data-phase="link"] .rdl-sky__nodes circle:nth-child(-n + 2) { opacity: .12; }
+.rdl-sky[data-phase="link"] .rdl-sky__links path:first-child { opacity: .055; }
+.rdl-sky[data-phase="constellation"] .rdl-sky__nodes circle { opacity: .1; }
+.rdl-sky[data-phase="constellation"] .rdl-sky__links path { opacity: .032; }
+.rdl-sky[data-phase="ecosystem"] .rdl-sky__nodes circle { opacity: .065; }
+.rdl-sky[data-phase="ecosystem"] .rdl-sky__links path { opacity: .022; }
+.rdl-sky[data-phase="ecosystem"] .rdl-sky__aurora { opacity: .1; }
 .rdl-sky[data-active="false"] * { animation-play-state: paused !important; }
 
 .rdl-coordinate { margin-bottom: 1.25rem; color: var(--rdl-gold); font-size: .64rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
