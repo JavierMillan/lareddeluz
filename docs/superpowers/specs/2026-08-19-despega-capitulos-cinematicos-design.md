@@ -15,15 +15,23 @@ El rediseño también corrige las colisiones móviles señaladas y equilibra el 
 - Teclado, swipe y controles táctiles ejecutan las mismas acciones.
 - Movimiento reducido conserva todo el contenido y sustituye desplazamientos complejos por cambios directos de estado.
 
+## Firma: Mapa de vuelo interior
+
+DESPEGA se presenta como un instrumento futurista de navegación personal. No imita una cabina espacial ni una interfaz de ciencia ficción: combina cartografía, trayectoria y calibración para convertir el significado del método en interacción.
+
+Las letras son simultáneamente índice, transición e instrumento. Al elegir una, el glifo crece desde su posición en la trayectoria y su geometría se transforma en la mecánica del capítulo. Al avanzar, un trazo del instrumento anterior origina la siguiente letra. Esta continuidad espacial es la firma memorable de la experiencia.
+
+La trayectoria se construye capítulo por capítulo. En el umbral final aparece completa y conduce al CTA de DESPEGA.
+
 ## Arquitectura de la experiencia
 
 ### Entrada
 
-El hero conserva su promesa actual y presenta las siete letras como índice. El CTA primario inicia el capítulo D; la compra de DESPEGA permanece disponible en la navegación.
+El hero conserva su promesa actual y presenta las siete letras como coordenadas de una trayectoria. El CTA «Iniciar calibración» activa D; la compra de DESPEGA permanece disponible en la navegación.
 
 ### Visor de capítulos
 
-Al entrar al método, un visor ocupa el viewport disponible debajo de la navegación. Sólo existe un capítulo activo. Cambiar de letra sustituye la escena mediante una transición breve de salida y entrada; ya no hay wrappers de varios cientos de `svh`, contenido sticky ni animaciones sincronizadas continuamente al scroll.
+Al entrar al método, un visor ocupa el viewport disponible debajo de la navegación. Sólo existe un capítulo activo. Cambiar de letra transforma el glifo o un trazo compartido para construir la escena siguiente; ya no hay wrappers de varios cientos de `svh`, contenido sticky ni animaciones sincronizadas continuamente al scroll.
 
 El estado activo se refleja en el hash de la URL (`#d`, `#e`, `#s`, `#p`, `#ej`, `#g`, `#a`). Abrir directamente uno de esos hashes carga el capítulo correspondiente.
 
@@ -39,7 +47,7 @@ El último capítulo conduce al umbral final y su CTA comercial.
 
 ## Lenguaje visual
 
-La interfaz base permanece nocturna. El cobre une todas las escenas; un segundo clima cambia con el significado del capítulo:
+La interfaz base permanece nocturna. El cobre une todas las escenas; un segundo clima cambia con el significado del capítulo. Líneas vectoriales, capas SVG, perspectiva CSS y partículas discretas producen profundidad sin depender de WebGL:
 
 | Capítulo | Clima | Función emocional |
 | --- | --- | --- |
@@ -51,37 +59,37 @@ La interfaz base permanece nocturna. El cobre une todas las escenas; un segundo 
 | G · Guarda | madera y ámbar | integrar herida y aprendizaje |
 | A · Ajusta | cobre amanecer | cruzar una decisión |
 
-No se busca un arcoíris. Los colores secundarios aparecen como luz, profundidad y respuesta interactiva; la tipografía, los controles y los elementos estructurales siguen perteneciendo a DESPEGA.
+No se busca un arcoíris. Los colores secundarios aparecen como luz, profundidad y respuesta interactiva; la tipografía, los controles y los elementos estructurales siguen perteneciendo a DESPEGA. La animación significativa siempre responde a una acción; el ambiente nunca reemplaza a la interacción.
 
 ## Mecánicas por capítulo
 
 ### D · La brújula
 
-Una brújula fuera de eje oscila suavemente. Al entrar, el rumbo se estabiliza y traza una primera línea. La escena representa reconocer el punto de partida.
+La curva de D se convierte en una brújula fuera de eje. Al elegir una dirección, el rumbo se estabiliza y traza el primer segmento de la trayectoria.
 
 ### E · La respiración
 
-Un campo circular guía inhalación y exhalación con texto claro. Activarlo reduce el movimiento y la densidad ambiental de toda la escena. No depende de mantener presionado ni bloquea el avance.
+Los tres trazos de E se expanden y contraen hasta formar un campo de respiración. Activarlo guía una inhalación y una exhalación, y reduce el movimiento y la densidad ambiental. No depende de mantener presionado ni bloquea el avance.
 
 ### S · La balanza
 
-Los ejemplos aparecen en dos planos: «drena» y «cuesta y vale». La interacción cambia inclinación, luminosidad y posición lateral de la balanza; ningún elemento se desplaza verticalmente sobre otro. En móvil se convierte en dos grupos apilados estables.
+La curva de S separa dos planos: «drena» y «cuesta y vale». La interacción cambia inclinación, luminosidad y posición lateral de la balanza; ningún elemento se desplaza verticalmente sobre otro. En móvil se convierte en dos grupos apilados estables.
 
 ### P · La ruta
 
-Las frases del súper tú se revelan como puntos de destino y una línea las conecta. La interacción selecciona una frase y la convierte en el siguiente rumbo visible.
+El tallo de P se prolonga como carta de navegación. Las frases del súper tú se revelan como destinos y la interacción selecciona una para convertirla en el rumbo visible.
 
 ### E · La onda
 
-Una onda de voz reacciona con tensión contenida. El botón «Mandar el audio» resuelve el temblor, limpia la señal y muestra «Mandado. No pasó nada.» como estado real y accesible.
+Los trazos de la segunda E se convierten en una onda de voz con tensión contenida. El botón «Mandar el audio» resuelve el temblor, limpia la señal y muestra «Mandado. No pasó nada.» como estado real y accesible.
 
 ### G · Los hilos
 
-Cada herida se vincula con el sueño que nació de ella. En escritorio los hilos cruzan la composición; en móvil cada pareja conserva una conexión vertical explícita.
+La apertura de G origina los hilos que vinculan cada herida con el sueño que nació de ella. En escritorio los hilos cruzan la composición; en móvil cada pareja conserva una conexión vertical explícita.
 
 ### A · El umbral
 
-Una apertura luminosa divide el escenario. La acción «Cruzar» desplaza el punto más allá del borde y revela la invitación final. También funciona con un toque o tecla; no depende de arrastrar.
+La A se abre físicamente como un umbral. La acción «Cruzar» desplaza el punto más allá del borde, completa la trayectoria DESPEGA y revela la invitación final. También funciona con un toque o tecla; no depende de arrastrar.
 
 ## Composición responsive
 
@@ -122,8 +130,10 @@ En móvil, el bloque secundario permanece debajo de las acciones y conserva sepa
 ## Componentes y responsabilidades
 
 - `Despega.tsx`: entrada, navegación global y montaje del viaje.
-- `ChapterJourney`: estado activo, hash, teclado, swipe y transición entre capítulos.
+- `ChapterJourney`: estado activo, hash, teclado, swipe, trayectoria acumulada y transición entre capítulos.
 - `ChapterScene`: marco semántico y composición compartida.
+- `FlightPath`: índice de letras, progreso y trazo acumulado del viaje.
+- `LetterMorph`: capa SVG compartida que transforma el glifo en instrumento sin contener lógica editorial.
 - Mecánicas independientes por letra: contienen únicamente la interacción específica.
 - Los datos editoriales permanecen en `letters.ts`; se amplían sólo con la información visual necesaria.
 
