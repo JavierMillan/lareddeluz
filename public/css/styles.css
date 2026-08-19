@@ -1,0 +1,611 @@
+/* ════════════════════════════════════════════════
+   LA RED DE LUZ — Sistema de diseño
+   Doctrina: Blueprint/Técnico + Minimalismo premium + acento Déco celeste
+   ════════════════════════════════════════════════ */
+
+:root {
+  --gold: #e4cd85;
+  --gold-dark: #c08a2d;
+  --blue: #163384;
+  --void: #0d0b16;
+  --void-2: #161423;
+  --line: rgba(228, 205, 133, 0.22);
+  --line-soft: rgba(228, 205, 133, 0.12);
+  --grid: rgba(228, 205, 133, 0.04);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(22, 51, 132, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 82% 78%, rgba(228, 205, 133, 0.05) 0%, transparent 50%),
+    var(--void);
+}
+
+::selection {
+  background: rgba(228, 205, 133, 0.25);
+  color: #fff;
+}
+
+/* ─── Keyframes ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50%      { opacity: 1; transform: scale(1.2); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+@keyframes cueDrop {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%      { transform: translateY(8px); opacity: 1; }
+}
+
+/* ─── Canvas constelación ─── */
+.network-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Scroll progress rail ─── */
+.scroll-rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--line-soft);
+  z-index: 60;
+}
+.scroll-rail-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+  box-shadow: 0 0 12px rgba(228, 205, 133, 0.6);
+  transition: width 0.1s linear;
+}
+
+/* ─── Glass surface ─── */
+.liquid-glass {
+  background: rgba(20, 18, 34, 0.55);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  border: 1px solid var(--line-soft);
+}
+
+/* ─── Navegación ─── */
+.nav-link {
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+}
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--gold);
+}
+.nav-link.is-active {
+  color: var(--gold);
+}
+
+/* ─── Botones ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  color: var(--void);
+  font-weight: 600;
+  padding: 0.7rem 1.4rem;
+  border-radius: 0.85rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  touch-action: manipulation;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px rgba(228, 205, 133, 0.45);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  padding: 0.7rem 1.4rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--line);
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+  touch-action: manipulation;
+}
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(228, 205, 133, 0.06);
+}
+.btn-lg {
+  padding: 0.95rem 2rem;
+  font-size: 1.05rem;
+  border-radius: 1rem;
+}
+
+/* ─── Mono label ─── */
+.mono-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+/* ─── Coordenada blueprint ─── */
+.coord {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+.coord-center { justify-content: center; }
+.coord-mark {
+  color: var(--gold);
+  font-weight: 700;
+}
+.coord-line {
+  flex: 0 1 90px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.coord-center .coord-line {
+  flex-basis: 60px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ─── Capítulos del recorrido ─── */
+.chapter {
+  position: relative;
+  z-index: 10;
+  padding: clamp(5.5rem, 14vh, 10rem) 1rem;
+}
+@media (min-width: 1024px) {
+  .chapter { padding-left: 2rem; padding-right: 2rem; }
+}
+.chapter-inner {
+  margin-left: auto;
+  margin-right: auto;
+}
+.chapter-hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+}
+.chapter-threshold {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chapter-frame {
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ─── Demo del vínculo (cap 02) ─── */
+.demo-link {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: 90px;
+  margin: 0 auto;
+}
+.demo-star {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 16px rgba(228, 205, 133, 0.8);
+  transform: translateY(-50%) scale(0);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.demo-star-a { left: 8%; }
+.demo-star-b { right: 8%; }
+.demo-link.is-drawn .demo-star-a { transform: translateY(-50%) scale(1); }
+.demo-link.is-drawn .demo-star-b { transform: translateY(-50%) scale(1); transition-delay: 0.25s; }
+.demo-line {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), rgba(228, 205, 133, 0.4), var(--gold));
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.8s ease-out;
+  transition-delay: 0.55s;
+}
+.demo-link.is-drawn .demo-line { transform: translateY(-50%) scaleX(1); }
+
+/* ─── Scroll cue ─── */
+.scroll-cue {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+.scroll-cue .mono-label { font-size: 0.62rem; }
+.scroll-cue-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: cueDrop 2s ease-in-out infinite;
+}
+
+/* ─── Word constellation (capa B) ─── */
+.constellate-word {
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  background-image: linear-gradient(90deg, var(--gold), rgba(228, 205, 133, 0.4));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 2px;
+  padding-bottom: 0.06em;
+}
+.constellate-word {
+  /* Text fades in as the stars "form" the word. */
+  opacity: 0.35;
+  transition: opacity 0.9s ease-out;
+}
+.constellate-word.lit { opacity: 1; }
+.cw-stars {
+  position: absolute;
+  inset: -0.2em -0.1em;
+  pointer-events: none;
+}
+.cw-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px rgba(228, 205, 133, 0.9);
+  opacity: 0;
+  transform: scale(0.4);
+}
+.constellate-word.lit .cw-star {
+  animation: starForm 0.7s ease-out forwards;
+  animation-delay: var(--sd, 0s);
+}
+@keyframes starForm {
+  0%   { opacity: 0; transform: scale(0.4); }
+  55%  { opacity: 1; transform: scale(1.3); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+/* ─── Friction cards ─── */
+.friction-card {
+  padding: 1.75rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line-soft);
+  background: rgba(20, 18, 34, 0.4);
+  border-left: 2px solid var(--line);
+  transition: border-color 0.4s, transform 0.4s, background 0.4s;
+}
+.friction-card:hover {
+  border-left-color: var(--gold);
+  background: rgba(20, 18, 34, 0.7);
+  transform: translateY(-3px);
+}
+
+/* ─── Reframe ─── */
+.reframe-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  max-width: 46rem;
+  margin: 0 auto;
+  text-align: left;
+}
+.reframe-side {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line-soft);
+}
+.reframe-side p { color: rgba(255, 255, 255, 0.7); margin-top: 0.6rem; line-height: 1.6; }
+.reframe-old { opacity: 0.6; }
+.reframe-new {
+  border-color: var(--line);
+  background: rgba(228, 205, 133, 0.05);
+}
+.reframe-arrow {
+  display: flex;
+  align-items: center;
+  color: var(--gold);
+  font-size: 1.5rem;
+}
+
+/* ─── Definition cards (qué es la red) ─── */
+.def-card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line-soft);
+  background: rgba(20, 18, 34, 0.4);
+  transition: transform 0.4s, border-color 0.4s;
+}
+.def-card:hover { transform: translateY(-4px); border-color: var(--line); }
+.def-card-gold {
+  border-color: var(--line);
+  background: rgba(228, 205, 133, 0.06);
+}
+.def-glyph {
+  font-size: 1.6rem;
+  color: rgba(255, 255, 255, 0.55);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+/* ─── Pillar legend ─── */
+.pillar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 1.5rem;
+}
+.pillar-legend li { display: flex; align-items: center; gap: 0.5rem; }
+.pillar-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(228, 205, 133, 0.6);
+}
+
+/* ─── Constellation cards ─── */
+.constellation-card {
+  display: block;
+  position: relative;
+  padding: 1.6rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line-soft);
+  background: rgba(20, 18, 34, 0.45);
+  overflow: hidden;
+  transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+}
+.constellation-card:hover,
+.constellation-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--line);
+  box-shadow: 0 16px 40px -16px rgba(228, 205, 133, 0.25);
+}
+.constellation-card.is-lit {
+  border-color: var(--gold);
+}
+.constellation-mini {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, var(--gold) 50%, transparent),
+    radial-gradient(1.5px 1.5px at 70% 25%, var(--gold) 50%, transparent),
+    radial-gradient(1.5px 1.5px at 50% 65%, var(--gold) 50%, transparent),
+    radial-gradient(1px 1px at 85% 70%, var(--gold) 50%, transparent);
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.constellation-card:hover .constellation-mini,
+.constellation-card.is-lit .constellation-mini { opacity: 0.5; }
+.constellation-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+}
+.status-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+.status-active { background: rgba(228, 205, 133, 0.18); color: var(--gold); }
+.status-soon { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.5); }
+.constellation-card-soon { opacity: 0.8; }
+.constellation-card-new {
+  border-style: dashed;
+  border-color: var(--line);
+  background: transparent;
+}
+.constellation-card > * { position: relative; }
+.card-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  font-weight: 500;
+  transition: color 0.3s, gap 0.3s;
+}
+.card-link:hover { color: #fff; }
+.card-link-muted { color: rgba(255, 255, 255, 0.45); }
+.card-link-muted:hover { color: var(--gold); }
+
+/* ─── Niveles ─── */
+.levels-track {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
+  counter-reset: lvl;
+  position: relative;
+}
+.level-step {
+  padding: 1.4rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line-soft);
+  background: rgba(20, 18, 34, 0.4);
+  border-top: 2px solid var(--line);
+  transition: transform 0.4s, border-color 0.4s;
+}
+.level-step:hover { transform: translateY(-4px); border-top-color: var(--gold); }
+.level-step h3 { margin: 0.6rem 0 0.4rem; }
+.level-step-gold {
+  border-color: var(--line);
+  border-top-color: var(--gold);
+  background: rgba(228, 205, 133, 0.06);
+}
+.level-num { color: rgba(255, 255, 255, 0.4); }
+
+/* ─── Niveles apilados (variante: una sola columna, fila horizontal) ─── */
+.levels-track-stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.level-step-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  border-top: none;
+  border-left: 2px solid var(--line);
+}
+.level-step-row:hover { transform: translateY(-2px); border-left-color: var(--gold); border-top-color: var(--line-soft); }
+.level-step-row.level-step-gold { border-left-color: var(--gold); }
+.level-step-row .level-num { flex: 0 0 auto; min-width: 1.2em; }
+.level-step-row h3 { margin: 0 0 0.3rem; }
+
+/* ─── Reciprocidad ─── */
+.reciprocity {
+  margin-top: 4rem;
+  padding: 2.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    rgba(228, 205, 133, 0.04);
+  background-size: 32px 32px, 32px 32px, auto;
+}
+
+/* ─── Cartógrafo ─── */
+.cartographer {
+  padding: 2.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--line-soft);
+  background: rgba(20, 18, 34, 0.5);
+  border-left: 3px solid var(--gold);
+}
+
+/* ─── Manifiesto ─── */
+.manifesto {
+  margin-top: 5rem;
+  padding: 2.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--line-soft);
+  text-align: left;
+}
+.creed {
+  margin-top: 1.75rem;
+}
+.creed p {
+  font-family: 'Spectral', serif;
+  font-size: clamp(1.25rem, 3.2vw, 1.6rem);
+  line-height: 1.45;
+  color: rgba(246, 239, 220, 0.5);
+  margin: 0 0 1.1rem;
+}
+.creed p:last-child {
+  margin-bottom: 0;
+}
+.creed strong {
+  color: #f6efdc;
+  font-weight: 600;
+}
+.creed em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* ─── Reveal animation ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition-delay: var(--d, 0s);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .reframe-grid {
+    grid-template-columns: 1fr;
+  }
+  .reframe-arrow {
+    transform: rotate(90deg);
+    justify-content: center;
+  }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .scroll-cue-dot { animation: none; }
+}
+
+/* ─── Focus visibility ─── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}

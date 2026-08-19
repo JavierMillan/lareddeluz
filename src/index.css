@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --void: #0d0b16;
+    --gold: #e4cd85;
+    --copper: #d4823f;
+    --copper-light: #e6a668;
+    --copper-dark: #a35f26;
+    --line: rgba(212, 130, 63, 0.2);
+    --line-soft: rgba(212, 130, 63, 0.09);
+    --glow: rgba(212, 130, 63, 0.45);
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--void);
+    color: #fff;
+    font-family: "Inter", system-ui, sans-serif;
+    overflow-x: clip;
+  }
+
+  ::selection { background: rgba(212, 130, 63, 0.28); }
+
+  :focus-visible {
+    outline: 2px solid var(--copper-light);
+    outline-offset: 4px;
+    border-radius: 3px;
+  }
+
+  /* Los titulares nunca van en itálica — ver guardrail del brand profile */
+  h1, h2, h3, h4 { font-style: normal; margin: 0; }
+  p, ul, ol, figure { margin: 0; }
+  ul, ol { list-style: none; padding: 0; }
+  a { text-decoration: none; color: inherit; }
+  img { display: block; max-width: 100%; }
+}
+
+@layer utilities {
+  /* Suma la luz en vez de taparla — el truco que hace que los
+     resplandores se sientan reales y no como manchas apiladas. */
+  .blend-add { mix-blend-mode: plus-lighter; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
