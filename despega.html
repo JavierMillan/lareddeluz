@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="DESPEGA — metodología ágil para soltar la vida que no es tuya. 7 pasos, 20 ejercicios, escritos por Javier Millán desde su propio proceso. Parte de La Red de Luz.">
+        content="DESPEGA — metodología ágil para soltar la vida que no es tuya. 7 pasos, 20 ejercicios, escritos por Javier Millán desde su propio proceso. Una constelación de La Red de Luz.">
     <title>DESPEGA — La Red de Luz</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/despega-constelacion.css">
     <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
     <link
-        href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
     <script>
         tailwind.config = {
@@ -21,14 +22,14 @@
                 extend: {
                     colors: {
                         'gold-light': '#e4cd85',
-                        'gold-dark': '#c08a2d',
-                        'deep-blue': '#163384',
+                        'copper': '#d4823f',
+                        'copper-light': '#e6a668',
+                        'copper-dark': '#a35f26',
                         'void-deep': '#0d0b16',
                         'void-medium': '#161423',
-                        'light-birth': '#f9f4e3',
                     },
                     fontFamily: {
-                        'display': ['Spectral', 'serif'],
+                        'despega-display': ['Instrument Serif', 'serif'],
                         'inter': ['Inter', 'sans-serif'],
                         'mono': ['JetBrains Mono', 'monospace'],
                     },
@@ -38,14 +39,20 @@
     </script>
 </head>
 
-<body class="bg-void-deep text-white overflow-x-hidden font-inter antialiased">
-    <!-- Living constellation -->
-    <canvas class="network-canvas" id="networkCanvas" aria-hidden="true"></canvas>
+<body class="despega-body bg-void-deep text-white overflow-x-hidden font-inter antialiased">
+    <!-- La espiral ascendente — motivo propio de DESPEGA, no la red de index.html -->
+    <canvas class="spiral-canvas" id="spiralCanvas" aria-hidden="true"></canvas>
 
-    <!-- Scroll progress rail -->
-    <div class="scroll-rail" aria-hidden="true">
-        <span class="scroll-rail-fill" id="scrollRailFill"></span>
-    </div>
+    <!-- Rail de progreso de los 7 pasos D-E-S-P-E-G-A -->
+    <nav class="progress-rail" aria-label="Progreso de los 7 pasos de DESPEGA" id="progressRail">
+        <a href="#paso-d" class="progress-step" data-step="d"><span class="progress-step-label">Descubre</span></a>
+        <a href="#paso-e1" class="progress-step" data-step="e1"><span class="progress-step-label">Envía</span></a>
+        <a href="#paso-s" class="progress-step" data-step="s"><span class="progress-step-label">Selecciona</span></a>
+        <a href="#paso-p" class="progress-step" data-step="p"><span class="progress-step-label">Planifica</span></a>
+        <a href="#paso-ej" class="progress-step" data-step="ej"><span class="progress-step-label">Ejecuta</span></a>
+        <a href="#paso-g" class="progress-step" data-step="g"><span class="progress-step-label">Guarda</span></a>
+        <a href="#paso-a" class="progress-step" data-step="a"><span class="progress-step-label">Ajusta</span></a>
+    </nav>
 
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-3">
@@ -62,14 +69,14 @@
                     <a href="index.html" class="nav-link">Inicio</a>
                     <a href="index.html#constelacion" class="nav-link">Constelaciones</a>
                     <a href="historia.html" class="nav-link">Historia</a>
-                    <a href="#pasos" class="nav-link" data-nav="pasos">Los 7 pasos</a>
+                    <a href="#pasos" class="nav-link">Los 7 pasos</a>
                     <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20información%20sobre%20DESPEGA"
-                        target="_blank" rel="noopener" class="btn-primary">
+                        target="_blank" rel="noopener" class="btn-despega">
                         Conseguir DESPEGA
                     </a>
                 </div>
 
-                <button class="lg:hidden text-white/80 hover:text-gold-light transition-colors p-2 -mr-2"
+                <button class="lg:hidden text-white/80 hover:text-copper-light transition-colors p-2 -mr-2"
                     id="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
@@ -86,39 +93,41 @@
                 <a href="historia.html" class="block nav-link">Historia</a>
                 <a href="#pasos" class="block nav-link">Los 7 pasos</a>
                 <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20información%20sobre%20DESPEGA"
-                    target="_blank" rel="noopener" class="block btn-primary text-center">Conseguir DESPEGA</a>
+                    target="_blank" rel="noopener" class="block btn-despega text-center">Conseguir DESPEGA</a>
             </div>
         </div>
     </nav>
 
     <!-- ════════════════════════════════════════
-         CAP 00 · Hero
+         MAPEA · Hero
          ════════════════════════════════════════ -->
     <section id="inicio" class="chapter chapter-hero" data-chapter="0" data-section="inicio">
         <div class="chapter-inner text-center max-w-4xl">
-            <p class="coord coord-center reveal" style="--d:0s">
-                <span class="coord-mark">DESPEGA</span>
-                <span class="coord-line"></span>
-                <span>Metodología ágil</span>
+            <p class="method-coord method-coord-center reveal" style="--d:0s">
+                <span class="method-coord-mark">MAPEA</span>
+                <span class="method-coord-line"></span>
+                <span>tu punto de partida</span>
             </p>
 
-            <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mt-8 mb-8 reveal"
+            <h1 class="font-despega-display italic text-4xl md:text-6xl lg:text-7xl font-normal leading-[1.05] tracking-tight mt-8 mb-8 reveal"
                 style="--d:.15s">
-                Suelta la vida<br>que no es tuya.
+                Suelta la vida<br><span class="copper-underline">que no es tuya.</span>
             </h1>
 
             <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-xl mx-auto mb-4 reveal"
                 style="--d:.3s">
-                Un día me quedé viendo una pantalla apagada, esperando a que cargara, y no reconocí
-                al que me devolvió la mirada. Tenía todo: título, sueldo, home office. Y los ojos apagados.
+                Hace unos años me senté a trabajar como todos los días. Café en la mano, la laptop
+                apenas encendiendo. Y mientras esperaba a que cargara me quedé viendo la pantalla,
+                todavía negra, y ahí estaba yo, reflejado. No reconocí al que me devolvió la mirada.
             </p>
-            <p class="text-lg lg:text-xl text-white/50 font-light leading-relaxed max-w-xl mx-auto mb-12 reveal"
-                style="--d:.4s">
-                Me tomó años entender qué me estaba pasando ese día. DESPEGA es lo que encontré.
+
+            <p class="threshold-question max-w-xl mx-auto mb-12 reveal" style="--d:.4s">
+                ¿Cuándo fue la última vez que te viste reflejado en algo —una ventana, una pantalla
+                apagada, un vidrio— y por un segundo no supiste bien quién te veía de vuelta?
             </p>
 
             <div class="reveal" style="--d:.55s">
-                <a href="#extrano" class="btn-ghost btn-lg group">
+                <a href="#extrano" class="btn-despega-ghost btn-despega-lg group">
                     Empieza por el principio
                     <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -130,25 +139,25 @@
         </div>
 
         <a href="#extrano" class="scroll-cue" aria-label="Bajar">
-            <span class="mono-label">baja conmigo</span>
-            <span class="scroll-cue-dot"></span>
+            <span class="despega-mono">baja conmigo</span>
+            <span class="scroll-cue-dot" style="background:var(--copper)"></span>
         </a>
     </section>
 
     <!-- ════════════════════════════════════════
-         CAP 01 · El extraño de la pantalla
+         MAPEA · El extraño de la pantalla
          ════════════════════════════════════════ -->
     <section id="extrano" class="chapter" data-chapter="1" data-section="extrano">
         <div class="chapter-inner max-w-4xl">
-            <p class="coord reveal">
-                <span class="coord-mark">ANTES DE EMPEZAR</span>
-                <span class="coord-line"></span>
-                <span>Hay dos vidas</span>
+            <p class="method-coord reveal">
+                <span class="method-coord-mark">MAPEA</span>
+                <span class="method-coord-line"></span>
+                <span>hay dos vidas</span>
             </p>
 
-            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
+            <h2 class="font-despega-display italic text-3xl md:text-5xl font-normal leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
                 No soy psicólogo.<br>
-                <span class="text-gold-light">Soy ingeniero de software.</span>
+                <span class="copper-underline">Soy ingeniero de software.</span>
             </h2>
 
             <p class="text-lg text-white/60 font-light max-w-2xl mb-6 reveal">
@@ -163,16 +172,16 @@
             </p>
 
             <div class="grid md:grid-cols-2 gap-5 mb-12">
-                <article class="friction-card reveal" style="--d:0s">
-                    <span class="mono-label text-gold-light/70">la primera vida</span>
+                <article class="step-file reveal" style="--d:0s">
+                    <span class="despega-mono text-copper-light/70">la primera vida</span>
                     <p class="text-white/70 leading-relaxed mt-3">
                         La que te dieron. La armaste con lo que te dijeron que había que hacer: estudia,
                         termina una carrera, consigue un buen trabajo, juega seguro. Si esa vida te llena,
                         quédate ahí. En serio.
                     </p>
                 </article>
-                <article class="friction-card reveal" style="--d:.1s">
-                    <span class="mono-label text-gold-light/70">la segunda vida</span>
+                <article class="step-file reveal" style="--d:.1s">
+                    <span class="despega-mono text-copper-light/70">la segunda vida</span>
                     <p class="text-white/70 leading-relaxed mt-3">
                         Empieza cuando te das cuenta de que puedes escoger. A partir de ahí cada decisión
                         que tomas va formando a la persona que quieres ser, y ya no hay vuelta atrás,
@@ -181,64 +190,64 @@
                 </article>
             </div>
 
-            <p class="text-xl lg:text-2xl text-white/80 font-light italic max-w-2xl mb-6 reveal">
-                Hay una diferencia entre estar feliz y estar cómodo, y de lejos se ven igual.
-                Cómodo es que nada duela.
+            <p class="mirror-quote text-xl lg:text-2xl leading-snug max-w-2xl mb-6 reveal">
+                "Tenía título de ingeniero, trabajo estable, buen sueldo, el respeto de mis colegas, la
+                libertad de trabajar desde mi casa. Y no me reconocía en una pantalla apagada."
             </p>
-            <p class="text-lg text-white/60 font-light max-w-2xl reveal">
-                La prueba es fácil: si te imaginas cinco años más de exactamente esto, ¿qué sientes?
-                Si sientes tranquilidad, en serio, quédate. Si sientes un huequito, ese huequito es el
-                tema de este libro.
+
+            <p class="threshold-question max-w-2xl reveal">
+                ¿Qué parte de tu lista ya tachaste, y aun así no cambió nada por dentro?
             </p>
         </div>
     </section>
 
     <!-- ════════════════════════════════════════
-         CAP 02 · Lo que no es tu culpa
+         SUELTA · Lo que no es tu culpa
          ════════════════════════════════════════ -->
     <section id="culpa" class="chapter chapter-frame" data-chapter="2" data-section="culpa">
         <div class="chapter-inner max-w-4xl text-center">
-            <p class="coord coord-center reveal">
-                <span class="coord-mark">LO QUE NO ES TU CULPA</span>
-                <span class="coord-line"></span>
-                <span>Y lo que sí</span>
+            <p class="method-coord method-coord-center reveal">
+                <span class="method-coord-mark">SUELTA</span>
+                <span class="method-coord-line"></span>
+                <span>lo que ya no te suma</span>
             </p>
 
-            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-8 reveal">
+            <h2 class="font-despega-display italic text-3xl md:text-5xl font-normal leading-tight tracking-tight mt-8 mb-8 reveal">
                 Probablemente llevas años<br>
-                echándote la culpa de que <span class="constellate-word" data-word="te falta disciplina">te&nbsp;falta&nbsp;disciplina</span>.
+                echándote la culpa de que <span class="copper-underline">te falta disciplina</span>.
             </h2>
 
             <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed max-w-xl mx-auto mt-6 mb-10 reveal" style="--d:.15s">
-                Fíjate en lo que sí sostienes: aguantas un trabajo que te drena. Cumples con gente que
-                no te devuelve nada. Sostienes proyectos que ya no te emocionan, y encima los sostienes
-                bien. Si de verdad te faltara disciplina, esas cosas también se te caerían.
+                Yo llevaba años en lo mismo. Pero mírame bien: aguantaba un trabajo que me drenaba,
+                cumplía con gente que no me devolvía nada, sostenía proyectos que ya no me emocionaban
+                —y los sostenía bien. Si de verdad me faltara disciplina, esas cosas también se me
+                habrían caído.
             </p>
 
-            <p class="font-display text-2xl md:text-3xl italic text-gold-light leading-snug max-w-xl mx-auto reveal" style="--d:.3s">
+            <p class="mirror-quote text-2xl md:text-3xl leading-snug max-w-xl mx-auto mb-6 reveal" style="--d:.3s">
                 "No te falta disciplina. La estás gastando toda en sostener cosas que no son tuyas."
             </p>
 
-            <p class="mono-label text-white/40 mt-6 reveal" style="--d:.4s">
-                por eso llegas sin nada al final del día para lo que sí te importa
+            <p class="threshold-question max-w-xl mx-auto text-left reveal" style="--d:.4s">
+                ¿Qué es lo que tú sí sostienes, sin que nadie te lo pida, aunque ya no te dé nada a cambio?
             </p>
         </div>
     </section>
 
     <!-- ════════════════════════════════════════
-         CAP 03 · Los 7 pasos
+         Los 7 pasos
          ════════════════════════════════════════ -->
     <section id="pasos" class="chapter" data-chapter="3" data-section="pasos">
         <div class="chapter-inner max-w-5xl">
-            <p class="coord reveal">
-                <span class="coord-mark">EL MÉTODO</span>
-                <span class="coord-line"></span>
-                <span>Siete letras, un viaje</span>
+            <p class="method-coord reveal">
+                <span class="method-coord-mark">EL MÉTODO</span>
+                <span class="method-coord-line"></span>
+                <span>siete pasos, un viaje ascendente</span>
             </p>
 
-            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
+            <h2 class="font-despega-display italic text-3xl md:text-5xl font-normal leading-tight tracking-tight mt-8 mb-6 max-w-3xl reveal">
                 DESPEGA no es un acrónimo bonito.<br>
-                <span class="text-gold-light">Es el orden en que me pasó a mí.</span>
+                <span class="copper-underline">Es el orden en que me pasó a mí.</span>
             </h2>
 
             <p class="text-lg text-white/60 font-light max-w-2xl mb-14 reveal">
@@ -248,148 +257,151 @@
             </p>
 
             <!-- D · Descubre -->
-            <article class="cartographer reveal mb-8">
-                <span class="mono-label text-gold-light">paso 01 · d</span>
-                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+            <article id="paso-d" class="step-file reveal mb-8">
+                <div class="step-file-head">
+                    <span class="step-file-code">paso 01 · d · clarifica</span>
+                    <span class="step-file-count">4 ejercicios</span>
+                </div>
+                <h3 class="font-despega-display italic text-2xl md:text-3xl font-normal text-white mb-4 leading-tight">
                     Descubre tu realidad
                 </h3>
                 <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
                     Vas en un barco a media agua y no te acuerdas de cuándo dejaste de llevar el timón.
-                    Este capítulo empieza con algo chiquito: una frase absurda sobre pingüinos que bailan
+                    Este paso empieza con algo chiquito: una frase absurda sobre pingüinos que bailan
                     cumbia los martes. La lees, y algo adentro de tu cabeza la lee en voz alta sin que tú
                     lo pidas. Si eso pasa con una tontería, imagínate el poder que tienen las frases que
                     llevas escuchando toda la vida.
                 </p>
-                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
-                    "Lo que tu mente te dice no es una orden."
-                </p>
-                <p class="mono-label text-white/40">4 ejercicios · esa voz, su nombre, sus frases, tu cuerpo en video</p>
+                <p class="mirror-quote text-xl max-w-2xl mb-4">"Lo que tu mente te dice no es una orden."</p>
+                <p class="threshold-question text-base max-w-2xl">¿Qué frase te llevas repitiendo tanto que ya ni la escuchas?</p>
             </article>
 
             <!-- E · Envía -->
-            <article class="cartographer reveal mb-8" style="--d:.05s">
-                <span class="mono-label text-gold-light">paso 02 · e</span>
-                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+            <article id="paso-e1" class="step-file reveal mb-8" style="--d:.05s">
+                <div class="step-file-head">
+                    <span class="step-file-code">paso 02 · e · itera</span>
+                    <span class="step-file-count">2 ejercicios</span>
+                </div>
+                <h3 class="font-despega-display italic text-2xl md:text-3xl font-normal text-white mb-4 leading-tight">
                     Envía calma a tu cuerpo
                 </h3>
                 <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
                     Cuando vives en piloto automático, tu sistema nervioso está sobreestimulado, y un
                     sistema nervioso así no razona: reacciona. Antes de decidir qué sueltas de tu vida,
                     necesito que quien tome esa decisión seas tú, y no el personaje viejo que se formó
-                    cuando eras chiquito. El presente es el único lugar donde puedes decidir algo.
+                    cuando eras chiquito.
                 </p>
-                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
-                    "La factura no llega el día que te sobreexiges. Llega después, cuando ya bajaste la guardia."
-                </p>
-                <p class="mono-label text-white/40">2 ejercicios · tu respiración, tu auditoría de energía</p>
+                <p class="mirror-quote text-xl max-w-2xl mb-4">"La factura no llega el día que te sobreexiges. Llega después, cuando ya bajaste la guardia."</p>
+                <p class="threshold-question text-base max-w-2xl">¿Cuándo fue la última vez que tu cuerpo se rindió, aunque tú por fuera seguías funcionando normal?</p>
             </article>
 
             <!-- S · Selecciona -->
-            <article class="cartographer reveal mb-8" style="--d:.1s">
-                <span class="mono-label text-gold-light">paso 03 · s</span>
-                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+            <article id="paso-s" class="step-file reveal mb-8" style="--d:.1s">
+                <div class="step-file-head">
+                    <span class="step-file-code">paso 03 · s · suelta</span>
+                    <span class="step-file-count">4 ejercicios</span>
+                </div>
+                <h3 class="font-despega-display italic text-2xl md:text-3xl font-normal text-white mb-4 leading-tight">
                     Selecciona tus tesoros
                 </h3>
                 <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
                     Yo solté la escalera corporativa que llevaba años construyendo, y lo que sentí no fue
                     miedo: fue alivio. Ese alivio es de los indicadores más confiables que conozco. El
-                    criterio es simple: no se trata de lo que cuesta trabajo —el gimnasio cuesta y vale
-                    la pena—, sino de lo que drena de manera constante y no devuelve nada.
+                    criterio es simple: no se trata de lo que cuesta trabajo, sino de lo que drena de
+                    manera constante y no devuelve nada.
                 </p>
-                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
-                    "Si de solo imaginar que lo sueltas te da paz, ya sabes la respuesta."
-                </p>
-                <p class="mono-label text-white/40">4 ejercicios · qué drena, decirlo en voz alta, la despedida, se va o se queda</p>
+                <p class="mirror-quote text-xl max-w-2xl mb-4">"Si de solo imaginar que lo sueltas te da paz, ya sabes la respuesta."</p>
+                <p class="threshold-question text-base max-w-2xl">Si imaginas soltar eso que ya sabes que te está costando de más, ¿qué es lo primero que sientes: miedo, o alivio?</p>
             </article>
 
             <!-- P · Planifica -->
-            <article class="cartographer reveal mb-8" style="--d:.15s">
-                <span class="mono-label text-gold-light">paso 04 · p</span>
-                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+            <article id="paso-p" class="step-file reveal mb-8" style="--d:.15s">
+                <div class="step-file-head">
+                    <span class="step-file-code">paso 04 · p · diseña</span>
+                    <span class="step-file-count">4 ejercicios</span>
+                </div>
+                <h3 class="font-despega-display italic text-2xl md:text-3xl font-normal text-white mb-4 leading-tight">
                     Planifica tu ruta
                 </h3>
                 <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
                     Con un punto de partida no se traza ninguna ruta: hace falta un destino. Aquí escribes
                     a tu súper tú, la mejor versión posible de ti, empezando cada frase con "soy" en vez de
-                    "algún día seré". Tu súper tú casi siempre vive del otro lado de tu creencia más vieja
-                    —y por eso arrancar de ahí sí sirve.
+                    "algún día seré".
                 </p>
-                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
-                    "Tu súper tú vive del otro lado de tu creencia más vieja."
-                </p>
-                <p class="mono-label text-white/40">4 ejercicios · súper tú, la brecha, tu territorio, tu primer miniviaje</p>
+                <p class="mirror-quote text-xl max-w-2xl mb-4">"Tu súper tú vive del otro lado de tu creencia más vieja."</p>
+                <p class="threshold-question text-base max-w-2xl">Si dejaras de tenerle miedo al ridículo por un día completo, ¿qué harías distinto?</p>
             </article>
 
             <!-- EJ · Ejecuta -->
-            <article class="cartographer reveal mb-8" style="--d:.2s">
-                <span class="mono-label text-gold-light">paso 05 · ej</span>
-                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+            <article id="paso-ej" class="step-file reveal mb-8" style="--d:.2s">
+                <div class="step-file-head">
+                    <span class="step-file-code">paso 05 · ej · itera</span>
+                    <span class="step-file-count">2 ejercicios</span>
+                </div>
+                <h3 class="font-despega-display italic text-2xl md:text-3xl font-normal text-white mb-4 leading-tight">
                     Ejecuta con foco
                 </h3>
                 <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
                     Grababa el mismo audio de WhatsApp veinticinco veces. Nadie del otro lado, nadie
                     escuchando todavía, y aun así: manos temblando, pecho apretado. El problema nunca fue
-                    el teléfono. Era escucharme a mí mismo y no creerme. Empecé por lo más chiquito que se
-                    me ocurrió: los vecinos.
+                    el teléfono. Era escucharme a mí mismo y no creerme.
                 </p>
-                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
-                    "Veinticinco tomas, temblando. Ahí está la prueba de que el problema no era la otra persona."
-                </p>
-                <p class="mono-label text-white/40">2 ejercicios · pesa lo que haces, el pivote</p>
+                <p class="mirror-quote text-xl max-w-2xl mb-4">"Veinticinco tomas, temblando. Ahí está la prueba de que el problema no era la otra persona."</p>
+                <p class="threshold-question text-base max-w-2xl">¿Cuál es tu versión del "audio de WhatsApp" — esa cosa chiquita que llevas evitando aunque a nadie del otro lado le costaría nada?</p>
             </article>
 
             <!-- G · Guarda -->
-            <article class="cartographer reveal mb-8" style="--d:.25s">
-                <span class="mono-label text-gold-light">paso 06 · g</span>
-                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+            <article id="paso-g" class="step-file reveal mb-8" style="--d:.25s">
+                <div class="step-file-head">
+                    <span class="step-file-code">paso 06 · g · reflexiona</span>
+                    <span class="step-file-count">2 ejercicios</span>
+                </div>
+                <h3 class="font-despega-display italic text-2xl md:text-3xl font-normal text-white mb-4 leading-tight">
                     Guarda aprendizajes
                 </h3>
                 <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
                     Diez imágenes de la vida de mis sueños, diez de mis traumas. Cuando por fin conecté
                     cada sueño con la herida de la que nació, entendí algo que llevaba toda la vida sin
-                    ver: no tendría ese sueño si no hubiera tenido ese trauma. Cuando integras tu sombra
-                    no te vuelves oscuro. Te vuelves completo.
+                    ver: no tendría ese sueño si no hubiera tenido ese trauma.
                 </p>
-                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
-                    "Gracias a esos traumas tengo los sueños que tengo hoy."
-                </p>
-                <p class="mono-label text-white/40">2 ejercicios · tu retrospectiva, tu registro mínimo</p>
+                <p class="mirror-quote text-xl max-w-2xl mb-4">"Gracias a esos traumas tengo los sueños que tengo hoy."</p>
+                <p class="threshold-question text-base max-w-2xl">Si conectaras tu sueño más grande con la herida de la que salió, ¿qué verías que no habías querido ver?</p>
             </article>
 
             <!-- A · Ajusta -->
-            <article class="cartographer reveal" style="--d:.3s">
-                <span class="mono-label text-gold-light">paso 07 · a</span>
-                <h3 class="font-display text-2xl md:text-3xl font-bold text-white mt-3 mb-4 leading-tight">
+            <article id="paso-a" class="step-file reveal" style="--d:.3s">
+                <div class="step-file-head">
+                    <span class="step-file-code">paso 07 · a · itera</span>
+                    <span class="step-file-count">2 ejercicios</span>
+                </div>
+                <h3 class="font-despega-display italic text-2xl md:text-3xl font-normal text-white mb-4 leading-tight">
                     Ajusta a tu rumbo
                 </h3>
                 <p class="text-white/60 leading-relaxed mb-6 max-w-2xl">
                     Guardar y ajustar no son la misma cosa: guardar es entender qué pasó, ajustar es
                     cambiar por eso. Estás parado en la orilla de un risco, ya decidiste saltar, y aun así
-                    no te mueves. Esa misma sensación la sentí después frente a un teléfono. El jalón no
-                    se quita antes. Se quita después, y solo si saltas.
+                    no te mueves.
                 </p>
-                <p class="font-display text-xl italic text-gold-light/90 max-w-2xl mb-4">
-                    "Dejas de buscar la técnica correcta y aceptas lo único que funciona: te vas a aventar con el jalón puesto."
-                </p>
-                <p class="mono-label text-white/40">2 ejercicios · analiza tu sistema, la decisión que traes atorada</p>
+                <p class="mirror-quote text-xl max-w-2xl mb-4">"Dejas de buscar la técnica correcta y aceptas lo único que funciona: te vas a aventar con el jalón puesto."</p>
+                <p class="threshold-question text-base max-w-2xl">¿Qué ya decidiste que tu cuerpo todavía no se cree?</p>
             </article>
         </div>
     </section>
 
     <!-- ════════════════════════════════════════
-         CAP 04 · Método CRECE (bolsillo)
+         REFLEXIONA · Método CRECE (bolsillo)
          ════════════════════════════════════════ -->
     <section id="crece" class="chapter chapter-frame" data-chapter="4" data-section="crece">
         <div class="chapter-inner max-w-3xl text-center">
-            <p class="coord coord-center reveal">
-                <span class="coord-mark">DE BOLSILLO</span>
-                <span class="coord-line"></span>
-                <span>El método CRECE</span>
+            <p class="method-coord method-coord-center reveal">
+                <span class="method-coord-mark">DE BOLSILLO</span>
+                <span class="method-coord-line"></span>
+                <span>el método CRECE</span>
             </p>
 
-            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 reveal">
+            <h2 class="font-despega-display italic text-3xl md:text-5xl font-normal leading-tight tracking-tight mt-8 mb-6 reveal">
                 DESPEGA es para la vida.<br>
-                <span class="text-gold-light">CRECE es para el momento.</span>
+                <span class="copper-underline">CRECE es para el momento.</span>
             </h2>
 
             <p class="text-lg text-white/60 font-light max-w-2xl mx-auto mb-12 reveal">
@@ -399,63 +411,63 @@
             </p>
 
             <ol class="levels-track levels-track-stacked text-left">
-                <li class="level-step level-step-row reveal" style="--d:0s">
-                    <span class="level-num mono-label">c</span>
+                <li class="level-step level-step-row reveal" style="--d:0s; border-left-color: var(--copper-line)">
+                    <span class="level-num despega-mono">c</span>
                     <div>
-                        <h3 class="font-display text-lg font-bold text-white">Conciencia</h3>
+                        <h3 class="font-despega-display italic text-lg font-normal text-white">Conciencia</h3>
                         <p class="text-white/55 text-sm">Reconoce lo que sientes sin juzgar.</p>
                     </div>
                 </li>
-                <li class="level-step level-step-row reveal" style="--d:.08s">
-                    <span class="level-num mono-label">r</span>
+                <li class="level-step level-step-row reveal" style="--d:.08s; border-left-color: var(--copper-line)">
+                    <span class="level-num despega-mono">r</span>
                     <div>
-                        <h3 class="font-display text-lg font-bold text-white">Respira</h3>
+                        <h3 class="font-despega-display italic text-lg font-normal text-white">Respira</h3>
                         <p class="text-white/55 text-sm">Pausa. Calma el cuerpo antes de actuar.</p>
                     </div>
                 </li>
-                <li class="level-step level-step-row reveal" style="--d:.16s">
-                    <span class="level-num mono-label">e</span>
+                <li class="level-step level-step-row reveal" style="--d:.16s; border-left-color: var(--copper-line)">
+                    <span class="level-num despega-mono">e</span>
                     <div>
-                        <h3 class="font-display text-lg font-bold text-white">Explora</h3>
+                        <h3 class="font-despega-display italic text-lg font-normal text-white">Explora</h3>
                         <p class="text-white/55 text-sm">¿Qué me enseña esta situación?</p>
                     </div>
                 </li>
-                <li class="level-step level-step-row reveal" style="--d:.24s">
-                    <span class="level-num mono-label">c</span>
+                <li class="level-step level-step-row reveal" style="--d:.24s; border-left-color: var(--copper-line)">
+                    <span class="level-num despega-mono">c</span>
                     <div>
-                        <h3 class="font-display text-lg font-bold text-white">Comprométete</h3>
+                        <h3 class="font-despega-display italic text-lg font-normal text-white">Comprométete</h3>
                         <p class="text-white/55 text-sm">Elige actuar desde el crecimiento, no el miedo.</p>
                     </div>
                 </li>
-                <li class="level-step level-step-row level-step-gold reveal" style="--d:.32s">
-                    <span class="level-num mono-label text-gold-light">e</span>
+                <li class="level-step level-step-row reveal" style="--d:.32s; border-left-color: var(--copper); background: rgba(212,130,63,0.06)">
+                    <span class="level-num despega-mono" style="color: var(--copper-light)">e</span>
                     <div>
-                        <h3 class="font-display text-lg font-bold text-gold-light">Evoluciona</h3>
+                        <h3 class="font-despega-display italic text-lg font-normal" style="color: var(--copper-light)">Evoluciona</h3>
                         <p class="text-white/70 text-sm">Aprende, ajusta y sigue.</p>
                     </div>
                 </li>
             </ol>
 
-            <p class="mono-label text-white/40 mt-10 reveal">
+            <p class="despega-mono text-white/40 mt-10 reveal">
                 la frase que lo dispara — "esta situación me está pidiendo crecer"
             </p>
         </div>
     </section>
 
     <!-- ════════════════════════════════════════
-         CAP 05 · El cuaderno de trabajo
+         El cuaderno de trabajo
          ════════════════════════════════════════ -->
     <section id="cuaderno" class="chapter" data-chapter="5" data-section="cuaderno">
         <div class="chapter-inner max-w-4xl text-center">
-            <p class="coord coord-center reveal">
-                <span class="coord-mark">EL LIBRO TRAE TAREA</span>
-                <span class="coord-line"></span>
-                <span>El cuaderno de trabajo</span>
+            <p class="method-coord method-coord-center reveal">
+                <span class="method-coord-mark">EL LIBRO TRAE TAREA</span>
+                <span class="method-coord-line"></span>
+                <span>el cuaderno de trabajo</span>
             </p>
 
-            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 reveal">
+            <h2 class="font-despega-display italic text-3xl md:text-5xl font-normal leading-tight tracking-tight mt-8 mb-6 reveal">
                 20 ejercicios.<br>
-                <span class="text-gold-light">Con espacio para escribirlos.</span>
+                <span class="copper-underline">Con espacio para escribirlos.</span>
             </h2>
 
             <p class="text-lg text-white/60 font-light max-w-2xl mx-auto mb-4 reveal">
@@ -468,59 +480,55 @@
                 cuaderno: lo que importa es que salga, no que quepa.
             </p>
 
-            <p class="mono-label text-gold-light reveal">
+            <p class="despega-mono text-copper-light reveal">
                 imprímelo, escríbelo a mano, y quédatelo
             </p>
         </div>
     </section>
 
     <!-- ════════════════════════════════════════
-         CAP 06 · Ikigai (lead magnet)
+         Ikigai (lead magnet)
          ════════════════════════════════════════ -->
     <section id="ikigai" class="chapter chapter-frame" data-chapter="6" data-section="ikigai">
         <div class="chapter-inner max-w-4xl">
-            <p class="coord reveal">
-                <span class="coord-mark">HERRAMIENTA</span>
-                <span class="coord-line"></span>
-                <span>Cómo encontrar tu Ikigai</span>
+            <p class="method-coord reveal">
+                <span class="method-coord-mark">HERRAMIENTA</span>
+                <span class="method-coord-line"></span>
+                <span>cómo encontrar tu ikigai</span>
             </p>
 
-            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight mt-8 mb-6 max-w-2xl reveal">
+            <h2 class="font-despega-display italic text-3xl md:text-5xl font-normal leading-tight tracking-tight mt-8 mb-6 max-w-2xl reveal">
                 El cruce entre lo que amas,<br>
-                <span class="text-gold-light">lo que se te da y lo que hace falta.</span>
+                <span class="copper-underline">lo que se te da y lo que hace falta.</span>
             </h2>
 
             <p class="text-lg text-white/60 font-light max-w-2xl mb-10 reveal">
                 Ikigai junta "iki" (vida) y "gai" (valor): tu razón para levantarte cada mañana. No es
                 una respuesta mágica ni una sola frase perfecta. Es el cruce de cuatro pilares —lo que
                 amas, en lo que eres bueno, por lo que te pueden pagar, lo que el mundo necesita— y casi
-                nunca los tienes alineados desde el inicio. Por eso se explora por fases.
+                nunca los tienes alineados desde el inicio.
             </p>
 
             <div class="grid sm:grid-cols-2 gap-5 mb-12">
-                <article class="def-card reveal" style="--d:0s">
-                    <span class="def-glyph" aria-hidden="true">◇</span>
+                <article class="step-file reveal" style="--d:0s">
                     <p class="text-white/70 text-sm leading-relaxed">
                         <strong class="text-white">Lo que amas</strong> — esas actividades donde se te va
                         el tiempo sin darte cuenta.
                     </p>
                 </article>
-                <article class="def-card reveal" style="--d:.06s">
-                    <span class="def-glyph" aria-hidden="true">◇</span>
+                <article class="step-file reveal" style="--d:.06s">
                     <p class="text-white/70 text-sm leading-relaxed">
                         <strong class="text-white">En lo que eres bueno</strong> — lo que haces con
                         facilidad, aunque tú mismo lo subestimes.
                     </p>
                 </article>
-                <article class="def-card reveal" style="--d:.12s">
-                    <span class="def-glyph" aria-hidden="true">◇</span>
+                <article class="step-file reveal" style="--d:.12s">
                     <p class="text-white/70 text-sm leading-relaxed">
                         <strong class="text-white">Por lo que te pueden pagar</strong> — habilidades o
                         servicios que hoy o a futuro tienen demanda real.
                     </p>
                 </article>
-                <article class="def-card reveal" style="--d:.18s">
-                    <span class="def-glyph" aria-hidden="true">◇</span>
+                <article class="step-file reveal" style="--d:.18s">
                     <p class="text-white/70 text-sm leading-relaxed">
                         <strong class="text-white">Lo que el mundo necesita</strong> — problemas cercanos
                         o causas que de verdad te muevan a actuar.
@@ -528,16 +536,16 @@
                 </article>
             </div>
 
-            <div class="reciprocity text-center reveal">
-                <p class="mono-label text-gold-light mb-3">descarga gratis</p>
-                <h3 class="font-display text-xl md:text-2xl font-bold text-white mb-4">
+            <div class="reciprocity text-center reveal" style="border-color: var(--copper-line); background: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px), rgba(212,130,63,0.04); background-size: 32px 32px, 32px 32px, auto;">
+                <p class="despega-mono text-copper-light mb-3">descarga gratis</p>
+                <h3 class="font-despega-display italic text-xl md:text-2xl font-normal text-white mb-4">
                     Cómo encontrar tu Ikigai
                 </h3>
                 <p class="text-white/60 max-w-xl mx-auto mb-6">
                     Siete capítulos con espacio para escribir: explora los cuatro pilares, crúzalos, mira
                     dónde hay fricción, y ponlo todo en una frase que puedas decir en voz alta.
                 </p>
-                <a href="assets/ikigai.pdf" target="_blank" rel="noopener" class="btn-primary btn-lg">
+                <a href="assets/ikigai.pdf" target="_blank" rel="noopener" class="btn-despega btn-despega-lg">
                     Descargar mi Ikigai
                 </a>
             </div>
@@ -545,32 +553,36 @@
     </section>
 
     <!-- ════════════════════════════════════════
-         CAP 07 · Umbral / CTA final
+         Umbral / CTA final
          ════════════════════════════════════════ -->
     <section id="umbral" class="chapter chapter-threshold" data-chapter="7" data-section="umbral">
         <div class="chapter-inner max-w-3xl text-center">
-            <p class="coord coord-center reveal">
-                <span class="coord-mark">ESTO NO SE ACABA AQUÍ</span>
-                <span class="coord-line"></span>
-                <span>Tu umbral</span>
+            <p class="method-coord method-coord-center reveal">
+                <span class="method-coord-mark">ESTO NO SE ACABA AQUÍ</span>
+                <span class="method-coord-line"></span>
+                <span>tu umbral</span>
             </p>
 
-            <h2 class="font-display text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight mt-10 mb-8 reveal">
-                Si algo de lo que leíste<br>
-                <span class="text-gold-light">te resonó, te dejo la puerta abierta.</span>
+            <h2 class="font-despega-display italic text-4xl md:text-6xl font-normal leading-[1.05] tracking-tight mt-10 mb-8 reveal">
+                Nada de esto lo hice solo.<br>
+                <span class="copper-underline">Y esto tampoco lo vas a hacer solo, si no quieres.</span>
             </h2>
 
-            <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed mb-12 reveal" style="--d:.15s">
-                No te voy a pedir que te unas a nada. Nada más que sepas que del otro lado hay gente
-                haciendo lo mismo que tú, y que eso hace toda la diferencia.
+            <p class="text-lg lg:text-xl text-white/70 font-light leading-relaxed mb-6 reveal" style="--d:.15s">
+                Si llegaste hasta aquí leyendo, ya sabes que no fue por curiosidad. Fue porque algo de
+                esto te encontró a ti primero.
+            </p>
+
+            <p class="threshold-question max-w-xl mx-auto mb-12 reveal" style="--d:.25s">
+                ¿Qué parte de tu historia está esperando a que por fin la mires de frente?
             </p>
 
             <div class="reveal" style="--d:.3s">
                 <a href="https://wa.me/526221424577?text=Hola%2C%20quiero%20información%20sobre%20la%20metodología%20DESPEGA"
-                    target="_blank" rel="noopener" class="btn-primary btn-lg">
+                    target="_blank" rel="noopener" class="btn-despega btn-despega-lg">
                     Conseguir DESPEGA
                 </a>
-                <p class="mono-label text-white/40 mt-5">
+                <p class="despega-mono text-white/40 mt-5">
                     escrito por Javier Millán · una constelación de La Red de Luz
                 </p>
             </div>
@@ -578,8 +590,42 @@
     </section>
 
     <!-- JavaScript -->
-    <script src="js/network.js"></script>
+    <script src="js/spiral.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        /* Progreso de pasos: marca aria-current + is-passed conforme el
+           lector avanza por las 7 secciones, y alimenta el mismo progress
+           a la espiral (window.despegaSpiral.setProgress). */
+        (function () {
+            var steps = Array.from(document.querySelectorAll('.progress-step'));
+            var targets = steps.map(function (s) {
+                return document.querySelector(s.getAttribute('href'));
+            });
+            function update() {
+                var mid = window.scrollY + window.innerHeight * 0.4;
+                var activeIdx = 0;
+                targets.forEach(function (t, i) {
+                    if (t && t.offsetTop <= mid) activeIdx = i;
+                });
+                steps.forEach(function (s, i) {
+                    s.classList.toggle('is-passed', i < activeIdx);
+                    if (i === activeIdx) s.setAttribute('aria-current', 'step');
+                    else s.removeAttribute('aria-current');
+                });
+                if (window.despegaSpiral) {
+                    window.despegaSpiral.setProgress(activeIdx / (steps.length - 1));
+                }
+            }
+            var ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    ticking = true;
+                    requestAnimationFrame(function () { update(); ticking = false; });
+                }
+            }, { passive: true });
+            update();
+        })();
+    </script>
 </body>
 
 </html>

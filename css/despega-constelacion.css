@@ -1,0 +1,269 @@
+/* ════════════════════════════════════════════════
+   CONSTELACIÓN DESPEGA — identidad propia
+   Ver brand-profile-despega.md. Hereda void/dorado-de-logo
+   de css/styles.css; el cobre gobierna el cuerpo de esta página.
+   ════════════════════════════════════════════════ */
+
+:root {
+  --copper: #d4823f;
+  --copper-dark: #a35f26;
+  --copper-light: #e6a668;
+  --copper-line: rgba(212, 130, 63, 0.25);
+  --copper-line-soft: rgba(212, 130, 63, 0.1);
+}
+
+/* ─── Tipografía propia: Instrument Serif reemplaza Spectral aquí ─── */
+.despega-body {
+  font-family: 'Inter', sans-serif;
+}
+.font-despega-display {
+  font-family: 'Instrument Serif', serif;
+}
+
+/* ─── Botón cobre (mismo patrón que .btn-primary, otro acento) ─── */
+.btn-despega {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--copper-light) 0%, var(--copper-dark) 100%);
+  color: var(--void);
+  font-weight: 600;
+  padding: 0.7rem 1.4rem;
+  border-radius: 0.85rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  touch-action: manipulation;
+}
+.btn-despega:hover,
+.btn-despega:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px rgba(212, 130, 63, 0.5);
+}
+.btn-despega-lg { padding: 0.95rem 2rem; font-size: 1.05rem; border-radius: 1rem; }
+
+.btn-despega-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  padding: 0.7rem 1.4rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--copper-line);
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+  touch-action: manipulation;
+}
+.btn-despega-ghost:hover,
+.btn-despega-ghost:focus-visible {
+  color: var(--copper-light);
+  border-color: var(--copper);
+  background: rgba(212, 130, 63, 0.08);
+}
+
+/* ─── Coordenada de método (reemplaza .coord "CAP 0X") ─── */
+.method-coord {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+.method-coord-center { justify-content: center; }
+.method-coord-mark {
+  color: var(--copper-light);
+  font-weight: 700;
+}
+.method-coord-line {
+  flex: 0 1 90px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--copper), transparent);
+}
+.method-coord-center .method-coord-line {
+  flex-basis: 60px;
+  background: linear-gradient(90deg, transparent, var(--copper), transparent);
+}
+
+/* ─── Mono label cobre (mismo patrón, otro acento) ─── */
+.despega-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+/* ─── Fichas de paso (expediente D-E-S-P-E-G-A) ─── */
+.step-file {
+  padding: 2.2rem;
+  border-radius: 1.1rem;
+  border: 1px solid var(--copper-line-soft);
+  background: rgba(20, 18, 34, 0.5);
+  border-left: 3px solid var(--copper);
+  transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+  scroll-margin-top: 6rem;
+}
+.step-file:hover {
+  transform: translateY(-3px);
+  border-left-color: var(--copper-light);
+  box-shadow: 0 16px 40px -20px rgba(212, 130, 63, 0.35);
+}
+.step-file-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+.step-file-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+.step-file-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--copper-light);
+  border: 1px solid var(--copper-line);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+}
+
+/* ─── Cita-espejo (anécdota real) ─── */
+.mirror-quote {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--copper-light);
+  line-height: 1.4;
+}
+
+/* ─── Pregunta abierta al lector (umbral de reflexión) ─── */
+.threshold-question {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.85);
+  border-left: 2px solid var(--copper);
+  padding-left: 1.2rem;
+  line-height: 1.5;
+}
+
+/* ─── Rail de progreso de los 7 pasos ─── */
+.progress-rail {
+  position: fixed;
+  z-index: 40;
+  display: flex;
+  gap: 0.4rem;
+}
+/* Desktop: rail vertical a la izquierda */
+@media (min-width: 1024px) {
+  .progress-rail {
+    top: 50%;
+    left: 1.4rem;
+    transform: translateY(-50%);
+    flex-direction: column;
+  }
+}
+/* Móvil/tablet: rail horizontal fijo abajo */
+@media (max-width: 1023px) {
+  .progress-rail {
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    background: rgba(13, 11, 22, 0.6);
+    backdrop-filter: blur(12px);
+    padding: 0.5rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--copper-line-soft);
+  }
+}
+.progress-step {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  transition: background 0.4s, box-shadow 0.4s, transform 0.3s;
+}
+.progress-step:hover,
+.progress-step:focus-visible {
+  transform: scale(1.3);
+}
+.progress-step.is-passed {
+  background: var(--copper);
+  box-shadow: 0 0 8px rgba(212, 130, 63, 0.7);
+}
+.progress-step[aria-current="step"] {
+  background: var(--copper-light);
+  box-shadow: 0 0 12px rgba(230, 166, 104, 0.9);
+  width: 11px;
+  height: 11px;
+}
+.progress-step-label {
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+@media (min-width: 1024px) {
+  .progress-step:hover .progress-step-label,
+  .progress-step:focus-visible .progress-step-label,
+  .progress-step[aria-current="step"] .progress-step-label {
+    opacity: 1;
+  }
+}
+@media (max-width: 1023px) {
+  .progress-step-label { display: none; }
+}
+
+/* ─── Canvas de la espiral ascendente (reemplaza network-canvas aquí) ─── */
+.spiral-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Reveal usando cobre en vez de dorado en el subrayado de énfasis ─── */
+.copper-underline {
+  color: var(--copper-light);
+  font-style: normal;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  background-image: linear-gradient(90deg, var(--copper), rgba(212, 130, 63, 0.4));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 2px;
+  padding-bottom: 0.06em;
+}
+
+/* ─── Focus visible propio (cobre en vez de dorado) ─── */
+.despega-body :focus-visible {
+  outline: 2px solid var(--copper-light);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-step { transition: none; }
+}
