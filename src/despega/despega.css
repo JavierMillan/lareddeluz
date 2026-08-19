@@ -41,7 +41,9 @@
 .despega-hero__scroll { position: absolute; bottom: 0; display: grid; justify-items: center; gap: .65rem; color: rgba(255,255,255,.35); font: .53rem/1 monospace; letter-spacing: .15em; text-transform: uppercase; }
 .despega-hero__scroll i { width: 1px; height: 4rem; background: linear-gradient(transparent,var(--copper)); }
 
-.chapter-journey { position: relative; z-index: 2; min-height: 100svh; min-height: 100dvh; padding: calc(var(--despega-nav-height) + 1.5rem) max(1.25rem,calc((100vw - 76rem)/2)) max(1rem,env(safe-area-inset-bottom)); display: grid; grid-template-rows: auto 1fr auto; background: linear-gradient(180deg,rgba(13,11,22,.72),#0d0b16 18% 82%,rgba(13,11,22,.72)); isolation: isolate; }
+/* El capitulo cabe en una pantalla: alto fijo, no minimo, para que la
+   fila 1fr tenga un techo real que repartir. */
+.chapter-journey { position: relative; z-index: 2; height: 100svh; height: 100dvh; padding: calc(var(--despega-nav-height) + 1rem) max(1.25rem,calc((100vw - 76rem)/2)) max(.9rem,env(safe-area-inset-bottom)); display: grid; grid-template-rows: auto minmax(0,1fr) auto; background: linear-gradient(180deg,rgba(13,11,22,.72),#0d0b16 18% 82%,rgba(13,11,22,.72)); isolation: isolate; }
 /* Carta nautica, no pergamino literal: retícula tecnica fina + grano.
    Todo en CSS — ni una peticion de red. */
 .chapter-journey:before { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.5;
@@ -56,11 +58,11 @@
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E"); }
 /* El mapa de vuelo asciende: cada coordenada se posa mas alto que la anterior. */
 .flight-path { position: relative; width: 100%; max-width: 76rem; margin: 0 auto; padding: 0 .5rem; }
-.flight-path__trace { position: absolute; left: 3.4%; right: 3.4%; top: .35rem; width: 93.2%; height: 4.6rem; overflow: visible; }
+.flight-path__trace { position: absolute; left: 3.4%; right: 3.4%; top: .35rem; width: 93.2%; height: clamp(2.6rem,6vh,4.6rem); overflow: visible; }
 .flight-path__trace polyline { fill: none; stroke-width: 1.4; vector-effect: non-scaling-stroke; }
 .flight-path__remaining { stroke: rgba(255,255,255,.13); stroke-dasharray: 4 5; }
 .flight-path__travelled { stroke: #efac69; filter: drop-shadow(0 0 7px rgba(212,130,63,.5)); transition: stroke-dashoffset .6s cubic-bezier(.22,1,.36,1); }
-.flight-path ol { position: relative; display: grid; grid-template-columns: repeat(7,1fr); align-items: end; height: 6.6rem; }
+.flight-path ol { position: relative; display: grid; grid-template-columns: repeat(7,1fr); align-items: end; height: clamp(4.2rem,9vh,6.6rem); }
 .flight-path li { display: grid; justify-items: center; align-content: end; padding-bottom: var(--lift,0); }
 .flight-path button { width: 3.6rem; min-height: 3rem; display: grid; justify-items: center; gap: .2rem; color: rgba(255,255,255,.3); background: transparent; border: 0; cursor: pointer; }
 .flight-path button>span { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; background: #0d0b16; font-family: var(--font-display,"Instrument Serif"),serif; font-size: 1rem; transition: .3s; }
@@ -68,26 +70,28 @@
 .flight-path button[aria-current="step"] { color: #efac69; }
 .flight-path button[aria-current="step"]>span { border-color: #d4823f; box-shadow: 0 0 0 5px rgba(212,130,63,.09),0 0 28px rgba(212,130,63,.2); transform: scale(1.12); }
 .chapter-journey__viewport { min-height: 0; display: grid; align-items: center; overflow: hidden; }
-.chapter-scene { width: min(100%,76rem); margin: auto; display: grid; grid-template-columns: minmax(0,1fr) minmax(25rem,.88fr); align-items: center; gap: clamp(2rem,6vw,7rem); padding: 2rem .5rem; }
+.chapter-journey__viewport>* { min-height: 0; height: 100%; display: grid; align-items: center; }
+.chapter-scene { width: min(100%,76rem); height: 100%; margin: auto; display: grid; grid-template-columns: minmax(0,1fr) minmax(22rem,.88fr); align-items: center; gap: clamp(1.5rem,5vw,6rem); padding: clamp(.5rem,2vh,2rem) .5rem; }
+.chapter-scene__narrative { min-height: 0; }
 .chapter-scene__narrative { position: relative; z-index: 2; }
 .chapter-scene__coordinate { color: var(--copper); font: .72rem/1.2 monospace; letter-spacing: .19em; text-transform: uppercase; }
-.chapter-scene h2 { max-width: 12ch; margin: 1.1rem 0 1.5rem; font-family: var(--font-display,"Instrument Serif"),Georgia,serif; font-size: clamp(3rem,5.8vw,5.8rem); font-weight: 400; line-height: .93; letter-spacing: -.045em; }
+.chapter-scene h2 { max-width: 12ch; margin: clamp(.5rem,1.4vh,1.1rem) 0 clamp(.7rem,1.8vh,1.5rem); font-family: var(--font-display,"Instrument Serif"),Georgia,serif; font-size: clamp(2.4rem,min(5.4vw,7.4vh),5.4rem); font-weight: 400; line-height: .93; letter-spacing: -.045em; }
 .chapter-scene h2 { scroll-margin-top: calc(var(--despega-nav-height) + 2rem); text-wrap: balance; }
 .chapter-scene h2 span { display: block; color: #e6a668; }
-.chapter-scene__body { max-width: 58ch; color: var(--muted); font-size: clamp(.95rem,1.2vw,1.08rem); line-height: 1.7; }
-.chapter-scene blockquote { max-width: 48ch; margin-top: 1.8rem; padding-left: 1.1rem; border-left: 1px solid var(--copper); color: rgba(255,255,255,.77); font-family: var(--font-display,"Instrument Serif"),serif; font-size: clamp(1rem,1.35vw,1.2rem); font-style: italic; line-height: 1.5; }
+.chapter-scene__body { max-width: 58ch; color: var(--muted); font-size: clamp(.9rem,min(1.2vw,1.9vh),1.08rem); line-height: clamp(1.5,3.4vh,1.7); }
+.chapter-scene blockquote { max-width: 48ch; margin-top: clamp(.9rem,2.2vh,1.8rem); padding-left: 1.1rem; border-left: 1px solid var(--copper); color: rgba(255,255,255,.77); font-family: var(--font-display,"Instrument Serif"),serif; font-size: clamp(.95rem,min(1.35vw,2.1vh),1.2rem); font-style: italic; line-height: 1.45; }
 /* La letra es atmosfera, no marco: vive detras y descentrada, mas grande
    que el instrumento, para que los controles tengan aire propio. */
 /* Dos zonas, no una: la letra ocupa la banda de arriba, el instrumento
    la de abajo. Se tocan por transparencia, nunca por encimarse. */
-.chapter-scene__instrument { position: relative; min-height: min(58vh,36rem); display: grid; grid-template-rows: auto 1fr; align-content: center; justify-items: center; gap: clamp(1rem,2.5vw,1.75rem); isolation: isolate; }
-.letter-instrument { position: relative; width: min(60%,17rem); margin-right: -8%; color: #d4823f; opacity: .55; z-index: -1; overflow: visible; pointer-events: none; }
+.chapter-scene__instrument { position: relative; min-height: 0; height: 100%; max-height: min(58vh,36rem); display: grid; grid-template-rows: minmax(0,auto) min-content; align-content: center; justify-items: center; gap: clamp(.6rem,2vh,1.75rem); isolation: isolate; }
+.letter-instrument { position: relative; width: min(60%,26vh,17rem); min-height: 0; margin-right: -8%; translate: 0 -9%; color: #d4823f; opacity: .55; z-index: -1; overflow: visible; pointer-events: none; }
 .letter-instrument__orbit { fill: none; stroke: currentColor; stroke-width: .5; stroke-dasharray: .055 .03; opacity: .3; }
 .letter-instrument text { fill: none; stroke: currentColor; stroke-width: .9; font: 176px/1 var(--font-display,"Instrument Serif"),serif; opacity: .34; }
 .letter-instrument circle:not(:first-of-type) { fill: #f0ad6c; opacity: .5; }
 
 /* Un instrumento se lee como aparato: fondo propio, borde tenue, aire dentro. */
-.instrument { width: min(100%,29rem); position: relative; z-index: 2; padding: clamp(1.35rem,2.6vw,1.9rem); border: 1px solid rgba(212,130,63,.16); border-radius: 2px; background: linear-gradient(180deg,rgba(22,19,32,.82),rgba(13,11,22,.88)); backdrop-filter: blur(6px); box-shadow: 0 24px 60px -30px rgba(0,0,0,.9); }
+.instrument { width: min(100%,29rem); max-height: 100%; overflow: auto; position: relative; z-index: 2; padding: clamp(.85rem,2vh,1.9rem) clamp(1rem,2.6vw,1.9rem); border: 1px solid rgba(212,130,63,.16); border-radius: 2px; background: linear-gradient(180deg,rgba(22,19,32,.82),rgba(13,11,22,.88)); backdrop-filter: blur(6px); box-shadow: 0 24px 60px -30px rgba(0,0,0,.9); }
 
 /* Accion primaria del instrumento: se invita, no se ordena. */
 .instrument>button { justify-self: start; min-height: 46px; padding: .8rem 1.4rem; border: 1px solid rgba(212,130,63,.5); border-radius: 99px; color: #f4eee4; background: rgba(212,130,63,.12); font: 500 .82rem/1.3 system-ui,sans-serif; letter-spacing: .005em; text-transform: none; cursor: pointer; transition: border .25s,color .25s,background .25s,transform .25s; }
@@ -97,7 +101,7 @@
 /* Deshabilitado = tarea cumplida, no boton roto. */
 .instrument button:disabled { cursor: default; opacity: .45; border-color: rgba(212,130,63,.14); background: transparent; }
 .compass { display: grid; justify-items: center; gap: .9rem; }
-.compass__dial { position: relative; width: min(52vw,12rem); aspect-ratio: 1; border: 1px solid rgba(212,130,63,.4); border-radius: 50%; background: repeating-conic-gradient(from 0deg,rgba(212,130,63,.2) 0 1deg,transparent 1deg 15deg); }
+.compass__dial { position: relative; width: min(52vw,24vh,12rem); aspect-ratio: 1; border: 1px solid rgba(212,130,63,.4); border-radius: 50%; background: repeating-conic-gradient(from 0deg,rgba(212,130,63,.2) 0 1deg,transparent 1deg 15deg); }
 .compass__dial:after { content:""; position:absolute; inset: 12%; border: 1px solid rgba(255,255,255,.12); border-radius:50%; }
 .compass__needle { position:absolute; left:calc(50% - 1px); top:17%; width:2px; height:66%; transform:rotate(var(--bearing)); background:linear-gradient(#efac69 0 50%,rgba(255,255,255,.25) 50%); transform-origin:center; transition:transform .4s cubic-bezier(.22,1,.36,1); }
 .compass__north { position:absolute; top:.6rem; left:calc(50% - .35em); color:#efac69; font:.62rem monospace; }
@@ -108,7 +112,7 @@
 .compass input::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; margin-top: -9px; border-radius: 50%; background: #efac69; box-shadow: 0 0 16px rgba(239,172,105,.5); }
 .compass input::-moz-range-thumb { width: 20px; height: 20px; border: 0; border-radius: 50%; background: #efac69; box-shadow: 0 0 16px rgba(239,172,105,.5); }
 .breath { display:grid; justify-items:center; gap:1rem; }
-.breath__orb { width:min(52vw,12rem); aspect-ratio:1; display:grid; place-items:center; border:1px solid rgba(87,119,190,.5); border-radius:50%; }
+.breath__orb { width:min(52vw,24vh,12rem); aspect-ratio:1; display:grid; place-items:center; border:1px solid rgba(87,119,190,.5); border-radius:50%; }
 .breath__orb span { width:62%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,rgba(91,129,211,.38),rgba(60,82,150,.04)); box-shadow:0 0 45px rgba(72,103,184,.25); }
 .breath[data-active="true"] .breath__orb span { animation:breathe 7.2s ease-in-out infinite; }
 .breath p,.tremble p,.threshold p { color:var(--muted); font: .78rem/1.4 monospace; letter-spacing:.06em; }
@@ -122,11 +126,11 @@
 .scale[data-tilt="drains"] li[data-kind="drena"],.scale[data-tilt="worth"] li[data-kind="vale"] { transform:translateX(-8px); border-color:rgba(212,130,63,.55); }
 .scale[data-tilt="drains"] li[data-kind="vale"],.scale[data-tilt="worth"] li[data-kind="drena"] { transform:translateX(8px); opacity:.26; }
 .super-you { display:grid; gap:1.2rem; }
-.super-you ol { min-height:10rem; display:grid; gap:.45rem; }
+.super-you ol { min-height:min(10rem,22vh); display:grid; gap:.45rem; }
 .super-you li { color:rgba(255,255,255,.15); font:clamp(1rem,1.8vw,1.35rem)/1.4 var(--font-display,"Instrument Serif"),serif; filter:blur(2px); transition:.45s; }
 .super-you li[data-visible="true"] { color:#efac69; filter:none; transform:translateX(.5rem); }
 .tremble { display:grid; justify-items:center; gap:1.2rem; }
-.tremble__wave { height:7rem; display:flex; align-items:center; gap:.55rem; }
+.tremble__wave { height:min(7rem,16vh); display:flex; align-items:center; gap:.55rem; }
 .tremble__wave i { width:2px; height:var(--h,35%); background:#d4823f; box-shadow:0 0 12px rgba(212,130,63,.35); transition:height .6s cubic-bezier(.22,1,.36,1),opacity .6s; }
 .tremble__wave i:nth-child(2n){--h:70%}.tremble__wave i:nth-child(3n){--h:100%}
 .tremble:not([data-sent="true"]) .tremble__wave { animation:tremble .18s linear infinite; }
@@ -141,7 +145,7 @@
 .scars>button[data-active="true"] { border-color:#d4823f; background:rgba(212,130,63,.08); }
 .scars>button[data-active="true"] i { transform:scaleX(1); background:#d4823f; }
 .threshold { display:grid; gap:1rem; }
-.threshold__line { position:relative; width:100%; height:6rem; border-bottom:1px solid rgba(212,130,63,.35); overflow:hidden; }
+.threshold__line { position:relative; width:100%; height:min(6rem,14vh); border-bottom:1px solid rgba(212,130,63,.35); overflow:hidden; }
 .threshold__line:after { content:""; position:absolute; right:10%; bottom:0; width:1px; height:100%; background:linear-gradient(transparent,#d4823f); }
 .threshold__line i { position:absolute; left:0; bottom:-.3rem; width:1rem; height:1rem; border-radius:50%; background:#efac69; box-shadow:0 0 20px rgba(239,172,105,.65); }
 .chapter-journey__controls { width:min(100%,76rem); margin:auto; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem; border-top:1px solid rgba(255,255,255,.1); padding-top:.8rem; }
@@ -165,7 +169,7 @@
   .despega-hero h1 { font-size:clamp(3.25rem,15vw,5rem); }
   .despega-hero__actions { flex-direction:column; }
   .despega-hero__telemetry { display:none; }
-  .chapter-journey { padding:calc(var(--despega-nav-height) + .8rem) .85rem max(.85rem,env(safe-area-inset-bottom)); min-height:auto; }
+  .chapter-journey { padding:calc(var(--despega-nav-height) + .8rem) .85rem max(.85rem,env(safe-area-inset-bottom)); height:auto; min-height:100svh; min-height:100dvh; grid-template-rows:auto auto auto; }
   .flight-path { padding:0; }
   .flight-path__trace { left:1.3rem; right:1.3rem; width:calc(100% - 2.6rem); height:3.6rem; }
   .flight-path ol { height:5.4rem; }
@@ -175,7 +179,8 @@
   .chapter-scene h2 { max-width:10ch; font-size:clamp(2.75rem,13vw,4.5rem); margin:.9rem 0 1.1rem; }
   .chapter-scene__body { font-size:.94rem; }
   .chapter-scene blockquote { margin-top:1.2rem; }
-  .chapter-scene__instrument { min-height:24rem; }
+  .chapter-scene__instrument { min-height:0; height:auto; max-height:none; }
+  .instrument { max-height:none; overflow:visible; }
   .letter-instrument { width:min(52vw,13rem); margin-right:0; opacity:.45; }
   .instrument { width:min(100%,25rem); }
   .weigh-list li button { font-size:.76rem; padding:.66rem .7rem; }
@@ -192,7 +197,7 @@
   .despega-hero h1 { font-size:3.15rem; }
   .chapter-scene { padding-top:1.5rem; }
   .chapter-scene h2 { font-size:2.7rem; }
-  .chapter-scene__instrument { min-height:22rem; }
+  .chapter-scene__instrument { min-height:0; }
   .scale__choices { grid-template-columns:1fr; }
   .chapter-journey__controls button { max-width:7rem; }
 }
