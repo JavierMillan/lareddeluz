@@ -42,7 +42,7 @@ export function SuperYou() {
 
 export function Tremble() {
   const [sent, setSent] = useState(false);
-  return <div className="instrument tremble" data-sent={sent}><div className="tremble__wave" aria-hidden="true">{[1, 2, 3, 4, 5, 6, 7].map((bar) => <i key={bar} />)}</div><p role="status">{sent ? "Mandado. No pasó nada." : "00:07 · listo para enviar"}</p><button type="button" onClick={() => setSent(true)} disabled={sent}>Mandar el audio</button></div>;
+  return <div className="instrument tremble" data-sent={sent}><div className="tremble__wave" aria-hidden="true">{[1, 2, 3, 4, 5, 6, 7].map((bar) => <i key={bar} />)}</div><p role="status">{sent ? "Mandado. No pasó nada." : "00:07 · listo para enviar"}</p><button type="button" onClick={() => setSent(true)} disabled={sent}>{sent ? "Ya lo mandaste" : "Mandar el audio"}</button></div>;
 }
 
 export function Scars() {
@@ -52,5 +52,5 @@ export function Scars() {
 
 export function Edge() {
   const [crossed, setCrossed] = useState(false);
-  return <div className="instrument threshold" data-crossed={crossed} data-testid="despega-threshold"><div className="threshold__line" aria-hidden="true"><motion.i animate={{ left: crossed ? "calc(100% - 18px)" : "0%" }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }} /></div><p role="status">{crossed ? "Tu cuerpo aprende después de moverte." : "La certeza no viene antes."}</p><button type="button" onClick={() => setCrossed(true)} disabled={crossed}>Cruzar el umbral</button></div>;
+  return <div className="instrument threshold" data-crossed={crossed} data-testid="despega-threshold"><div className="threshold__line" aria-hidden="true"><motion.i animate={{ left: crossed ? "calc(100% - 18px)" : "0%" }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }} /></div><p role="status">{crossed ? "Tu cuerpo aprende después de moverte." : "La certeza no viene antes."}</p><button type="button" onClick={() => setCrossed(true)} disabled={crossed}>{crossed ? "Ya cruzaste" : "Cruzar el umbral"}</button></div>;
 }
