@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { motion, useTransform, useMotionValueEvent, type MotionValue } from "motion/react";
+import {
+  motion,
+  useMotionValueEvent,
+  useTime,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
 import { WEIGH, SCARS, SUPER_YOU } from "./letters";
+import { tremorOffset } from "./tremor";
 
 /* ───────────────────────────────────────────────
    Las mecánicas.
@@ -151,9 +158,8 @@ export function Tremble({ progress }: P) {
 
 /** Convierte una intensidad en un temblor continuo */
 function useTremor(intensity: MotionValue<number>) {
-  return useTransform(intensity, (i) =>
-    i === 0 ? 0 : Math.sin(Date.now() / 40) * i
-  );
+  const time = useTime();
+  return useTransform(() => tremorOffset(time.get(), intensity.get()));
 }
 
 /** G · la cicatriz. Cada herida se conecta con su sueño, una por una. */

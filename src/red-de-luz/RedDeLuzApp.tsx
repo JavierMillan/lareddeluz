@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "motion/react";
 import { usePageVisibility } from "@/shared/hooks/usePageVisibility";
 import { ConstellationObservatory } from "./components/ConstellationObservatory";
 import { NarrativePrologue } from "./components/NarrativePrologue";
@@ -20,14 +21,16 @@ export function RedDeLuzApp() {
 
       <main id="contenido">
         <NarrativePrologue onPhaseChange={setSkyPhase} />
-        <section
+        <motion.section
           id="constelaciones"
           className="rdl-observatory-section"
+          onViewportEnter={() => setSkyPhase("ecosystem")}
+          viewport={{ amount: 0.3 }}
           onMouseEnter={() => setSkyPhase("ecosystem")}
           onFocus={() => setSkyPhase("ecosystem")}
         >
           <ConstellationObservatory />
-        </section>
+        </motion.section>
       </main>
 
       <NetworkFinale />

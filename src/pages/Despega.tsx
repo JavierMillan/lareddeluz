@@ -41,7 +41,7 @@ function Nav() {
       className="fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl"
     >
       <div className="mx-auto flex max-w-[76rem] items-center justify-between gap-4 px-6 py-3.5">
-        <a href="/home.html" className="flex items-center gap-2.5" aria-label="La Red de Luz">
+        <a href="/" className="flex items-center gap-2.5" aria-label="La Red de Luz">
           <img src="/assets/logo.png" alt="" width="28" height="28" className="h-7 w-auto" />
           <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-gold">
             La Red de Luz
@@ -77,7 +77,7 @@ function Nav() {
 
 export default function Despega() {
   return (
-    <main className="relative">
+    <main className="despega relative">
       <Nav />
 
       {/* Atmósfera cobre */}
@@ -269,7 +269,7 @@ export default function Despega() {
 
           <p className="mt-10 font-mono text-[0.66rem] uppercase tracking-[0.24em] text-white/35">
             Javier Millán · una constelación de{" "}
-            <a href="/home.html" className="text-gold">
+            <a href="/" className="text-gold">
               La Red de Luz
             </a>
           </p>
