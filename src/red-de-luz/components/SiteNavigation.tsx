@@ -2,11 +2,7 @@ export function SiteNavigation() {
   return (
     <header className="rdl-nav">
       <a className="rdl-nav__brand" href="#cielo" aria-label="La Red de Luz, inicio">
-        <span className="rdl-nav__mark" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </span>
+        <img data-testid="brand-logo" src="/assets/logo.png" alt="" width="42" height="42" />
         <span>La Red de Luz</span>
       </a>
 

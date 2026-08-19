@@ -6,18 +6,19 @@ export function NetworkFinale() {
         <span />
         <span />
       </div>
-      <p className="rdl-coordinate">04 · La red sigue creciendo</p>
+      <p className="rdl-coordinate">06 · Tu umbral</p>
       <h2>
-        Tu luz no llega aquí
-        <span>para perderse entre otras.</span>
+        Empezaste como una luz suelta.
+        <span>Ya no tienes que serlo.</span>
       </h2>
       <p className="rdl-finale__copy">
-        Llega para encontrar conexiones, crear algo compartido y encender nuevas
-        constelaciones.
+        No prometemos milagros. Prometemos movimiento, estructura y gente que rema
+        hacia el mismo lado.
       </p>
-      <a className="rdl-finale__cta" href="#constelaciones">
-        Encuentra tu constelación <span aria-hidden="true">↑</span>
+      <a className="rdl-finale__cta" href="https://chat.whatsapp.com/LQwZxtrJSmNECZEyIwO9az" target="_blank" rel="noopener">
+        Entrar al grupo de avisos <span aria-hidden="true">↗</span>
       </a>
+      <p className="rdl-finale__note">Gratis · avisos y nuevas constelaciones · sin ruido</p>
       <div className="rdl-finale__foot">
         <span>La Red de Luz</span>
         <span>Un mundo de ecosistemas para crecer.</span>
