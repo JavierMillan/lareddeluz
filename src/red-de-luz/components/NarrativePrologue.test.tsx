@@ -2,17 +2,12 @@ import { render, screen } from "@testing-library/react";
 import { expect, it, vi } from "vitest";
 import { NarrativePrologue } from "./NarrativePrologue";
 
-it("cuenta vacío, vínculo y constelación en ese orden", () => {
+it("abre el recorrido con contexto y dos caminos claros", () => {
   render(<NarrativePrologue onPhaseChange={vi.fn()} />);
 
-  const headings = screen.getAllByRole("heading").map((node) => node.textContent);
-  expect(headings).toEqual([
-    "Brillar solo cansa.",
-    "No te falta luz.Te falta dónde conectarla.",
-    "Una misión compartidacambia la forma del cielo.",
-  ]);
-  expect(screen.getByRole("link", { name: "Entender la red" })).toHaveAttribute(
-    "href",
-    "#vinculo"
+  expect(screen.getByRole("heading", { name: "Brillar solo cansa." })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /Ocupa tu lugar/ })).toHaveAttribute(
+    "href", "https://chat.whatsapp.com/LQwZxtrJSmNECZEyIwO9az"
   );
+  expect(screen.getByRole("link", { name: /Explorar el cielo/ })).toHaveAttribute("href", "#constelaciones");
 });
