@@ -56,19 +56,53 @@
 /* Grano de papel: turbulencia fractal en un SVG inline. */
 .chapter-journey:after { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E"); }
-/* El mapa de vuelo asciende: cada coordenada se posa mas alto que la anterior. */
+/* El mapa de vuelo: siete medallones de cobre en linea.
+   Bisel + brillo interior + guardas en las esquinas — cofre, con contencion. */
 .flight-path { position: relative; width: 100%; max-width: 76rem; margin: 0 auto; padding: 0 .5rem; }
-.flight-path__trace { position: absolute; left: 3.4%; right: 3.4%; top: .35rem; width: 93.2%; height: clamp(2.6rem,6vh,4.6rem); overflow: visible; }
-.flight-path__trace polyline { fill: none; stroke-width: 1.4; vector-effect: non-scaling-stroke; }
-.flight-path__remaining { stroke: rgba(255,255,255,.13); stroke-dasharray: 4 5; }
-.flight-path__travelled { stroke: #efac69; filter: drop-shadow(0 0 7px rgba(212,130,63,.5)); transition: stroke-dashoffset .6s cubic-bezier(.22,1,.36,1); }
-.flight-path ol { position: relative; display: grid; grid-template-columns: repeat(7,1fr); align-items: end; height: clamp(4.2rem,9vh,6.6rem); }
-.flight-path li { display: grid; justify-items: center; align-content: end; padding-bottom: var(--lift,0); }
-.flight-path button { width: 3.6rem; min-height: 3rem; display: grid; justify-items: center; gap: .2rem; color: rgba(255,255,255,.3); background: transparent; border: 0; cursor: pointer; }
-.flight-path button>span { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; background: #0d0b16; font-family: var(--font-display,"Instrument Serif"),serif; font-size: 1rem; transition: .3s; }
-.flight-path button small { font: .5rem/1 monospace; letter-spacing: .08em; }
-.flight-path button[aria-current="step"] { color: #efac69; }
-.flight-path button[aria-current="step"]>span { border-color: #d4823f; box-shadow: 0 0 0 5px rgba(212,130,63,.09),0 0 28px rgba(212,130,63,.2); transform: scale(1.12); }
+.flight-path__rail { position: absolute; left: 7%; right: 7%; top: calc(clamp(2.1rem,4.6vh,2.6rem) / 2); height: 2px; border-radius: 2px; background: linear-gradient(90deg,rgba(212,130,63,.16),rgba(212,130,63,.26),rgba(212,130,63,.16)); overflow: hidden; }
+.flight-path__rail:after { content:""; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent 0 5px,rgba(13,11,22,.75) 5px 9px); }
+.flight-path__travelled { position:absolute; inset:0; transform-origin:left; background:linear-gradient(90deg,#8f532e,#e6a668 60%,#f3c48c); box-shadow:0 0 14px rgba(212,130,63,.5); transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.flight-path ol { position: relative; display: grid; grid-template-columns: repeat(7,1fr); align-items: start; }
+.flight-path li { display: grid; justify-items: center; }
+.flight-path button { display:grid; justify-items:center; gap:.3rem; padding:0; background:transparent; border:0; color:rgba(255,255,255,.34); cursor:pointer; }
+
+/* El medallon: metal batido, no un circulo plano. */
+.flight-path__medal { position:relative; display:grid; place-items:center; width:clamp(2.1rem,4.6vh,2.6rem); aspect-ratio:1; border-radius:50%;
+  background:
+    radial-gradient(circle at 34% 26%,rgba(255,220,180,.16),transparent 58%),
+    linear-gradient(155deg,#241a24,#15111d 62%,#100d18);
+  box-shadow:
+    inset 0 1px 0 rgba(240,190,140,.16),
+    inset 0 -1px 0 rgba(0,0,0,.6),
+    0 0 0 1px rgba(212,130,63,.26),
+    0 3px 9px -4px rgba(0,0,0,.85);
+  transition:box-shadow .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1),background .4s; }
+.flight-path__medal b { font:400 clamp(.92rem,2vh,1.06rem)/1 var(--font-display,"Instrument Serif"),serif; color:rgba(244,238,228,.5); transition:color .4s,text-shadow .4s; }
+/* Guardas: dos arcos de cobre que abrazan el medallon, como el herraje de un cofre. */
+.flight-path__guard { position:absolute; inset:-3px; border-radius:50%; border:1px solid transparent; border-top-color:rgba(212,130,63,.5); border-bottom-color:rgba(212,130,63,.5); opacity:0; transform:rotate(-38deg) scale(.86); transition:opacity .45s,transform .55s cubic-bezier(.22,1,.36,1); }
+.flight-path button small { font:.5rem/1 monospace; letter-spacing:.08em; opacity:.7; }
+.flight-path button em { font:.5rem/1 monospace; font-style:normal; letter-spacing:.09em; text-transform:uppercase; opacity:0; transform:translateY(-2px); transition:opacity .3s,transform .3s; }
+
+/* Recorrido: el metal ya se encendio y se queda encendido. */
+.flight-path button[data-done] .flight-path__medal { background:radial-gradient(circle at 34% 26%,rgba(255,214,166,.2),transparent 60%),linear-gradient(155deg,#3a2519,#1d1420); box-shadow:inset 0 1px 0 rgba(245,200,150,.24),inset 0 -1px 0 rgba(0,0,0,.6),0 0 0 1px rgba(212,130,63,.45),0 3px 10px -4px rgba(0,0,0,.85); }
+.flight-path button[data-done] .flight-path__medal b { color:rgba(230,166,104,.85); }
+
+/* Actual: el cofre abierto — guardas fuera, cobre vivo, halo. */
+.flight-path button[aria-current="step"] { color:#efac69; }
+.flight-path button[aria-current="step"] .flight-path__medal { transform:scale(1.14);
+  background:radial-gradient(circle at 34% 26%,rgba(255,226,186,.34),transparent 62%),linear-gradient(155deg,#6b3d1c,#331f18 68%,#1b1220);
+  box-shadow:
+    inset 0 1px 0 rgba(255,224,180,.45),
+    inset 0 -2px 3px rgba(0,0,0,.55),
+    0 0 0 1px rgba(230,166,104,.75),
+    0 0 0 5px rgba(212,130,63,.1),
+    0 0 26px rgba(212,130,63,.34); }
+.flight-path button[aria-current="step"] .flight-path__medal b { color:#fbe6cd; text-shadow:0 0 14px rgba(239,172,105,.75); }
+.flight-path button[aria-current="step"] .flight-path__guard { opacity:1; transform:rotate(0) scale(1); }
+.flight-path button[aria-current="step"] em { opacity:.85; transform:none; }
+.flight-path button:hover .flight-path__medal { transform:scale(1.07); box-shadow:inset 0 1px 0 rgba(245,205,160,.3),0 0 0 1px rgba(212,130,63,.55),0 0 18px rgba(212,130,63,.24); }
+.flight-path button:hover em { opacity:.6; transform:none; }
+.flight-path button:focus-visible em { opacity:.85; transform:none; }
 .chapter-journey__viewport { min-height: 0; display: grid; align-items: center; overflow: hidden; }
 .chapter-journey__viewport>* { min-height: 0; height: 100%; display: grid; align-items: center; }
 .chapter-scene { width: min(100%,76rem); height: 100%; margin: auto; display: grid; grid-template-columns: minmax(0,1fr) minmax(22rem,.88fr); align-items: center; gap: clamp(1.5rem,5vw,6rem); padding: clamp(.5rem,2vh,2rem) .5rem; }
@@ -86,9 +120,25 @@
    la de abajo. Se tocan por transparencia, nunca por encimarse. */
 .chapter-scene__instrument { position: relative; min-height: 0; height: 100%; max-height: min(58vh,36rem); display: grid; grid-template-rows: minmax(0,auto) min-content; align-content: center; justify-items: center; gap: clamp(.6rem,2vh,1.75rem); isolation: isolate; }
 .letter-instrument { position: relative; width: min(60%,26vh,17rem); min-height: 0; margin-right: -8%; translate: 0 -9%; color: #d4823f; opacity: .55; z-index: -1; overflow: visible; pointer-events: none; }
-.letter-instrument__orbit { fill: none; stroke: currentColor; stroke-width: .5; stroke-dasharray: .055 .03; opacity: .3; }
-.letter-instrument text { fill: none; stroke: currentColor; stroke-width: .9; font: 176px/1 var(--font-display,"Instrument Serif"),serif; opacity: .34; }
-.letter-instrument circle:not(:first-of-type) { fill: #f0ad6c; opacity: .5; }
+/* La orbita se traza sola cuando entra el capitulo. */
+.letter-instrument__orbit { fill: none; stroke: currentColor; stroke-width: .5; stroke-dasharray: .055 .03; opacity: .3; animation: orbit-draw 1.9s cubic-bezier(.22,1,.36,1) both; }
+@keyframes orbit-draw { from { stroke-dasharray:.001 .999; opacity:0 } 55% { opacity:.3 } to { stroke-dasharray:.055 .03; opacity:.3 } }
+
+/* El glifo tiene cuerpo: relleno de metal + contorno encima. */
+.letter-instrument text { font: 176px/1 var(--font-display,"Instrument Serif"),serif; }
+.letter-instrument__fill { stroke: none; opacity: .95; animation: glyph-in 1.4s cubic-bezier(.22,1,.36,1) both; }
+.letter-instrument__edge { fill: none; stroke: currentColor; stroke-width: .85; opacity: .4; animation: glyph-in 1.4s cubic-bezier(.22,1,.36,1) .08s both; }
+@keyframes glyph-in { from { opacity:0; transform:translateY(9px) scale(.985) } to { transform:none } }
+.letter-instrument[data-active="true"] .letter-instrument__fill { animation: glyph-in 1.4s cubic-bezier(.22,1,.36,1) both, glyph-breathe 11s ease-in-out 1.4s infinite; }
+@keyframes glyph-breathe { 0%,100% { opacity:.95 } 50% { opacity:.66 } }
+
+.letter-instrument__mark { fill: #f0ad6c; opacity: .5; animation: mark-pulse 6s ease-in-out infinite; }
+.letter-instrument__mark:nth-of-type(3) { animation-delay: 1.6s }
+.letter-instrument__mark:nth-of-type(4) { animation-delay: 3.2s }
+@keyframes mark-pulse { 0%,100% { opacity:.28 } 50% { opacity:.72 } }
+
+/* Un satelite recorre la orbita: el mapa esta vivo, no dibujado. */
+.letter-instrument__sat { fill: #f7d7ae; filter: drop-shadow(0 0 5px rgba(239,172,105,.9)); opacity: .8; }
 
 /* Un instrumento se lee como aparato: fondo propio, borde tenue, aire dentro. */
 .instrument { width: min(100%,29rem); max-height: 100%; overflow: auto; position: relative; z-index: 2; padding: clamp(.85rem,2vh,1.9rem) clamp(1rem,2.6vw,1.9rem); border: 1px solid rgba(212,130,63,.16); border-radius: 2px; background: linear-gradient(180deg,rgba(22,19,32,.82),rgba(13,11,22,.88)); backdrop-filter: blur(6px); box-shadow: 0 24px 60px -30px rgba(0,0,0,.9); }
@@ -171,9 +221,9 @@
   .despega-hero__telemetry { display:none; }
   .chapter-journey { padding:calc(var(--despega-nav-height) + .8rem) .85rem max(.85rem,env(safe-area-inset-bottom)); height:auto; min-height:100svh; min-height:100dvh; grid-template-rows:auto auto auto; }
   .flight-path { padding:0; }
-  .flight-path__trace { left:1.3rem; right:1.3rem; width:calc(100% - 2.6rem); height:3.6rem; }
-  .flight-path ol { height:5.4rem; }
-  .flight-path button { width:2.6rem; }
+  .flight-path__rail { left:9%; right:9%; }
+  /* Siete nombres no caben en 375px: solo el numero. */
+  .flight-path button em { display:none; }
   .chapter-journey__viewport { overflow:visible; min-height:calc(100dvh - 12.5rem); }
   .chapter-scene { grid-template-columns:1fr; gap:1rem; padding:2rem .25rem 1.5rem; }
   .chapter-scene h2 { max-width:10ch; font-size:clamp(2.75rem,13vw,4.5rem); margin:.9rem 0 1.1rem; }
@@ -203,4 +253,5 @@
 }
 @media(prefers-reduced-motion:reduce){
   .despega *,.despega *:before,.despega *:after { scroll-behavior:auto!important; animation-duration:.001ms!important; animation-iteration-count:1!important; transition-duration:.001ms!important; }
+  .letter-instrument__sat { display:none; }
 }
