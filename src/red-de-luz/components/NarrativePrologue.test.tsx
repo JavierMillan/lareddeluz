@@ -10,4 +10,6 @@ it("abre el recorrido con contexto y dos caminos claros", () => {
     "href", "https://chat.whatsapp.com/LQwZxtrJSmNECZEyIwO9az"
   );
   expect(screen.getByRole("link", { name: /Explorar el cielo/ })).toHaveAttribute("href", "#constelaciones");
+  expect(screen.getByText("Aquí empieza la red")).toBeInTheDocument();
+  expect(screen.getByText(/Una idea no necesita más ruido/i)).toHaveClass("rdl-hero__aside-copy");
 });

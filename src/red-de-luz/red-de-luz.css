@@ -86,13 +86,16 @@
 .rdl-hero h1 span, .rdl-section-heading h2 span, .rdl-link-story h2 span, .rdl-atlas__intro h2 span, .rdl-network-context h2 span, .rdl-finale h2 span { display: block; color: #89858a; }
 
 .rdl-hero {
-  display: grid; grid-template-columns: minmax(0, 8fr) minmax(13rem, 3fr); gap: clamp(2rem,8vw,9rem); align-items: end;
+  display: grid; grid-template-columns: minmax(0, 7.4fr) minmax(18rem, 3.6fr); gap: clamp(2rem,6vw,7rem); align-items: end;
   width: min(100%, 92rem); min-height: 100svh; margin-inline: auto; padding: 9rem clamp(1.35rem,5vw,5rem) 7rem;
 }
 .rdl-hero__copy { max-width: 67rem; }
 .rdl-hero h1 { max-width: 11ch; font-size: clamp(4.8rem,10.5vw,10.7rem); }
 .rdl-hero__body { max-width: 39rem; margin-top: 2.5rem; color: var(--rdl-muted); font-size: clamp(1rem,1.3vw,1.22rem); line-height: 1.72; }
-.rdl-hero__aside { margin-bottom: .4rem; padding-top: 1.35rem; border-top: 1px solid rgba(228,205,133,.3); color: #9f9991; font: 1.05rem/1.55 "Spectral", Georgia, serif; }
+.rdl-hero__aside { position: relative; align-self: center; max-width: 25rem; margin-top: 13rem; padding-top: 1.35rem; border-top: 1px solid rgba(228,205,133,.3); color: #9f9991; }
+.rdl-hero__aside::before { content: ""; position: absolute; right: 100%; top: -1px; width: clamp(2rem,7vw,8rem); height: 1px; background: linear-gradient(90deg,transparent,rgba(228,205,133,.3)); }
+.rdl-hero__aside > span { display: block; margin-bottom: .8rem; color: var(--rdl-gold); font-size: .57rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.rdl-hero__aside-copy { font: 1.08rem/1.55 "Spectral", Georgia, serif; }
 .rdl-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem 2rem; margin-top: 2.7rem; }
 .rdl-primary-cta, .rdl-finale__cta, .rdl-focus__cta {
   display: inline-flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 3.2rem; padding: .9rem 1.05rem;
@@ -235,7 +238,8 @@
   .rdl-nav__cta { padding: .65rem .8rem; }
   .rdl-hero { grid-template-columns: 1fr; align-content: end; gap: 2.6rem; padding: 8rem 1.25rem 4rem; }
   .rdl-hero h1 { max-width: 100%; font-size: clamp(3.8rem,16.5vw,5.5rem); }
-  .rdl-hero__aside { max-width: 23rem; }
+  .rdl-hero__aside { max-width: 23rem; margin-top: 0; }
+  .rdl-hero__aside::before { display: none; }
   .rdl-hero__actions { align-items: flex-start; flex-direction: column; }
   .rdl-reflection, .rdl-link-story, .rdl-definition, .rdl-network-context { padding: 8rem 1.25rem; }
   .rdl-reflection { grid-template-columns: 1fr; gap: 4rem; }

@@ -16,7 +16,10 @@ export function NarrativePrologue({ onPhaseChange }: Props) {
           <a className="rdl-text-link" href="#constelaciones">Explorar el cielo <span aria-hidden="true">↓</span></a>
         </div>
       </motion.div>
-      <p className="rdl-hero__aside">Una idea no necesita más ruido. Necesita estructura y gente con quien crecer.</p>
+      <aside className="rdl-hero__aside">
+        <span>Aquí empieza la red</span>
+        <p className="rdl-hero__aside-copy">Una idea no necesita más ruido. Necesita estructura y gente con quien crecer.</p>
+      </aside>
     </motion.section>
   );
 }

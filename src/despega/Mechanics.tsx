@@ -1,256 +1,56 @@
-import { useState } from "react";
-import {
-  motion,
-  useMotionValueEvent,
-  useTime,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
-import { WEIGH, SCARS, SUPER_YOU } from "./letters";
-import { tremorOffset } from "./tremor";
+import { useEffect, useState, type CSSProperties } from "react";
+import { motion } from "motion/react";
+import { SCARS, SUPER_YOU, WEIGH } from "./letters";
 
-/* ───────────────────────────────────────────────
-   Las mecánicas.
-
-   Todas reciben el progreso (0→1) del tramo clavado de su letra:
-   la emoción avanza mientras atraviesas la sección, no se dispara
-   una vez y muere.
-   ─────────────────────────────────────────────── */
-
-type P = { progress: MotionValue<number> };
-
-/** E · la respiración. Inhala corto, exhala largo. */
-export function Breath({ progress }: P) {
-  // El círculo crece con tu avance, además de respirar por su cuenta
-  const scale = useTransform(progress, [0, 1], [0.8, 1.15]);
-  const opacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.5, 0.15]);
-
-  return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none absolute left-1/2 top-1/2 rounded-full border"
-      style={{
-        width: "min(56vw, 30rem)",
-        aspectRatio: "1",
-        borderColor: "rgba(62,96,168,.4)",
-        x: "-50%",
-        y: "-50%",
-        scale,
-        opacity,
-      }}
-    >
-      <motion.div
-        className="h-full w-full rounded-full border"
-        style={{ borderColor: "rgba(62,96,168,.25)" }}
-        animate={{ scale: [0.88, 1, 0.88] }}
-        transition={{ duration: 11, repeat: Infinity, ease: [0.4, 0, 0.2, 1] }}
-      />
-    </motion.div>
-  );
+export function Compass() {
+  const [bearing, setBearing] = useState(38);
+  return <div className="instrument compass">
+    <div className="compass__dial" style={{ "--bearing": `${bearing}deg` } as CSSProperties}><span aria-hidden="true" className="compass__needle" /><span className="compass__north">N</span></div>
+    <label htmlFor="despega-bearing">¿Hacia dónde sí?</label>
+    <input id="despega-bearing" name="bearing" aria-label="Ajustar rumbo" type="range" min="-70" max="70" value={bearing} onChange={(event) => setBearing(Number(event.target.value))} />
+  </div>;
 }
 
-/** S · el peso. Lo que drena se hunde mientras avanzas; lo que vale se sostiene. */
-export function Weigh({ progress }: P) {
-  return (
-    <ul className="mb-8 grid gap-2">
-      {WEIGH.map((item, i) => (
-        <WeighRow key={i} item={item} progress={progress} index={i} />
-      ))}
-    </ul>
-  );
+const BREATH_STEPS = ["Inhala", "Sostén", "Exhala"];
+export function Breath() {
+  const [active, setActive] = useState(false);
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    const timer = window.setInterval(() => setStep((value) => (value + 1) % 3), 2400);
+    return () => window.clearInterval(timer);
+  }, [active]);
+  return <div className="instrument breath" data-active={active}>
+    <div className="breath__orb" aria-hidden="true"><span /></div>
+    <p role="status">{active ? BREATH_STEPS[step] : "Tu cuerpo también participa."}</p>
+    <button type="button" onClick={() => { setStep(0); setActive((value) => !value); }}>{active ? "Pausar respiración" : "Comenzar una respiración"}</button>
+  </div>;
 }
 
-function WeighRow({
-  item,
-  progress,
-  index,
-}: {
-  item: (typeof WEIGH)[number];
-  progress: MotionValue<number>;
-  index: number;
-}) {
-  const drains = item.kind === "drena";
-  // Cada fila reacciona con un desfase: el peso cae en cascada
-  const from = 0.15 + index * 0.06;
-  const to = from + 0.35;
-
-  const y = useTransform(progress, [from, to], [0, drains ? 30 : -5]);
-  const opacity = useTransform(progress, [from, to], [1, drains ? 0.28 : 1]);
-  const borderColor = useTransform(
-    progress,
-    [from, to],
-    ["rgba(212,130,63,.14)", drains ? "rgba(212,130,63,.04)" : "rgba(196,108,44,.55)"]
-  );
-
-  return (
-    <motion.li
-      style={{ y, opacity, borderColor }}
-      className="flex flex-wrap items-center gap-3 rounded-[10px] border px-5 py-3.5 text-[0.93rem]"
-    >
-      <span className="text-white/70">{item.text}</span>
-      <b className="ml-auto font-mono text-[0.55rem] font-normal uppercase tracking-[0.14em] text-white/35">
-        {drains ? "drena" : "cuesta y vale"}
-      </b>
-    </motion.li>
-  );
+export function Weigh() {
+  const [tilt, setTilt] = useState<"neutral" | "drains" | "worth">("neutral");
+  return <div className="instrument scale" data-tilt={tilt} data-testid="despega-scale">
+    <div className="scale__choices" role="group" aria-label="Pesa lo que sostienes"><button type="button" onClick={() => setTilt("drains")}>Lo que drena</button><button type="button" onClick={() => setTilt("worth")}>Lo que cuesta y vale</button></div>
+    <ul className="weigh-list">{WEIGH.map((item) => <li key={item.text} data-kind={item.kind}><button type="button" onClick={() => setTilt(item.kind === "drena" ? "drains" : "worth")}>{item.text}</button><small>{item.kind === "drena" ? "drena" : "cuesta y vale"}</small></li>)}</ul>
+  </div>;
 }
 
-/** P · el súper tú. Se escribe en presente, al ritmo de tu scroll. */
-export function SuperYou({ progress }: P) {
-  return (
-    <div className="mb-8 min-h-[7em] font-display text-[clamp(1.25rem,2.6vw,1.85rem)] leading-[1.5]">
-      {SUPER_YOU.map((line, i) => (
-        <SuperLine key={i} line={line} progress={progress} index={i} />
-      ))}
-    </div>
-  );
+export function SuperYou() {
+  const [revealed, setRevealed] = useState(0);
+  return <div className="instrument super-you"><ol>{SUPER_YOU.map((line, index) => <li key={line} data-visible={index < revealed}>{line}</li>)}</ol><button type="button" onClick={() => setRevealed((value) => Math.min(SUPER_YOU.length, value + 1))} disabled={revealed === SUPER_YOU.length}>{revealed === SUPER_YOU.length ? "Ruta trazada" : "Escribir en presente"}</button></div>;
 }
 
-function SuperLine({
-  line,
-  progress,
-  index,
-}: {
-  line: string;
-  progress: MotionValue<number>;
-  index: number;
-}) {
-  // Una línea por tercio del tramo: tú la escribes al avanzar
-  const from = 0.18 + index * 0.2;
-  const opacity = useTransform(progress, [from, from + 0.12], [0, 1]);
-  const y = useTransform(progress, [from, from + 0.12], [14, 0]);
-  const blur = useTransform(progress, [from, from + 0.12], ["blur(6px)", "blur(0px)"]);
-
-  return (
-    <motion.p style={{ opacity, y, filter: blur }} className="text-copper-light">
-      {line}
-    </motion.p>
-  );
-}
-
-/** EJ · el temblor. La tensión sube conforme te acercas al final del tramo. */
-export function Tremble({ progress }: P) {
-  // Cuanto más avanzas, más tiembla — hasta que se suelta
-  const shake = useTransform(progress, [0.2, 0.7, 0.85], [0, 1.6, 0]);
-  const borderColor = useTransform(
-    progress,
-    [0.2, 0.85],
-    ["rgba(212,130,63,.2)", "rgb(214,120,58)"]
-  );
-  const bg = useTransform(
-    progress,
-    [0.75, 0.85],
-    ["rgba(214,120,58,0)", "rgba(214,120,58,.12)"]
-  );
-  // El texto es estado real: un MotionValue de string no se puede renderizar
+export function Tremble() {
   const [sent, setSent] = useState(false);
-  useMotionValueEvent(progress, "change", (p) => setSent(p > 0.85));
-
-  return (
-    <motion.div
-      style={{ borderColor, background: bg, x: useTremor(shake) }}
-      className="mb-8 inline-flex items-center gap-3 rounded-full border px-8 py-3.5 text-[0.93rem] text-white/75"
-    >
-      <span>{sent ? "Mandado. No pasó nada." : "Mandar el audio"}</span>
-    </motion.div>
-  );
+  return <div className="instrument tremble" data-sent={sent}><div className="tremble__wave" aria-hidden="true">{[1, 2, 3, 4, 5, 6, 7].map((bar) => <i key={bar} />)}</div><p role="status">{sent ? "Mandado. No pasó nada." : "00:07 · listo para enviar"}</p><button type="button" onClick={() => setSent(true)} disabled={sent}>Mandar el audio</button></div>;
 }
 
-/** Convierte una intensidad en un temblor continuo */
-function useTremor(intensity: MotionValue<number>) {
-  const time = useTime();
-  return useTransform(() => tremorOffset(time.get(), intensity.get()));
+export function Scars() {
+  const [active, setActive] = useState(0);
+  return <div className="instrument scars">{SCARS.map((pair, index) => <button type="button" key={pair.wound} data-active={index === active} onClick={() => setActive(index)}><span><small>lo que dolió</small>{pair.wound}</span><i aria-hidden="true" /><span><small>lo que nació</small>{pair.dream}</span></button>)}</div>;
 }
 
-/** G · la cicatriz. Cada herida se conecta con su sueño, una por una. */
-export function Scars({ progress }: P) {
-  return (
-    <div className="mb-8 grid gap-5 md:grid-cols-[1fr_auto_1fr] md:items-center">
-      <div>
-        <p className="mb-3 font-mono text-[0.55rem] uppercase tracking-[0.18em] text-white/35">
-          lo que dolió
-        </p>
-        <ul className="grid gap-2.5">
-          {SCARS.map((s, i) => (
-            <ScarItem key={i} text={s.wound} progress={progress} from={0.2 + i * 0.15} />
-          ))}
-        </ul>
-      </div>
-
-      <Link progress={progress} />
-
-      <div>
-        <p className="mb-3 font-mono text-[0.55rem] uppercase tracking-[0.18em] text-white/35">
-          lo que quieres
-        </p>
-        <ul className="grid gap-2.5">
-          {SCARS.map((s, i) => (
-            <ScarItem key={i} text={s.dream} progress={progress} from={0.3 + i * 0.15} />
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-function Link({ progress }: P) {
-  const scaleX = useTransform(progress, [0.25, 0.65], [0, 1]);
-  return (
-    <motion.span
-      aria-hidden
-      className="hidden h-px origin-left bg-[rgb(178,100,52)] md:block"
-      style={{ width: "clamp(28px,6vw,72px)", scaleX }}
-    />
-  );
-}
-
-function ScarItem({
-  text,
-  progress,
-  from,
-}: {
-  text: string;
-  progress: MotionValue<number>;
-  from: number;
-}) {
-  const color = useTransform(progress, [from, from + 0.2], ["rgba(255,255,255,.42)", "rgba(255,255,255,.75)"]);
-  const borderColor = useTransform(
-    progress,
-    [from, from + 0.2],
-    ["rgba(212,130,63,.08)", "rgba(212,130,63,.28)"]
-  );
-
-  return (
-    <motion.li
-      style={{ color, borderColor }}
-      className="rounded-[9px] border px-4 py-2.5 text-[0.9rem]"
-    >
-      {text}
-    </motion.li>
-  );
-}
-
-/** A · el risco. Ya decidiste; el cuerpo se suelta al final del tramo. */
-export function Edge({ progress }: P) {
-  const left = useTransform(progress, [0, 0.7, 0.95], ["12%", "17%", "86%"]);
-  const bottom = useTransform(progress, [0, 0.7, 0.95], ["-4px", "-4px", "5.5rem"]);
-  const shake = useTransform(progress, [0, 0.65, 0.72], [0.6, 2.2, 0]);
-
-  return (
-    <div
-      aria-hidden
-      className="relative mb-8 h-24 border-b"
-      style={{ borderColor: "rgba(212,130,63,.22)" }}
-    >
-      <motion.span
-        className="absolute h-2 w-2 rounded-full bg-copper-light"
-        style={{
-          left,
-          bottom,
-          x: useTremor(shake),
-          boxShadow: "0 0 14px rgba(212,130,63,.5)",
-        }}
-      />
-    </div>
-  );
+export function Edge() {
+  const [crossed, setCrossed] = useState(false);
+  return <div className="instrument threshold" data-crossed={crossed} data-testid="despega-threshold"><div className="threshold__line" aria-hidden="true"><motion.i animate={{ left: crossed ? "calc(100% - 18px)" : "0%" }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }} /></div><p role="status">{crossed ? "Tu cuerpo aprende después de moverte." : "La certeza no viene antes."}</p><button type="button" onClick={() => setCrossed(true)} disabled={crossed}>Cruzar el umbral</button></div>;
 }
