@@ -267,3 +267,56 @@
 @media (prefers-reduced-motion: reduce) {
   .progress-step { transition: none; }
 }
+
+/* ─── Hero: la espiral es protagonista, el texto convive a un lado ─── */
+.despega-hero {
+  position: relative;
+  overflow: hidden;
+}
+.despega-hero-copy {
+  text-align: left;
+  position: relative;
+  z-index: 3;
+}
+@media (min-width: 1024px) {
+  .despega-hero-copy {
+    margin-left: 4vw;
+    margin-right: auto;
+  }
+}
+
+/* ─── Anotaciones orbitando la espiral (portada real del Workbook) ─── */
+.spiral-annotations {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  display: none;
+}
+@media (min-width: 1024px) {
+  .spiral-annotations { display: block; }
+}
+.spiral-annotation {
+  position: absolute;
+  left: var(--ax);
+  top: var(--ay);
+  transform: translate(-50%, -50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+  line-height: 1.6;
+  opacity: 0.75;
+  text-align: left;
+  white-space: nowrap;
+}
+.spiral-annotation-r { text-align: right; }
+.spiral-annotation em {
+  display: block;
+  font-style: normal;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.4);
+}
