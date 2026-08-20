@@ -234,7 +234,6 @@
 
 @media (max-width: 760px) {
   .rdl-nav { padding: .85rem 1.1rem; }
-  .rdl-nav nav > a:first-child { display: none; }
   .rdl-nav__cta { padding: .65rem .8rem; }
   .rdl-hero { grid-template-columns: 1fr; align-content: end; gap: 2.6rem; padding: 8rem 1.25rem 4rem; }
   .rdl-hero h1 { max-width: 100%; font-size: clamp(3.8rem,16.5vw,5.5rem); }

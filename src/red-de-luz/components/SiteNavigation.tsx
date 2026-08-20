@@ -7,7 +7,6 @@ export function SiteNavigation() {
       </a>
 
       <nav aria-label="Navegación principal">
-        <a href="#constelaciones">Constelaciones</a>
         <a className="rdl-nav__cta" href="#constelaciones">
           Explorar el cielo
         </a>
