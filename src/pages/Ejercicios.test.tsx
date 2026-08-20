@@ -24,13 +24,17 @@ describe("cuaderno de trabajo", () => {
     expect(links.some((link) => link.hasAttribute("download"))).toBe(true);
   });
 
-  it("abre D1 como pausa de pantalla completa sin textbox ni PDF", async () => {
+  it("abre D1 como la lectura directa indicada en el libro principal", async () => {
     render(<Ejercicios />);
     await userEvent.click(screen.getByText("D1").closest("button")!);
 
     expect(screen.getByRole("main", { name: /D1 · Escúchate/i })).toBeTruthy();
     expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.getByText("Los pingüinos de Alaska bailan cumbia los martes.")).toBeTruthy();
+    expect(screen.getByText("¿Por qué la escuchaste?")).toBeTruthy();
+    expect(screen.getByText(/algo dentro de ti la leyó en voz alta/i)).toBeTruthy();
     expect(screen.queryByRole("textbox")).toBeNull();
+    expect(screen.queryByRole("button", { name: "Comenzar pausa" })).toBeNull();
     expect(screen.queryByText(/descargar esta hoja/i)).toBeNull();
     expect(window.location.search).toBe("?ejercicio=D1");
   });
@@ -43,6 +47,9 @@ describe("cuaderno de trabajo", () => {
     expect(within(workspace).getByRole("heading", { name: "Me drena" })).toBeTruthy();
     expect(within(workspace).getByRole("heading", { name: "Neutro" })).toBeTruthy();
     expect(within(workspace).getByRole("heading", { name: "Me recarga" })).toBeTruthy();
+    expect(within(workspace).getByText(/cada noche anota lo que hiciste ese día.*hora aproximada/i)).toBeTruthy();
+    expect(within(workspace).getByRole("table", { name: /dónde se te va el día/i })).toBeTruthy();
+    expect(within(workspace).getByRole("textbox", { name: "Lunes 06:00" })).toBeTruthy();
 
     await userEvent.type(within(workspace).getByRole("textbox", { name: "Agregar a Me drena" }), "Junta sin propósito");
     await userEvent.click(within(workspace).getByRole("button", { name: "Agregar en Me drena" }));

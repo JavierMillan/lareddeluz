@@ -6,8 +6,9 @@ export type Category = { key: string; label: string };
 export type ComposeField = { key: string; label: string; placeholder: string };
 
 export type ExerciseExperience =
-  | { kind: "pause"; duration: number; downloadable: false }
+  | { kind: "reading"; statement: string; question: string; explanation: string[]; downloadable: false }
   | { kind: "writing"; prompts: string[]; downloadable: true }
+  | { kind: "energy"; categories: Category[]; days: string[]; hours: string[]; downloadable: true }
   | { kind: "capture"; categories: Category[]; downloadable: true }
   | { kind: "decision"; categories: Category[]; downloadable: true }
   | { kind: "compose"; fields: ComposeField[]; template: string; downloadable: true };
@@ -15,7 +16,17 @@ export type ExerciseExperience =
 const categories = (...pairs: [string, string][]): Category[] => pairs.map(([key, label]) => ({ key, label }));
 
 export const EXPERIENCE_BY_CODE: Record<string, ExerciseExperience> = {
-  D1: { kind: "pause", duration: 10, downloadable: false },
+  D1: {
+    kind: "reading",
+    statement: "Los pingüinos de Alaska bailan cumbia los martes.",
+    question: "¿Por qué la escuchaste?",
+    explanation: [
+      "Porque la escuchaste. No nada más la viste: sonó. Alguien la dijo adentro de tu cabeza, con voz y con tono, y hasta con la pausa antes de «los martes». Y tú no diste esa orden.",
+      "Yo escribí una tontería sobre pingüinos bailando y algo dentro de ti la leyó en voz alta sin preguntarte si querías.",
+      "Si una frase absurda activa esa voz sin tu permiso, imagínate el poder que tienen las frases que llevas escuchando toda la vida.",
+    ],
+    downloadable: false,
+  },
   D2: { kind: "writing", prompts: ["Encuentra el momento", "Encuentra la conclusión que sacaste", "Ve dónde te ha servido", "Escribe la despedida", "Déjala a la vista"], downloadable: true },
   D3: {
     kind: "compose",
@@ -29,7 +40,13 @@ export const EXPERIENCE_BY_CODE: Record<string, ExerciseExperience> = {
   },
   D4: { kind: "capture", categories: categories(["audio", "Lo que escuché"], ["body", "Lo que vi"], ["patterns", "Tres automatismos"]), downloadable: true },
   E1: { kind: "decision", categories: categories(["fourEight", "4 · 4 · 8"], ["box", "Respiración de caja"], ["hold", "Retención cómoda"]), downloadable: true },
-  E2: { kind: "capture", categories: categories(["drena", "Me drena"], ["neutro", "Neutro"], ["recarga", "Me recarga"]), downloadable: true },
+  E2: {
+    kind: "energy",
+    categories: categories(["drena", "Me drena"], ["neutro", "Neutro"], ["recarga", "Me recarga"]),
+    days: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
+    hours: Array.from({ length: 17 }, (_, index) => `${String(index + 6).padStart(2, "0")}:00`),
+    downloadable: true,
+  },
   S1: { kind: "capture", categories: categories(["returns", "Drena y devuelve"], ["empty", "Drena y no devuelve"]), downloadable: true },
   S2: { kind: "writing", prompts: ["Lo que quiero decir en voz alta", "La justificación que se me salió"], downloadable: true },
   S3: { kind: "writing", prompts: ["Lo que me dio", "Por qué ya no me corresponde", "Lo que me llevo", "Mi frase de cierre"], downloadable: true },
@@ -43,26 +60,18 @@ export const EXPERIENCE_BY_CODE: Record<string, ExerciseExperience> = {
       { key: "weeks", label: "Duración", placeholder: "2" },
       { key: "goal", label: "Meta", placeholder: "publicar mi idea" },
       { key: "feeling", label: "Cómo quiero sentirme", placeholder: "curiosidad" },
-      { key: "cadence", label: "Ritmo real", placeholder: "3 mañanas" },
+      { key: "cadence", label: "Días por semana", placeholder: "3 días" },
+      { key: "review", label: "Fecha de revisión", placeholder: "viernes 28" },
     ],
-    template: "Durante las próximas {weeks} semanas voy a {goal}, sintiendo {feeling}, dedicándole {cadence}.",
+    template: "Durante las próximas {weeks} semanas voy a {goal}, sintiendo {feeling}, dedicándole {cadence} por semana, y lo reviso el {review}.",
     downloadable: true,
   },
   EJ1: { kind: "capture", categories: categories(["one", "1 · Natural"], ["two", "2 · Concentración"], ["three", "3 · Vencer resistencia"]), downloadable: true },
-  EJ2: {
-    kind: "compose",
-    fields: [
-      { key: "hard", label: "Qué cuesta sostener", placeholder: "Lo que pesa esta semana" },
-      { key: "reduce", label: "Qué puedo reducir", placeholder: "Un ajuste concreto" },
-      { key: "keep", label: "Qué sí quiero sostener", placeholder: "El rumbo que permanece" },
-    ],
-    template: "Esta semana ajusto {reduce} porque {hard}; mantengo {keep}.",
-    downloadable: true,
-  },
-  G1: { kind: "capture", categories: categories(["good", "Qué salió bien"], ["bad", "Qué salió mal"], ["felt", "Cómo me sentí"]), downloadable: true },
+  EJ2: { kind: "writing", prompts: ["¿Qué me está costando sostener esta semana?", "¿Qué puedo hacer distinto sin romperme?", "¿Le bajo a la meta o le cambio la forma?", "¿Qué ajusté y por qué?"], downloadable: true },
+  G1: { kind: "capture", categories: categories(["good", "Qué salió bien"], ["bad", "Qué salió mal"], ["felt", "Cómo me sentí"], ["adjustments", "Máximo dos ajustes"], ["gratitude", "Algo que agradezco"]), downloadable: true },
   G2: { kind: "writing", prompts: ["¿Qué necesito recordar de hoy?"], downloadable: true },
   A1: { kind: "capture", categories: categories(["input", "Qué le meto"], ["return", "Qué me devuelve"], ["parts", "Las piezas del sistema"]), downloadable: true },
-  A2: { kind: "decision", categories: categories(["facts", "Lo que sé"], ["fear", "Lo que estoy imaginando"], ["choice", "La decisión"]), downloadable: true },
+  A2: { kind: "capture", categories: categories(["decision", "La decisión, sin adornos"], ["facts", "Los hechos"], ["added", "Lo que yo estoy agregando"], ["realRisks", "Riesgos reales"], ["inventedRisks", "Riesgos inventados"], ["superSelf", "Qué haría mi súper tú"], ["today", "Lo que haré hoy en 5 minutos"]), downloadable: true },
 };
 
 function textLines(value: AnswerValue | undefined): string[] {
@@ -79,11 +88,25 @@ export function composeStatement(template: string, answer: ExerciseAnswer): stri
 
 export function answerToBlocks(code: string, answer: ExerciseAnswer): PrintBlock[] {
   const experience = EXPERIENCE_BY_CODE[code];
-  if (!experience || experience.kind === "pause") return [];
+  if (!experience) return [];
+
+  if (experience.kind === "reading") return [];
 
   if (experience.kind === "compose") {
     const hasValue = experience.fields.some((field) => textLines(answer[field.key]).length > 0);
     return hasValue ? [{ label: "Mi declaración", lines: [composeStatement(experience.template, answer)] }] : [];
+  }
+
+  if (experience.kind === "energy") {
+    const categoryBlocks = experience.categories.flatMap(({ key, label }) => {
+      const lines = textLines(answer[key]);
+      return lines.length ? [{ label, lines }] : [];
+    });
+    const scheduleBlocks = experience.days.flatMap((day) => experience.hours.flatMap((hour) => {
+      const lines = textLines(answer[`schedule:${day}:${hour}`]);
+      return lines.length ? [{ label: `${day} · ${hour}`, lines }] : [];
+    }));
+    return [...categoryBlocks, ...scheduleBlocks];
   }
 
   const sources = experience.kind === "writing"

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "motion/react";
 import type { Exercise } from "./exercises";
 import {
@@ -25,30 +25,21 @@ type Props = {
 const asText = (value: ExerciseAnswer[string]) => Array.isArray(value) ? value.join("\n") : value ?? "";
 const asList = (value: ExerciseAnswer[string]) => Array.isArray(value) ? value : value?.trim() ? [value] : [];
 
-function PauseExperience({ duration }: { duration: number }) {
-  const [remaining, setRemaining] = useState(duration);
-  const [running, setRunning] = useState(false);
-
-  useEffect(() => {
-    if (!running || remaining <= 0) return;
-    const timer = window.setTimeout(() => setRemaining((value) => value - 1), 1000);
-    return () => window.clearTimeout(timer);
-  }, [remaining, running]);
-
-  const start = () => {
-    setRemaining(duration);
-    setRunning(true);
-  };
-
-  return <section className="pause-experience" aria-label="Pausa guiada">
-    <div className={`pause-orb${running ? " is-running" : ""}`} aria-live="polite">
-      <span>{remaining > 0 ? remaining : "·"}</span>
+function ReadingExperience({ experience }: {
+  experience: Extract<ExerciseExperience, { kind: "reading" }>;
+}) {
+  return <section className="reading-experience" aria-label="Lectura directa">
+    <div className="reading-cue">
+      <span>Lee esta frase</span>
+      <blockquote>{experience.statement}</blockquote>
     </div>
-    <p>{remaining > 0
-      ? "Cierra los ojos. Escucha lo primero que tu cabeza intenta decirte."
-      : "Ahí está. No necesitabas escribirla para comprobar que existe."}</p>
-    <button type="button" onClick={start}>{running && remaining > 0 ? "Reiniciar pausa" : "Comenzar pausa"}</button>
-    <small>Sin respuestas · sin nada que entregar</small>
+    <div className="reading-reveal">
+      <p className="reading-stop">Ya está, eso es todo.</p>
+      <h2>{experience.question}</h2>
+      <div className="reading-explanation">
+        {experience.explanation.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      </div>
+    </div>
   </section>;
 }
 
@@ -135,6 +126,39 @@ function ListExperience({ categories, answer, onChange, variant }: {
   </div>;
 }
 
+function EnergyExperience({ experience, answer, onChange }: {
+  experience: Extract<ExerciseExperience, { kind: "energy" }>;
+  answer: ExerciseAnswer;
+  onChange: Props["onChange"];
+}) {
+  return <div className="energy-experience">
+    <ListExperience categories={experience.categories} answer={answer} onChange={onChange} variant="capture" />
+    <section className="energy-week">
+      <header>
+        <span>Paso 2 · tu semana real</span>
+        <h2>Dónde se te va el día</h2>
+        <p>Anota la actividad y la hora. Al final revisa qué días son puro drenaje y en cuáles ya hay algo que recarga.</p>
+      </header>
+      <div className="energy-table-scroll">
+        <table aria-label="Dónde se te va el día">
+          <thead><tr><th>Hora</th>{experience.days.map((day) => <th key={day}>{day.slice(0, 3)}</th>)}</tr></thead>
+          <tbody>{experience.hours.map((hour) => <tr key={hour}>
+            <th>{hour}</th>
+            {experience.days.map((day) => {
+              const key = `schedule:${day}:${hour}`;
+              return <td key={key}><input
+                aria-label={`${day} ${hour}`}
+                value={asText(answer[key])}
+                onChange={(event) => onChange({ ...answer, [key]: event.target.value })}
+              /></td>;
+            })}
+          </tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+  </div>;
+}
+
 function ComposeExperience({ experience, answer, onChange }: {
   experience: Extract<ExerciseExperience, { kind: "compose" }>;
   answer: ExerciseAnswer;
@@ -161,7 +185,8 @@ function Experience({ experience, answer, onChange }: {
   answer: ExerciseAnswer;
   onChange: Props["onChange"];
 }) {
-  if (experience.kind === "pause") return <PauseExperience duration={experience.duration} />;
+  if (experience.kind === "reading") return <ReadingExperience experience={experience} />;
+  if (experience.kind === "energy") return <EnergyExperience experience={experience} answer={answer} onChange={onChange} />;
   if (experience.kind === "writing") return <WritingExperience prompts={experience.prompts} answer={answer} onChange={onChange} />;
   if (experience.kind === "compose") return <ComposeExperience experience={experience} answer={answer} onChange={onChange} />;
   return <ListExperience categories={experience.categories} answer={answer} onChange={onChange} variant={experience.kind} />;
@@ -178,7 +203,7 @@ export default function ExerciseWorkspace({ exercise, answer, onChange, onBack, 
   const experience = EXPERIENCE_BY_CODE[exercise.code];
   const written = answerHasContent(exercise.code, answer);
 
-  return <main className="exercise-workspace" aria-label={`${exercise.code} · ${exercise.title}`}>
+  return <main className={`exercise-workspace exercise-workspace--${experience.kind}`} aria-label={`${exercise.code} · ${exercise.title}`}>
     <div className="workbook-toolbar">
       <button type="button" className="workbook-back" onClick={onBack}>← Volver al índice</button>
       <span>{String(exercise.num).padStart(2, "0")} / 20</span>
@@ -191,6 +216,17 @@ export default function ExerciseWorkspace({ exercise, answer, onChange, onBack, 
         <p className="workbook-purpose">{exercise.purpose}</p>
         <div className="workbook-needs"><span>Antes de empezar</span><p>{exercise.needs}</p></div>
       </header>
+
+      {exercise.steps.length > 0 && <details className="workbook-instructions" open>
+        <summary>Cómo hacerlo <span>{exercise.steps.length} pasos</span></summary>
+        {exercise.notice && <aside className="workbook-notice"><strong>Antes de empezar</strong><p>{exercise.notice}</p></aside>}
+        <ol>
+          {exercise.steps.map((step, index) => <li key={`${exercise.code}-${index}`}>
+            <i>{String(index + 1).padStart(2, "0")}</i>
+            <p>{step}</p>
+          </li>)}
+        </ol>
+      </details>}
 
       <section className="workbook-body">
         <Experience experience={experience} answer={answer} onChange={onChange} />

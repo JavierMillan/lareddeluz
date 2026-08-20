@@ -34,7 +34,8 @@ function Nav() {
 }
 
 const KIND_COPY = {
-  pause: "Pausa guiada",
+  reading: "Lectura directa",
+  energy: "Mapa semanal",
   writing: "Escritura íntima",
   capture: "Registro vivo",
   decision: "Decisión visual",
