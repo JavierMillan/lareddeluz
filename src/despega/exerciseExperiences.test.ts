@@ -53,15 +53,26 @@ describe("experiencias del cuaderno", () => {
   it("conserva completas las instrucciones del libro principal", () => {
     const exercise = (code: string) => EXERCISES.find((item) => item.code === code)!;
     expect(exercise("D2").notice).toMatch(/busca a un profesional/);
-    expect(exercise("D2").steps[0]).toMatch(/quién estaba ahí\.$/);
-    expect(exercise("D2").steps[2]).toMatch(/Es entre tú y tú, pero sin que te dé pena mirarlo\.$/);
+    expect(exercise("D2").steps[0]).toMatch(/recuerdo cotidiano/);
+    expect(exercise("D2").steps[2]).toMatch(/tres momentos.*protegió/i);
     expect(exercise("D3").steps[0]).toMatch(/Ahí es donde se esconden\.$/);
     expect(exercise("D4").steps[0]).toMatch(/así es como hablas de verdad\.$/);
     expect(exercise("E1").steps[4]).toMatch(/la que te bajó de verdad\.$/);
     expect(exercise("E2").steps[3]).toMatch(/Aunque sean quince minutos\.$/);
     expect(exercise("S1").steps[4]).toMatch(/ahí está la cuenta\.$/);
-    expect(exercise("P4").steps[5]).toMatch(/lo reviso el \[fecha\]\.»$/);
+    expect(exercise("P4").steps[5]).toMatch(/lo reviso el \[fecha\]/);
     expect(exercise("A2").steps).toHaveLength(7);
     expect(exercise("A2").steps[6]).toMatch(/dirección de esa respuesta\.$/);
+  });
+
+  it("mantiene las instrucciones breves y accionables", () => {
+    const verboseSteps = EXERCISES.flatMap((exercise) => exercise.steps
+      .map((step, index) => ({ code: exercise.code, step: index + 1, length: step.length }))
+      .filter((item) => item.length > 240));
+
+    expect(verboseSteps).toEqual([]);
+    for (const exercise of EXERCISES) {
+      if (exercise.notice) expect(exercise.notice.length, `${exercise.code}: aviso`).toBeLessThanOrEqual(500);
+    }
   });
 });
