@@ -54,15 +54,19 @@ describe("experiencias del cuaderno", () => {
     const exercise = (code: string) => EXERCISES.find((item) => item.code === code)!;
     expect(exercise("D2").notice).toMatch(/busca a un profesional/);
     expect(exercise("D2").notice).not.toMatch(/recuerdo cotidiano/i);
+    expect(exercise("D2").expect).not.toMatch(/acompañado|profesional/i);
     expect(exercise("D2").steps[0]).toMatch(/recuerdo cotidiano/);
     expect(exercise("D2").steps[2]).toMatch(/tres momentos.*protegió/i);
     expect(exercise("D3").steps[0]).toMatch(/Ahí es donde se esconden\.$/);
     expect(exercise("D4").steps[0]).toMatch(/así es como hablas de verdad\.$/);
     expect(exercise("E1").steps[4]).toMatch(/la que te bajó de verdad\.$/);
     expect(exercise("E2").steps[3]).toMatch(/Aunque sean quince minutos\.$/);
+    expect(exercise("E2").needs).not.toMatch(/columnas/i);
     expect(exercise("S1").steps[4]).toMatch(/ahí está la cuenta\.$/);
     expect(exercise("P4").steps[5]).toMatch(/lo reviso el \[fecha\]/);
+    expect(exercise("G2").needs).not.toMatch(/dormir/i);
     expect(exercise("A2").steps).toHaveLength(7);
+    expect(exercise("A2").needs).not.toMatch(/columnas/i);
     expect(exercise("A2").steps[6]).toMatch(/dirección de esa respuesta\.$/);
   });
 

@@ -55,7 +55,7 @@ export const EXERCISES: Exercise[] = [
       "Escribe la despedida: «Gracias, [creencia], por cuidarme cuando [momento]. Ya no te necesito. Ahora elijo creer que [lo nuevo]». Léela en voz alta, aunque se sienta raro.",
       "Déjala a la vista. Pon la frase nueva donde la veas seguido. No es magia: es un recordatorio para cachar la creencia vieja mientras está decidiendo por ti.",
     ],
-    expect: "El paso 1 y el 2 pueden remover cosas, así que no lo hagas de prisa ni antes de una junta. Si al escribir la creencia se te cierra algo en el pecho, vas bien, esa es la señal de que diste con la buena. Y si de plano lo que aparece es más grande de lo que puedes sostener solo, ya sabes lo que sigue: eso se trabaja acompañado, no en un cuaderno.",
+    expect: "El paso 1 y el 2 pueden remover cosas, así que no lo hagas de prisa ni antes de una junta. Si al escribir la creencia se te cierra algo en el pecho, vas bien: esa es la señal de que diste con la buena.",
     signal: "Cuando en los días siguientes te veas a punto de hacer algo desde la creencia vieja y lo reconozcas en el momento. No cuando desaparezca, porque no desaparece. Cuando la veas venir.",
   },
   {
@@ -115,7 +115,7 @@ export const EXERCISES: Exercise[] = [
     letter: "e",
     title: "Auditoría de energía",
     purpose: "Para encontrar el hueco por donde se te está drenando la energía, y para darte cuenta de si tus días traen algo que te recargue o son puro gasto.",
-    needs: "Una hoja partida en tres columnas, y hacerlo al final del día durante una semana. Te toma dos minutos diarios.",
+    needs: "Una hoja y dos minutos al final del día durante una semana.",
     steps: [
       "Divide la hoja en tres columnas: lo que me drena, lo neutro, lo que me recarga.",
       "Cada noche anota lo que hiciste y la hora aproximada. No pongas «trabajo»: escribe la actividad concreta y colócala donde sientas que va.",
@@ -315,7 +315,7 @@ export const EXERCISES: Exercise[] = [
     letter: "g",
     title: "Tu registro mínimo",
     purpose: "Para no perder el hábito en los días malos, que son justamente los días donde más material hay que guardar.",
-    needs: "Dos minutos antes de dormir. Nada más.",
+    needs: "Dos minutos al día. Nada más.",
     steps: [
       "Elige tu momento y que sea siempre el mismo. Antes de dormir, en la ducha, mientras te tomas el café, caminando. El momento importa menos que la constancia.",
       "Hazte una sola pregunta: ¿qué necesito recordar de hoy?",
@@ -349,7 +349,7 @@ export const EXERCISES: Exercise[] = [
     letter: "a",
     title: "La decisión que traes atorada",
     purpose: "Para desatorar esa decisión que llevas semanas o meses dándole vueltas sin resolver. Todos traemos una.",
-    needs: "Una hoja partida en tres columnas, veinte minutos, y estar solo.",
+    needs: "Una hoja, veinte minutos y estar solo.",
     steps: [
       "Antes de escribir nada, respira. Tres minutos con la exhalación más larga que la inhalación, como lo trabajaste en el capítulo E. No es relleno: si decides con el cuerpo acelerado, vas a decidir desde el miedo.",
       "Escribe arriba la decisión, en una frase y sin adornos. «¿Renuncio o no?» «¿Cierro el negocio?» «¿Tengo esa conversación?»",
