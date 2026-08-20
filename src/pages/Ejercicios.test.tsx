@@ -43,6 +43,19 @@ describe("cuaderno de trabajo", () => {
     expect(window.location.search).toBe("?ejercicio=D1");
   });
 
+  it("mantiene accesibles e interactivos los desplegables del ejercicio", async () => {
+    render(<Ejercicios />);
+    await userEvent.click(screen.getByText("D2").closest("button")!);
+    const workspace = screen.getByRole("main", { name: /D2 · Ponle nombre a tu creencia/i });
+    const instructions = within(workspace).getByText(/Cómo hacerlo/i, { selector: "summary" });
+
+    expect(instructions.closest("details")).toHaveAttribute("open");
+    await userEvent.click(instructions);
+    expect(instructions.closest("details")).not.toHaveAttribute("open");
+    expect(within(workspace).getByText("Qué podrías sentir mientras lo haces")).toBeTruthy();
+    expect(within(workspace).getByText("Cómo vas a notar que algo cambió")).toBeTruthy();
+  });
+
   it("E2 permite capturar momentos en tres categorias", async () => {
     render(<Ejercicios />);
     await userEvent.click(screen.getByText("E2").closest("button")!);
