@@ -80,4 +80,19 @@ describe("experiencias del cuaderno", () => {
       if (exercise.notice) expect(exercise.notice.length, `${exercise.code}: aviso`).toBeLessThanOrEqual(500);
     }
   });
+
+  it("habla desde el momento de completar la hoja, después de observar", () => {
+    const exercise = (code: string) => EXERCISES.find((item) => item.code === code)!;
+
+    expect(exercise("D3").needs).toMatch(/notaste durante el día/i);
+    expect(exercise("D3").steps[0]).not.toMatch(/durante un día completo, pon atención/i);
+    expect(exercise("D4").needs).toMatch(/video que grabaste/i);
+    expect(exercise("D4").steps.join(" ")).not.toMatch(/déjalo reposar/i);
+    expect(exercise("E2").needs).toMatch(/registro de la semana/i);
+    expect(exercise("E2").steps.join(" ")).not.toMatch(/cada noche anota|al terminar la semana/i);
+    expect(exercise("S1").needs).toMatch(/registro de dos semanas/i);
+    expect(exercise("S1").steps.join(" ")).not.toMatch(/durante dos semanas|a las dos semanas/i);
+    expect(exercise("EJ1").needs).toMatch(/registro.*semana/i);
+    expect(exercise("EJ1").steps[0]).not.toMatch(/cada noche escribe/i);
+  });
 });

@@ -51,7 +51,7 @@ describe("cuaderno de trabajo", () => {
     expect(within(workspace).getByRole("heading", { name: "Me drena" })).toBeTruthy();
     expect(within(workspace).getByRole("heading", { name: "Neutro" })).toBeTruthy();
     expect(within(workspace).getByRole("heading", { name: "Me recarga" })).toBeTruthy();
-    expect(within(workspace).getByText(/cada noche anota lo que hiciste y la hora aproximada/i)).toBeTruthy();
+    expect(within(workspace).getByText(/recorre tu registro.*día y hora aproximada/i)).toBeTruthy();
     expect(within(workspace).getByRole("table", { name: /dónde se te va el día/i })).toBeTruthy();
     expect(within(workspace).getByRole("textbox", { name: "Lunes 06:00" })).toBeTruthy();
 
