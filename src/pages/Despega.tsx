@@ -10,7 +10,7 @@ function Nav() {
   return <nav className="despega-nav">
     <div>
       <a href="/" className="despega-nav__brand" aria-label="La Red de Luz"><img src="/assets/logo.png" alt="" width="28" height="28" /><span>La Red de Luz</span></a>
-      <a href="#viaje" className="despega-nav__map">Mapa de vuelo <span aria-hidden="true">↓</span></a>
+      <a href="/ejercicios/" className="despega-nav__map">Cuaderno de trabajo <span aria-hidden="true">↗</span></a>
       <a href={WA} target="_blank" rel="noopener" className="despega-nav__cta">Conseguir DESPEGA</a>
     </div>
   </nav>;
@@ -45,6 +45,7 @@ export default function Despega() {
         <motion.h2 variants={rise} custom={.12} initial="hidden" whileInView="show" viewport={{ once: true }}>Nada de esto lo hice solo.<br/><span>Tú tampoco tienes que hacerlo así.</span></motion.h2>
         <motion.p variants={rise} custom={.2} initial="hidden" whileInView="show" viewport={{ once: true }} className="despega-final__body">Si llegaste hasta aquí leyendo, ya sabes que no fue por curiosidad. Fue porque algo de esto te encontró a ti primero.</motion.p>
         <motion.a variants={rise} custom={.28} initial="hidden" whileInView="show" viewport={{ once: true }} href={WA} target="_blank" rel="noopener" className="despega-final__cta">Empezar <span aria-hidden="true">↗</span></motion.a>
+        <p className="despega-final__workbook">¿Prefieres empezar por tu cuenta? <a href="/ejercicios/">Los 20 ejercicios del cuaderno</a> están aquí, con espacio para escribirlos.</p>
         <p className="despega-final__credit">Javier Millán · una constelación de <a href="/">La Red de Luz</a></p>
       </div>
     </section>

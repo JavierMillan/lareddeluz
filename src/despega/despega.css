@@ -254,7 +254,9 @@
 .despega-final h2 { font-size:clamp(2.5rem,6vw,4.8rem); }
 .despega-final__glow { position:absolute; inset:20% 15%; background:rgba(212,130,63,.11); filter:blur(150px); border-radius:50%; }
 .despega-final__cta { display:inline-flex; gap:1rem; margin-top:2.5rem; padding:1rem 1.6rem; transition:.25s; }
-.despega-final__credit { margin-top:3rem; color:rgba(255,255,255,.3); font:.6rem/1.5 var(--font-mono); letter-spacing:.15em; text-transform:uppercase; }
+.despega-final__workbook { margin-top:2.4rem; color:var(--muted); font-size:.92rem; line-height:1.6; }
+.despega-final__workbook a { color:#e6a668; text-decoration:underline; text-underline-offset:3px; }
+.despega-final__credit { margin-top:1.6rem; color:rgba(255,255,255,.3); font:.6rem/1.5 var(--font-mono); letter-spacing:.15em; text-transform:uppercase; }
 .despega-final__credit a { color:#d8bd71; }
 
 @media(max-width:800px){

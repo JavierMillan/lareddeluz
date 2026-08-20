@@ -14,6 +14,7 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, "index.html"),
         despega: path.resolve(__dirname, "despega/index.html"),
+        ejercicios: path.resolve(__dirname, "ejercicios/index.html"),
       },
     },
   },
