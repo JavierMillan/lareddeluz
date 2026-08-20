@@ -53,6 +53,7 @@ describe("experiencias del cuaderno", () => {
   it("conserva completas las instrucciones del libro principal", () => {
     const exercise = (code: string) => EXERCISES.find((item) => item.code === code)!;
     expect(exercise("D2").notice).toMatch(/busca a un profesional/);
+    expect(exercise("D2").notice).not.toMatch(/recuerdo cotidiano/i);
     expect(exercise("D2").steps[0]).toMatch(/recuerdo cotidiano/);
     expect(exercise("D2").steps[2]).toMatch(/tres momentos.*protegió/i);
     expect(exercise("D3").steps[0]).toMatch(/Ahí es donde se esconden\.$/);

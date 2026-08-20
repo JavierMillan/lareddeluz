@@ -47,7 +47,7 @@ export const EXERCISES: Exercise[] = [
     title: "Ponle nombre a tu creencia",
     purpose: "Para poder cacharla en vivo. Mientras la creencia no tenga nombre no la ves, se siente como que así son las cosas y ya. En cuanto la nombras empiezas a detectarla justo en el momento en que la estás repitiendo, y ahí es donde por fin puedes hacer algo.",
     needs: "Media hora, un cuaderno y estar solo. No lo hagas entre pendientes ni con el teléfono al lado.",
-    notice: "Busca un recuerdo cotidiano: un comentario, una comparación, una regla de tu casa. Nada más. Si aparece algo grande, de eso que te mueve el piso o llevas años esquivando, detente. No es cobardía, es criterio. Eso se trabaja acompañado. Cierra el cuaderno y busca a un profesional; el ejercicio seguirá aquí cuando estés listo.",
+    notice: "Si aparece algo grande, de eso que te mueve el piso o llevas años esquivando, detente. No es cobardía, es criterio. Eso se trabaja acompañado. Cierra el cuaderno y busca a un profesional; el ejercicio seguirá aquí cuando estés listo.",
     steps: [
       "Encuentra el momento. Busca un recuerdo cotidiano que se te haya quedado grabado. Escríbelo tal cual: qué pasó, cuántos años tenías y quién estaba ahí.",
       "Encuentra la conclusión. Escríbela en una frase que empiece con «si» o «yo». Si puedes nombrar tres momentos recientes en los que actuaste desde ahí, diste con la buena.",
