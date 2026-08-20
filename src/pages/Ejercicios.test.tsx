@@ -4,10 +4,14 @@ import userEvent from "@testing-library/user-event";
 import Ejercicios from "./Ejercicios";
 import { EXERCISES } from "@/despega/exercises";
 import { LETTERS } from "@/despega/letters";
+import { clearAnswer } from "@/despega/exerciseStorage";
 
 describe("cuaderno de trabajo", () => {
   beforeEach(() => window.history.replaceState({}, "", "/ejercicios/"));
-  afterEach(() => localStorage.clear());
+  afterEach(() => {
+    for (const exercise of EXERCISES) clearAnswer(exercise.code);
+    localStorage.clear();
+  });
 
   it("lista los 20 ejercicios repartidos en las 7 coordenadas", () => {
     render(<Ejercicios />);
@@ -64,6 +68,31 @@ describe("cuaderno de trabajo", () => {
     await userEvent.click(screen.getByRole("button", { name: /volver al índice/i }));
     expect(screen.getByRole("heading", { name: /Los 20 ejercicios/i })).toBeTruthy();
     expect(window.location.search).toBe("");
+  });
+
+  it("navega de forma circular entre el primer y el último ejercicio", async () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=D1");
+    render(<Ejercicios />);
+
+    await userEvent.click(screen.getByRole("button", { name: /ejercicio anterior: A2/i }));
+    expect(screen.getByRole("main", { name: /A2 · La decisión que traes atorada/i })).toBeTruthy();
+    expect(window.location.search).toBe("?ejercicio=A2");
+
+    await userEvent.click(screen.getByRole("button", { name: /ejercicio siguiente: D1/i }));
+    expect(screen.getByRole("main", { name: /D1 · Escúchate/i })).toBeTruthy();
+    expect(window.location.search).toBe("?ejercicio=D1");
+  });
+
+  it("guarda una respuesta pendiente antes de cambiar de ejercicio", async () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=G2");
+    const view = render(<Ejercicios />);
+
+    await userEvent.type(screen.getByRole("textbox", { name: "¿Qué necesito recordar de hoy?" }), "No perder esta idea");
+    await userEvent.click(screen.getByRole("button", { name: /ejercicio siguiente: A1/i }));
+    await userEvent.click(screen.getByRole("button", { name: /ejercicio anterior: G2/i }));
+
+    expect(screen.getByRole("textbox", { name: "¿Qué necesito recordar de hoy?" })).toHaveValue("No perder esta idea");
+    view.unmount();
   });
 
   it("autoguarda una respuesta y la recupera al volver", async () => {

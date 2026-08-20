@@ -18,6 +18,9 @@ type Props = {
   answer: ExerciseAnswer;
   onChange: (answer: ExerciseAnswer) => void;
   onBack: () => void;
+  previous: Exercise;
+  next: Exercise;
+  onNavigate: (code: string) => void;
   onClear: () => void;
   saveState: SaveState;
 };
@@ -199,14 +202,18 @@ const SAVE_COPY: Record<SaveState, string> = {
   memory: "No se pudo guardar; sigue abierto en esta sesión",
 };
 
-export default function ExerciseWorkspace({ exercise, answer, onChange, onBack, onClear, saveState }: Props) {
+export default function ExerciseWorkspace({ exercise, answer, onChange, onBack, previous, next, onNavigate, onClear, saveState }: Props) {
   const experience = EXPERIENCE_BY_CODE[exercise.code];
   const written = answerHasContent(exercise.code, answer);
 
   return <main className={`exercise-workspace exercise-workspace--${experience.kind}`} aria-label={`${exercise.code} · ${exercise.title}`}>
     <div className="workbook-toolbar">
       <button type="button" className="workbook-back" onClick={onBack}>← Volver al índice</button>
-      <span>{String(exercise.num).padStart(2, "0")} / 20</span>
+      <nav className="workbook-toolbar__nav" aria-label="Navegación entre ejercicios">
+        <button type="button" onClick={() => onNavigate(previous.code)} aria-label={`Ejercicio anterior: ${previous.code} · ${previous.title}`}>← <b>{previous.code}</b></button>
+        <span>{String(exercise.num).padStart(2, "0")} / 20</span>
+        <button type="button" onClick={() => onNavigate(next.code)} aria-label={`Ejercicio siguiente: ${next.code} · ${next.title}`}><b>{next.code}</b> →</button>
+      </nav>
     </div>
 
     <motion.article className="workbook-sheet" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45, ease: [.22, 1, .36, 1] }}>

@@ -52,6 +52,9 @@ export default function Ejercicios() {
     items: EXERCISES.filter((item) => item.letter === letter.id),
   })), []);
   const active = EXERCISES.find((item) => item.code === activeCode) ?? null;
+  const activeIndex = active ? EXERCISES.findIndex((item) => item.code === active.code) : -1;
+  const previous = active ? EXERCISES[(activeIndex - 1 + EXERCISES.length) % EXERCISES.length] : null;
+  const next = active ? EXERCISES[(activeIndex + 1) % EXERCISES.length] : null;
 
   useEffect(() => {
     const onPop = () => setActiveCode(codeFromLocation());
@@ -85,6 +88,12 @@ export default function Ejercicios() {
     window.setTimeout(() => opener.current?.focus(), 0);
   };
 
+  const navigateExercise = (code: string) => {
+    if (active && saveState === "saving") saveAnswer(active.code, answer);
+    setExerciseInUrl(code);
+    setActiveCode(code);
+  };
+
   const changeAnswer = (next: ExerciseAnswer) => {
     setAnswer(next);
     setSaveState("saving");
@@ -97,11 +106,14 @@ export default function Ejercicios() {
     setSaveState("idle");
   };
 
-  if (active) return <ExerciseWorkspace
+  if (active && previous && next) return <ExerciseWorkspace
     exercise={active}
     answer={answer}
     onChange={changeAnswer}
     onBack={backToIndex}
+    previous={previous}
+    next={next}
+    onNavigate={navigateExercise}
     onClear={removeAnswer}
     saveState={saveState}
   />;
