@@ -69,6 +69,7 @@ function WritingExperience({ prompts, answer, onChange }: {
           onChange={(event) => onChange({ ...answer, [key]: event.target.value })}
           placeholder="Deja que salga como venga…"
         />
+        <div className="print-value">{asText(answer[key])}</div>
       </label>;
     })}
   </div>;

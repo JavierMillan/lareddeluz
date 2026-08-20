@@ -39,7 +39,7 @@ export const LETTERS: Letter[] = [
       "Vas en un barco a media agua. Levantas la cabeza y no reconoces nada: la rutina te jaló otra vez al piloto automático y no te diste cuenta de cuándo. Despertar no es bonito, es un susto. Pero es el único lugar desde donde se puede trazar una ruta.",
     ask: "¿Qué frase te llevas repitiendo tanto que ya ni la escuchas?",
     exercises: 4,
-    amb: "150, 92, 48",
+    amb: "188, 105, 59",
     ambA: 0.05,
   },
   {
@@ -54,8 +54,8 @@ export const LETTERS: Letter[] = [
       "Un sistema nervioso encendido no razona: reacciona. Si decides así, no decides tú — decide el personaje viejo, el que se formó cuando eras chiquito y nunca actualizó su información.",
     ask: "¿Cuándo fue la última vez que tu cuerpo se rindió, aunque por fuera seguías funcionando normal?",
     exercises: 2,
-    amb: "62, 96, 168",
-    ambA: 0.07,
+    amb: "207, 132, 82",
+    ambA: 0.06,
   },
   {
     id: "s",
@@ -69,8 +69,8 @@ export const LETTERS: Letter[] = [
       "Hay cosas que drenan y valen: el gimnasio cuesta, una conversación difícil cuesta. De lo que hablamos es de lo otro — lo que sostienes por costumbre, por culpa, o porque llevas tanto con eso que ya ni te preguntas por qué sigue ahí.",
     ask: "Si imaginas soltar eso que ya sabes, ¿qué sientes primero: miedo, o alivio?",
     exercises: 4,
-    amb: "196, 108, 44",
-    ambA: 0.08,
+    amb: "176, 82, 43",
+    ambA: 0.07,
   },
   {
     id: "p",
@@ -84,8 +84,8 @@ export const LETTERS: Letter[] = [
       "Hace falta un destino. Aquí escribes a tu súper tú — la mejor versión posible de ti, en presente. No «algún día seré». Se escribe «soy», porque tu subconsciente lee el futuro como que todavía no.",
     ask: "Si dejaras de tenerle miedo al ridículo por un día completo, ¿qué harías distinto?",
     exercises: 4,
-    amb: "226, 168, 96",
-    ambA: 0.11,
+    amb: "226, 161, 103",
+    ambA: 0.08,
   },
   {
     id: "ej",
@@ -99,7 +99,7 @@ export const LETTERS: Letter[] = [
       "Grabar un audio no tiene a nadie escuchando todavía. Puedes borrarlo, repetirlo, y nadie se entera. Ahí está la prueba de que el problema nunca fue la otra persona.",
     ask: "¿Cuál es tu versión del audio de WhatsApp — esa cosa chiquita que llevas evitando aunque a nadie del otro lado le costaría nada?",
     exercises: 2,
-    amb: "214, 120, 58",
+    amb: "204, 103, 51",
     ambA: 0.06,
   },
   {
@@ -114,7 +114,7 @@ export const LETTERS: Letter[] = [
       "Cuando por fin conectas uno con otro, ves algo que llevabas toda la vida sin ver: no tendrías ese sueño si no hubieras tenido esa herida. Ahí el trauma deja de ser una piedra y se vuelve el origen de algo.",
     ask: "Si conectaras tu sueño más grande con la herida de la que salió, ¿qué verías que no habías querido ver?",
     exercises: 2,
-    amb: "178, 100, 52",
+    amb: "165, 91, 53",
     ambA: 0.07,
   },
   {
@@ -129,7 +129,7 @@ export const LETTERS: Letter[] = [
       "Es el mismo jalón hacia atrás en la orilla de un risco que frente a un teléfono. No se quita antes de saltar: se quita después, y solo si saltas. Por eso ajustar es el paso más difícil — casi siempre implica soltar algo que te costó construir.",
     ask: "¿Qué ya decidiste que tu cuerpo todavía no se cree?",
     exercises: 2,
-    amb: "212, 130, 63",
+    amb: "215, 127, 69",
     ambA: 0.04,
   },
 ];

@@ -64,6 +64,7 @@ describe("cuaderno de trabajo", () => {
     const first = render(<Ejercicios />);
     const note = screen.getByRole("textbox", { name: "¿Qué necesito recordar de hoy?" });
     await userEvent.type(note, "Que sí avancé aunque fuera poco");
+    expect(first.container.querySelector(".print-value")).toHaveTextContent("Que sí avancé aunque fuera poco");
     await waitFor(() => expect(screen.getByText("Guardado en este dispositivo")).toBeTruthy(), { timeout: 2000 });
     first.unmount();
 
