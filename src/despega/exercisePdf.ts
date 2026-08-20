@@ -10,6 +10,7 @@
  */
 
 import type { Exercise } from "./exercises";
+import { answerToBlocks, type ExerciseAnswer, type PrintBlock } from "./exerciseExperiences";
 
 const PAGE_W = 612; // carta, 72dpi
 const PAGE_H = 792;
@@ -53,25 +54,40 @@ function wrap(text: string, size: number, width: number): string[] {
   return lines;
 }
 
-type Answers = Record<string, string>;
-
 /** El PDF como texto. Separado del Blob para poder verificarlo en pruebas. */
-export function buildExercisePdfString(exercise: Exercise, answers: Answers): string {
-  const ops: string[] = [];
+export function buildExercisePdfString(exercise: Exercise, answers: ExerciseAnswer): string {
+  const pages: string[][] = [[]];
+  let ops = pages[0];
   let y = PAGE_H - MARGIN;
   const width = PAGE_W - MARGIN * 2;
 
+  const startPage = () => {
+    ops = [];
+    pages.push(ops);
+    y = PAGE_H - MARGIN;
+    put(`${exercise.code} · ${exercise.title.toUpperCase()} · CONTINÚA`, 8, "F2", 0.45);
+    y -= 3;
+    rule();
+  };
+  const ensureSpace = (height: number) => {
+    if (y - height < MARGIN + 24) startPage();
+  };
   const put = (text: string, size: number, font: "F1" | "F2", gray = 0) => {
+    ensureSpace(size + 5);
     ops.push(`BT /${font} ${size} Tf ${gray} g 1 0 0 1 ${MARGIN} ${y} Tm (${pdfString(text)}) Tj ET`);
     y -= size + 5;
   };
   const block = (text: string, size: number, font: "F1" | "F2", gray = 0, lead = LINE) => {
-    for (const line of wrap(text, size, width)) {
-      ops.push(`BT /${font} ${size} Tf ${gray} g 1 0 0 1 ${MARGIN} ${y} Tm (${pdfString(line)}) Tj ET`);
-      y -= lead;
+    for (const paragraph of text.split(/\r?\n/)) {
+      for (const line of wrap(paragraph, size, width)) {
+        ensureSpace(lead);
+        ops.push(`BT /${font} ${size} Tf ${gray} g 1 0 0 1 ${MARGIN} ${y} Tm (${pdfString(line)}) Tj ET`);
+        y -= lead;
+      }
     }
   };
   const rule = () => {
+    ensureSpace(18);
     ops.push(`0.8 g ${MARGIN} ${y} m ${PAGE_W - MARGIN} ${y} l S`);
     y -= 18;
   };
@@ -87,33 +103,48 @@ export function buildExercisePdfString(exercise: Exercise, answers: Answers): st
   block(exercise.purpose, 10, "F1", 0.15);
   y -= 10;
 
-  // Lo que escribio el lector: el motivo de esta hoja
-  for (const [label, value] of Object.entries(answers)) {
-    if (!value.trim()) continue;
+  // Cada interacción se vuelve bloques lineales antes de maquetarse.
+  // El fallback mantiene compatible el generador para llamadas antiguas.
+  const configured = answerToBlocks(exercise.code, answers);
+  const fallback: PrintBlock[] = Object.entries(answers).flatMap(([label, value]) => {
+    const lines = (Array.isArray(value) ? value : [value]).map((item) => item.trim()).filter(Boolean);
+    return lines.length ? [{ label, lines }] : [];
+  });
+  const blocks = configured.length ? configured : fallback;
+
+  for (const { label, lines } of blocks) {
     block(label.toUpperCase(), 8, "F2", 0.45, 13);
-    block(value, 11, "F1", 0);
+    for (const line of lines) block(line, 11, "F1", 0);
     y -= 12;
-    if (y < MARGIN + 90) break; // una hoja por ejercicio
   }
 
-  if (y > MARGIN + 60) {
+  const close = exercise.signal || exercise.expect;
+  if (close) {
+    ensureSpace(70);
     rule();
     block("CÓMO SABES QUE FUNCIONÓ", 8, "F2", 0.45, 13);
-    block(exercise.signal || exercise.expect, 9, "F1", 0.3, 12);
+    block(close, 9, "F1", 0.3, 12);
   }
 
-  // Pie
-  ops.push(`BT /F1 7.5 Tf 0.5 g 1 0 0 1 ${MARGIN} ${MARGIN - 16} Tm (${pdfString(`DESPEGA · Cuaderno de trabajo · ${exercise.num} / 20 · lareddeluz.com`)}) Tj ET`);
+  // Pie constante en todas las páginas.
+  pages.forEach((page, index) => page.push(
+    `BT /F1 7.5 Tf 0.5 g 1 0 0 1 ${MARGIN} ${MARGIN - 16} Tm (${pdfString(`DESPEGA · ${exercise.num} / 20 · página ${index + 1} / ${pages.length} · lareddeluz.com`)}) Tj ET`,
+  ));
 
-  const content = ops.join("\n");
-  const objects = [
+  const pageIds = pages.map((_, index) => 5 + index * 2);
+  const objects: string[] = [
     "<< /Type /Catalog /Pages 2 0 R >>",
-    "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
-    `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PAGE_W} ${PAGE_H}] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>`,
-    `<< /Length ${content.length} >>\nstream\n${content}\nendstream`,
+    `<< /Type /Pages /Kids [${pageIds.map((id) => `${id} 0 R`).join(" ")}] /Count ${pages.length} >>`,
     "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
     "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>",
   ];
+  pages.forEach((page, index) => {
+    const pageId = pageIds[index];
+    const contentId = pageId + 1;
+    const content = page.join("\n");
+    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PAGE_W} ${PAGE_H}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentId} 0 R >>`);
+    objects.push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
+  });
 
   let pdf = "%PDF-1.4\n";
   const offsets: number[] = [];
@@ -129,14 +160,14 @@ export function buildExercisePdfString(exercise: Exercise, answers: Answers): st
   return pdf;
 }
 
-export function buildExercisePdf(exercise: Exercise, answers: Answers): Blob {
+export function buildExercisePdf(exercise: Exercise, answers: ExerciseAnswer): Blob {
   const pdf = buildExercisePdfString(exercise, answers);
   const bytes = new Uint8Array(pdf.length);
   for (let i = 0; i < pdf.length; i += 1) bytes[i] = pdf.charCodeAt(i) & 0xff;
   return new Blob([bytes], { type: "application/pdf" });
 }
 
-export function downloadExercisePdf(exercise: Exercise, answers: Answers) {
+export function downloadExercisePdf(exercise: Exercise, answers: ExerciseAnswer) {
   const url = URL.createObjectURL(buildExercisePdf(exercise, answers));
   const link = document.createElement("a");
   link.href = url;

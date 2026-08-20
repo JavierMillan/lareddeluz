@@ -43,4 +43,30 @@ describe("hoja de ejercicio en PDF", () => {
     expect(pdf).toContain("LLENA");
     expect(pdf).not.toContain("VACIA");
   });
+
+  it("serializa las categorias de una experiencia estructurada", () => {
+    const exercise = EXERCISES.find((item) => item.code === "E2")!;
+    const pdf = buildExercisePdfString(exercise, {
+      drena: ["Junta sin propósito"],
+      neutro: [],
+      recarga: ["Caminar sin teléfono"],
+    });
+
+    expect(pdf).toContain("ME DRENA");
+    expect(pdf).toContain("Junta sin prop");
+    expect(pdf).toContain("ME RECARGA");
+    expect(pdf).toContain("Caminar sin tel");
+  });
+
+  it("pagina respuestas largas sin perder el ultimo renglon", () => {
+    const exercise = EXERCISES.find((item) => item.code === "G2")!;
+    const longAnswer = Array.from({ length: 200 }, (_, index) => (
+      index === 199 ? "ULTIMO RENGLON DEL CUADERNO" : `Renglón ${index + 1} con una memoria que quiero conservar.`
+    )).join("\n");
+    const pdf = buildExercisePdfString(exercise, { "0": longAnswer });
+
+    const pages = Number(pdf.match(/\/Count (\d+)/)?.[1]);
+    expect(pages).toBeGreaterThan(1);
+    expect(pdf).toContain("ULTIMO RENGLON DEL CUADERNO");
+  });
 });
