@@ -23,11 +23,11 @@ function ImportCue({ from, label, onImport }: { from: string; label: string; onI
 }
 
 function BeliefExperience(props: Props) {
-  return <div className="belief-experience journey-instrument"><header className="instrument-intro"><p className="instrument-kicker">Ve despacio</p><h2>No tienes que resolver tu vida entera.</h2><p>Busca un momento cotidiano. Si aparece algo que te mueve demasiado, cierra esta hoja y busca acompañamiento. Aquí no hay premio por empujarte de más.</p></header><div className="belief-path">
-    <Field {...props} answerKey="moment" label="01 · El momento" help="Qué pasó, cuántos años tenías y quién estaba ahí." placeholder="Recuerdo que…" />
-    <Field {...props} answerKey="belief" label="02 · La conclusión" help="Una frase que empiece con «si» o «yo»." placeholder="Yo… / Si…" />
-    <Field {...props} answerKey="served" label="03 · Cómo me protegió" help="Tres momentos donde esta idea sí te cuidó o te dio resultados." placeholder="En ese momento me sirvió para…" />
-  </div><section className="belief-release"><Field {...props} answerKey="goodbye" label="La despedida" placeholder="Gracias por cuidarme cuando… Ya no te necesito." /><Field {...props} answerKey="newBelief" label="Ahora elijo creer" placeholder="Una frase nueva que puedas reconocer durante el día…" /></section></div>;
+  return <div className="belief-experience journey-instrument"><header className="instrument-intro"><p className="instrument-kicker">Ve despacio</p><h2>No tienes que resolver tu vida entera.</h2><p>Busca un momento cotidiano. Si aparece algo que te mueve demasiado, cierra esta hoja y busca acompañamiento. Aquí no hay premio por empujarte de más.</p></header><div className="belief-story">
+    <section data-testid="belief-moment"><span className="belief-story__number">01</span><Field {...props} answerKey="moment" label="Lo que pasó" help="Qué pasó, cuántos años tenías y quién estaba ahí." placeholder="Recuerdo que…" /></section>
+    <section data-testid="belief-moment" className="belief-story__turn"><span className="belief-story__number">02</span><Field {...props} answerKey="belief" label="Lo que aprendí a creer" help="Escríbelo como una frase que empiece con «si» o «yo»." placeholder="Yo… / Si…" /><Field {...props} answerKey="served" label="Alguna vez me protegió así" help="No la cargas porque sí. Nombra brevemente cuándo te cuidó o te dio resultados." placeholder="Me sirvió cuando…" rows={3} /></section>
+    <section data-testid="belief-moment"><span className="belief-story__number">03</span><Field {...props} answerKey="newBelief" label="Lo que hoy elijo" help="Una frase nueva que puedas reconocer cuando aparezca la vieja." placeholder="Ahora elijo creer que…" rows={3} /></section>
+  </div><section className="belief-closing"><p className="instrument-kicker">Cierra el ciclo con tus palabras</p><Field {...props} answerKey="goodbye" label="Mi despedida" placeholder="Gracias por cuidarme cuando… Ya no te necesito para lo que sigue." rows={3} /></section></div>;
 }
 
 function PhraseExperience(props: Props) {
@@ -46,7 +46,8 @@ function ConversationExperience(props: Props) {
 }
 
 function FarewellExperience(props: Props) {
-  return <div className="farewell-experience journey-instrument"><header className="instrument-intro"><p className="instrument-kicker">No hace falta un villano</p><h2>Escribe una despedida, no un reporte.</h2><p>Elige algo que sí estés listo para soltar hoy. La carta puede doler y aun así ser correcta.</p></header><article className="farewell-letter"><p>Para eso que hoy dejo ir:</p><Field {...props} answerKey="gift" label="Gracias por…" placeholder="Lo que me diste fue…" /><Field {...props} answerKey="noLonger" label="Ya no me corresponde porque…" placeholder="Dejamos de encajar cuando…" /><Field {...props} answerKey="take" label="Me llevo conmigo…" placeholder="Esto sí se queda en mí…" /><Field {...props} answerKey="closing" label="Mi última frase" placeholder="Gracias. Ya no te necesito para donde voy." rows={3} /></article></div>;
+  const importS4 = () => { const source = loadAnswer("S4"); props.onChange({ ...props.answer, source: [...new Set([...asList(props.answer.source), ...asList(source.leaves)])] }); };
+  return <div className="farewell-experience journey-instrument"><header className="instrument-intro"><p className="instrument-kicker">Ya viste qué se queda</p><h2>Ahora sí: escribe una despedida, no un reporte.</h2><p>Elige algo que ya decidiste soltar. La carta puede doler y aun así ser correcta.</p></header><ImportCue from="S4" label="Traer lo que decidí soltar" onImport={importS4} />{asList(props.answer.source).length > 0 && <div className="farewell-source">{asList(props.answer.source).map((item) => <span key={item}>{item}</span>)}</div>}<article className="farewell-letter"><p>Para eso que hoy dejo ir:</p><Field {...props} answerKey="gift" label="Gracias por…" placeholder="Lo que me diste fue…" /><Field {...props} answerKey="noLonger" label="Ya no me corresponde porque…" placeholder="Dejamos de encajar cuando…" /><Field {...props} answerKey="take" label="Me llevo conmigo…" placeholder="Esto sí se queda en mí…" /><Field {...props} answerKey="closing" label="Mi última frase" placeholder="Gracias. Ya no te necesito para donde voy." rows={3} /></article></div>;
 }
 
 function CommitmentExperience(props: Props) {
@@ -58,8 +59,7 @@ function CommitmentExperience(props: Props) {
 }
 
 function IdentityExperience(props: Props) {
-  const statements = asList(props.answer.statements); const gives = asList(props.answer.gives); const total = statements.length + gives.length;
-  return <div className="identity-experience journey-instrument"><header className="instrument-intro"><p className="instrument-kicker">No escribas “quiero ser”</p><h2>Escribe desde «soy».</h2><p>No estás llenando un perfil. Estás dejando por escrito hacia dónde caminas.</p></header><div className="identity-portrait"><ListBuilder {...props} answerKey="statements" label="Lo que habla de mí" placeholder="Soy alguien que…" /><div className="identity-balance"><span>{total ? Math.round(statements.length / total * 100) : 0}%</span><i>de mí</i><span>{total ? Math.round(gives.length / total * 100) : 0}%</span><i>de lo que doy</i></div><ListBuilder {...props} answerKey="gives" label="Lo que doy a otros" placeholder="Soy alguien que aporta…" /></div><section className="identity-name"><Field {...props} answerKey="name" label="¿Cómo se llama esta versión tuya?" placeholder="Un nombre que al decirlo te mueva algo…" rows={2} /></section></div>;
+  return <div className="identity-experience journey-instrument"><header className="instrument-intro"><p className="instrument-kicker">No escribas “quiero ser”</p><h2>Escribe desde «soy».</h2><p>No estás llenando un perfil. Estás dejando por escrito hacia dónde caminas.</p></header><div className="identity-spread"><ListBuilder {...props} answerKey="statements" label="Lo que habla de mí" placeholder="Soy alguien que…" /><ListBuilder {...props} answerKey="gives" label="Lo que doy a otros" placeholder="Soy alguien que aporta…" /></div><section className="identity-name identity-signature"><p>Cuando lo escrito arriba se vuelva una sola presencia:</p><Field {...props} answerKey="name" label="Firma esta versión de ti" placeholder="Un nombre que al decirlo te mueva algo…" rows={2} /></section></div>;
 }
 
 type GapItem = { id: string; title: string; dimension: "habilidad" | "creencia" | "persona" | "hábito"; status: "tengo" | "sé" | "no-sé" };
@@ -111,4 +111,3 @@ export default function JourneyExperience({ kind, ...props }: Props & { kind: Cu
   const Component = COMPONENTS[kind];
   return <Component {...props} />;
 }
-

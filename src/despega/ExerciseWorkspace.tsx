@@ -30,6 +30,7 @@ type Props = {
   onNavigate: (code: string) => void;
   onClear: () => void;
   saveState: SaveState;
+  position: number;
 };
 
 const asText = (value: ExerciseAnswer[string]) => Array.isArray(value) ? value.join("\n") : value ?? "";
@@ -171,11 +172,13 @@ function EnergyExperience({ experience, answer, onChange }: {
       <p>Recorre tu registro y anota cada actividad con su día y hora aproximada. Clasifícala aquí mismo; no tienes que copiarla después a otra columna.</p>
     </header>
     <div className="energy-composer">
-      <input aria-label="Actividad concreta" value={activity} onChange={(event) => setActivity(event.target.value)} placeholder="No pongas «trabajo»: escribe la actividad concreta…" />
-      <select aria-label="Día" value={day} onChange={(event) => setDay(event.target.value)}>{experience.days.map((item) => <option key={item}>{item}</option>)}</select>
-      <input type="time" aria-label="Hora aproximada" value={time} onChange={(event) => setTime(event.target.value)} />
-      <select aria-label="Cómo me dejó" value={energy} onChange={(event) => setEnergy(event.target.value as EnergyEntry["energy"])}><option value="drena">Me drenó</option><option value="neutro">Neutro</option><option value="recarga">Me recargó</option></select>
-      <button type="button" onClick={add}>Registrar actividad</button>
+      <div className="energy-composer__activity"><label><span>Actividad concreta</span><input aria-label="Actividad concreta" value={activity} onChange={(event) => setActivity(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") add(); }} placeholder="Ej. reunión semanal, traslado, caminar…" /></label></div>
+      <div className="energy-composer__meta">
+        <label><span>Día</span><select aria-label="Día" value={day} onChange={(event) => setDay(event.target.value)}>{experience.days.map((item) => <option key={item}>{item}</option>)}</select></label>
+        <label><span>Hora</span><input type="time" aria-label="Hora aproximada" value={time} onChange={(event) => setTime(event.target.value)} /></label>
+        <label><span>Me dejó</span><select aria-label="Cómo me dejó" value={energy} onChange={(event) => setEnergy(event.target.value as EnergyEntry["energy"])}><option value="drena">Me drenó</option><option value="neutro">Neutro</option><option value="recarga">Me recargó</option></select></label>
+        <button type="button" onClick={add}>Añadir</button>
+      </div>
     </div>
     <p className="energy-summary">{counts.drena} drena · {counts.neutro} neutro · {counts.recarga} recarga</p>
     <div className="energy-days">{experience.days.map((item) => {
@@ -231,7 +234,7 @@ const SAVE_COPY: Record<SaveState, string> = {
   memory: "No se pudo guardar; sigue abierto en esta sesión",
 };
 
-export default function ExerciseWorkspace({ exercise, answer, onChange, onBack, previous, next, onNavigate, onClear, saveState }: Props) {
+export default function ExerciseWorkspace({ exercise, answer, onChange, onBack, previous, next, onNavigate, onClear, saveState, position }: Props) {
   const experience = EXPERIENCE_BY_CODE[exercise.code];
   const written = answerHasContent(exercise.code, answer);
 
@@ -240,7 +243,7 @@ export default function ExerciseWorkspace({ exercise, answer, onChange, onBack, 
       <button type="button" className="workbook-back" onClick={onBack}>← Volver al índice</button>
       <nav className="workbook-toolbar__nav" aria-label="Navegación entre ejercicios">
         <button type="button" onClick={() => onNavigate(previous.code)} aria-label={`Ejercicio anterior: ${previous.code} · ${previous.title}`}>← <b>{previous.code}</b></button>
-        <span>{String(exercise.num).padStart(2, "0")} / 20</span>
+        <span>{String(position).padStart(2, "0")} / 20</span>
         <button type="button" onClick={() => onNavigate(next.code)} aria-label={`Ejercicio siguiente: ${next.code} · ${next.title}`}><b>{next.code}</b> →</button>
       </nav>
     </div>

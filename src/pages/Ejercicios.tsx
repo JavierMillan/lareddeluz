@@ -9,6 +9,11 @@ import "@/despega/ejercicios.css";
 import "@/despega/journey-experiences.css";
 
 const WORKBOOK = "/assets/despega-workbook.pdf";
+const JOURNEY_ORDER = EXERCISES.flatMap((exercise) => {
+  if (exercise.code === "S3") return [];
+  if (exercise.code === "S4") return [exercise, EXERCISES.find((item) => item.code === "S3")!];
+  return [exercise];
+});
 
 type SaveState = "idle" | "saving" | "saved" | "memory";
 
@@ -68,12 +73,12 @@ export default function Ejercicios() {
   const opener = useRef<HTMLButtonElement | null>(null);
   const byLetter = useMemo(() => LETTERS.map((letter) => ({
     letter,
-    items: EXERCISES.filter((item) => item.letter === letter.id),
+    items: JOURNEY_ORDER.filter((item) => item.letter === letter.id),
   })), []);
   const active = EXERCISES.find((item) => item.code === activeCode) ?? null;
-  const activeIndex = active ? EXERCISES.findIndex((item) => item.code === active.code) : -1;
-  const previous = active ? EXERCISES[(activeIndex - 1 + EXERCISES.length) % EXERCISES.length] : null;
-  const next = active ? EXERCISES[(activeIndex + 1) % EXERCISES.length] : null;
+  const activeIndex = active ? JOURNEY_ORDER.findIndex((item) => item.code === active.code) : -1;
+  const previous = active ? JOURNEY_ORDER[(activeIndex - 1 + JOURNEY_ORDER.length) % JOURNEY_ORDER.length] : null;
+  const next = active ? JOURNEY_ORDER[(activeIndex + 1) % JOURNEY_ORDER.length] : null;
 
   useEffect(() => {
     const onPop = () => setActiveCode(codeFromLocation());
@@ -135,6 +140,7 @@ export default function Ejercicios() {
     onNavigate={navigateExercise}
     onClear={removeAnswer}
     saveState={saveState}
+    position={activeIndex + 1}
   />;
 
   return <main className="despega ejercicios">
