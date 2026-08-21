@@ -24,6 +24,25 @@ describe("experiencias del cuaderno", () => {
     ]);
   });
 
+  it("asigna a los 20 ejercicios el instrumento que corresponde a su accion", () => {
+    expect(Object.fromEntries(Object.entries(EXPERIENCE_BY_CODE).map(([code, experience]) => [code, experience.kind]))).toEqual({
+      D1: "reading", D2: "belief", D3: "phrase", D4: "audit",
+      E1: "breathing", E2: "energy",
+      S1: "drain-ledger", S2: "conversation", S3: "farewell", S4: "commitment",
+      P1: "identity", P2: "gap", P3: "territory", P4: "sprint",
+      EJ1: "effort", EJ2: "pivot",
+      G1: "retrospective", G2: "daily-log",
+      A1: "system-map", A2: "decision-table",
+    });
+  });
+
+  it("imprime la respiracion elegida junto con la respuesta corporal", () => {
+    expect(answerToBlocks("E1", { selected: "box", "note:box": "Se aflojaron mis hombros" })).toEqual([
+      { label: "Respiración de caja", lines: ["Se aflojaron mis hombros"] },
+      { label: "La respiración que elijo", lines: ["Respiración de caja"] },
+    ]);
+  });
+
   it("convierte una composicion en una declaracion legible", () => {
     const blocks = answerToBlocks("P4", {
       weeks: "2",
@@ -35,18 +54,10 @@ describe("experiencias del cuaderno", () => {
     expect(blocks[0].lines[0]).toBe("Durante las próximas 2 semanas voy a publicar, sintiendo curiosidad, dedicándole 3 mañanas por semana, y lo reviso el viernes 28.");
   });
 
-  it("mantiene las preguntas y columnas del libro en EJ2 y A2", () => {
-    expect(EXPERIENCE_BY_CODE.EJ2).toMatchObject({
-      kind: "writing",
-      prompts: expect.arrayContaining(["¿Qué puedo hacer distinto sin romperme?", "¿Le bajo a la meta o le cambio la forma?"]),
-    });
+  it("mantiene las preguntas del libro en EJ2 y la mesa de decision A2", () => {
+    expect(EXPERIENCE_BY_CODE.EJ2).toMatchObject({ kind: "pivot" });
     expect(EXPERIENCE_BY_CODE.A2).toMatchObject({
-      kind: "capture",
-      categories: expect.arrayContaining([
-        { key: "added", label: "Lo que yo estoy agregando" },
-        { key: "realRisks", label: "Riesgos reales" },
-        { key: "inventedRisks", label: "Riesgos inventados" },
-      ]),
+      kind: "decision-table",
     });
   });
 

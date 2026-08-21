@@ -8,8 +8,15 @@ import {
   type Category,
   type ExerciseAnswer,
   type ExerciseExperience,
+  isCustomExperience,
 } from "./exerciseExperiences";
 import { downloadExercisePdf } from "./exercisePdf";
+import AuditExperience from "./experiences/AuditExperience";
+import BreathingExperience from "./experiences/BreathingExperience";
+import DecisionTableExperience from "./experiences/DecisionTableExperience";
+import SprintExperience from "./experiences/SprintExperience";
+import TerritoryExperience from "./experiences/TerritoryExperience";
+import JourneyExperience from "./experiences/JourneyExperiences";
 
 type SaveState = "idle" | "saving" | "saved" | "memory";
 
@@ -69,11 +76,12 @@ function WritingExperience({ prompts, answer, onChange }: {
   </div>;
 }
 
-function ListExperience({ categories, answer, onChange, variant }: {
+function ListExperience({ categories, answer, onChange, variant, movable = false }: {
   categories: Category[];
   answer: ExerciseAnswer;
   onChange: Props["onChange"];
   variant: "capture" | "decision";
+  movable?: boolean;
 }) {
   const [drafts, setDrafts] = useState<Record<string, string>>({});
 
@@ -105,12 +113,13 @@ function ListExperience({ categories, answer, onChange, variant }: {
   return <div className={`list-experience list-experience--${variant}`}>
     {categories.map((category, categoryIndex) => <section className="answer-zone" key={category.key}>
       <header><span>{String(categoryIndex + 1).padStart(2, "0")}</span><h2>{category.label}</h2></header>
+      {category.help && <p className="answer-zone__help">{category.help}</p>}
       <ul>
         {asList(answer[category.key]).map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>
           <p>{item}</p>
           <div className="move-controls">
-            {categoryIndex > 0 && <button type="button" onClick={() => move(categoryIndex, itemIndex, -1)} aria-label={`Mover ${item} a ${categories[categoryIndex - 1].label}`}>←</button>}
-            {categoryIndex < categories.length - 1 && <button type="button" onClick={() => move(categoryIndex, itemIndex, 1)} aria-label={`Mover ${item} a ${categories[categoryIndex + 1].label}`}>→</button>}
+            {movable && categoryIndex > 0 && <button type="button" onClick={() => move(categoryIndex, itemIndex, -1)} aria-label={`Mover ${item} a ${categories[categoryIndex - 1].label}`}>←</button>}
+            {movable && categoryIndex < categories.length - 1 && <button type="button" onClick={() => move(categoryIndex, itemIndex, 1)} aria-label={`Mover ${item} a ${categories[categoryIndex + 1].label}`}>→</button>}
             <button type="button" onClick={() => remove(category.key, itemIndex)} aria-label={`Quitar ${item}`}>×</button>
           </div>
         </li>)}
@@ -134,31 +143,45 @@ function EnergyExperience({ experience, answer, onChange }: {
   answer: ExerciseAnswer;
   onChange: Props["onChange"];
 }) {
-  return <div className="energy-experience">
-    <ListExperience categories={experience.categories} answer={answer} onChange={onChange} variant="capture" />
-    <section className="energy-week">
-      <header>
-        <span>Paso 2 · tu semana real</span>
-        <h2>Dónde se te va el día</h2>
-        <p>Anota la actividad y la hora. Al final revisa qué días son puro drenaje y en cuáles ya hay algo que recarga.</p>
-      </header>
-      <div className="energy-table-scroll">
-        <table aria-label="Dónde se te va el día">
-          <thead><tr><th>Hora</th>{experience.days.map((day) => <th key={day}>{day.slice(0, 3)}</th>)}</tr></thead>
-          <tbody>{experience.hours.map((hour) => <tr key={hour}>
-            <th>{hour}</th>
-            {experience.days.map((day) => {
-              const key = `schedule:${day}:${hour}`;
-              return <td key={key}><input
-                aria-label={`${day} ${hour}`}
-                value={asText(answer[key])}
-                onChange={(event) => onChange({ ...answer, [key]: event.target.value })}
-              /></td>;
-            })}
-          </tr>)}</tbody>
-        </table>
-      </div>
-    </section>
+  type EnergyEntry = { id: string; activity: string; day: string; time: string; energy: "drena" | "neutro" | "recarga" };
+  const [activity, setActivity] = useState("");
+  const [day, setDay] = useState(experience.days[0]);
+  const [time, setTime] = useState("09:00");
+  const [energy, setEnergy] = useState<EnergyEntry["energy"]>("neutro");
+  const entries = asList(answer.entries).flatMap((line) => { try { return [JSON.parse(line) as EnergyEntry]; } catch { return []; } });
+  const saveEntries = (next: EnergyEntry[]) => onChange({
+    ...answer,
+    entries: next.map((entry) => JSON.stringify(entry)),
+    drena: next.filter((entry) => entry.energy === "drena").map((entry) => entry.activity),
+    neutro: next.filter((entry) => entry.energy === "neutro").map((entry) => entry.activity),
+    recarga: next.filter((entry) => entry.energy === "recarga").map((entry) => entry.activity),
+  });
+  const add = () => {
+    const value = activity.trim();
+    if (!value) return;
+    saveEntries([...entries, { id: `${Date.now()}-${Math.random()}`, activity: value, day, time, energy }]);
+    setActivity("");
+  };
+  const counts = { drena: entries.filter((entry) => entry.energy === "drena").length, neutro: entries.filter((entry) => entry.energy === "neutro").length, recarga: entries.filter((entry) => entry.energy === "recarga").length };
+
+  return <div className="energy-experience energy-experience--timeline">
+    <header className="instrument-intro">
+      <p className="instrument-kicker">Una actividad · una sola captura</p>
+      <h2>Dónde se te va el día.</h2>
+      <p>Recorre tu registro y anota cada actividad con su día y hora aproximada. Clasifícala aquí mismo; no tienes que copiarla después a otra columna.</p>
+    </header>
+    <div className="energy-composer">
+      <input aria-label="Actividad concreta" value={activity} onChange={(event) => setActivity(event.target.value)} placeholder="No pongas «trabajo»: escribe la actividad concreta…" />
+      <select aria-label="Día" value={day} onChange={(event) => setDay(event.target.value)}>{experience.days.map((item) => <option key={item}>{item}</option>)}</select>
+      <input type="time" aria-label="Hora aproximada" value={time} onChange={(event) => setTime(event.target.value)} />
+      <select aria-label="Cómo me dejó" value={energy} onChange={(event) => setEnergy(event.target.value as EnergyEntry["energy"])}><option value="drena">Me drenó</option><option value="neutro">Neutro</option><option value="recarga">Me recargó</option></select>
+      <button type="button" onClick={add}>Registrar actividad</button>
+    </div>
+    <p className="energy-summary">{counts.drena} drena · {counts.neutro} neutro · {counts.recarga} recarga</p>
+    <div className="energy-days">{experience.days.map((item) => {
+      const daily = entries.filter((entry) => entry.day === item).sort((a, b) => a.time.localeCompare(b.time));
+      return <section key={item} className={daily.length ? "has-entries" : ""}><h3>{item}</h3>{daily.length ? <ol>{daily.map((entry) => <li key={entry.id} className={`energy-entry energy-entry--${entry.energy}`}><time>{entry.time}</time><p>{entry.activity}</p><span>{entry.energy === "drena" ? "Drena" : entry.energy === "recarga" ? "Recarga" : "Neutro"}</span><button type="button" onClick={() => saveEntries(entries.filter((itemEntry) => itemEntry.id !== entry.id))} aria-label={`Quitar ${entry.activity}`}>×</button></li>)}</ol> : <p>Sin registro</p>}</section>;
+    })}</div>
   </div>;
 }
 
@@ -192,7 +215,13 @@ function Experience({ experience, answer, onChange }: {
   if (experience.kind === "energy") return <EnergyExperience experience={experience} answer={answer} onChange={onChange} />;
   if (experience.kind === "writing") return <WritingExperience prompts={experience.prompts} answer={answer} onChange={onChange} />;
   if (experience.kind === "compose") return <ComposeExperience experience={experience} answer={answer} onChange={onChange} />;
-  return <ListExperience categories={experience.categories} answer={answer} onChange={onChange} variant={experience.kind} />;
+  if (experience.kind === "audit") return <AuditExperience experience={experience} answer={answer} onChange={onChange} />;
+  if (experience.kind === "breathing") return <BreathingExperience experience={experience} answer={answer} onChange={onChange} />;
+  if (experience.kind === "territory") return <TerritoryExperience answer={answer} onChange={onChange} />;
+  if (experience.kind === "sprint") return <SprintExperience experience={experience} answer={answer} onChange={onChange} />;
+  if (experience.kind === "decision-table") return <DecisionTableExperience answer={answer} onChange={onChange} />;
+  if (isCustomExperience(experience)) return <JourneyExperience kind={experience.kind} answer={answer} onChange={onChange} />;
+  return <ListExperience categories={experience.categories} answer={answer} onChange={onChange} variant={experience.kind} movable={experience.movable} />;
 }
 
 const SAVE_COPY: Record<SaveState, string> = {

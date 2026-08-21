@@ -56,21 +56,20 @@ describe("cuaderno de trabajo", () => {
     expect(within(workspace).getByText("Cómo vas a notar que algo cambió")).toBeTruthy();
   });
 
-  it("E2 permite capturar momentos en tres categorias", async () => {
+  it("E2 registra cada actividad una sola vez con su energia", async () => {
     render(<Ejercicios />);
     await userEvent.click(screen.getByText("E2").closest("button")!);
     const workspace = screen.getByRole("main", { name: /E2 · Auditoría de energía/i });
 
-    expect(within(workspace).getByRole("heading", { name: "Me drena" })).toBeTruthy();
-    expect(within(workspace).getByRole("heading", { name: "Neutro" })).toBeTruthy();
-    expect(within(workspace).getByRole("heading", { name: "Me recarga" })).toBeTruthy();
-    expect(within(workspace).getByText(/recorre tu registro.*día y hora aproximada/i)).toBeTruthy();
-    expect(within(workspace).getByRole("table", { name: /dónde se te va el día/i })).toBeTruthy();
-    expect(within(workspace).getByRole("textbox", { name: "Lunes 06:00" })).toBeTruthy();
+    expect(within(workspace).getAllByText(/recorre tu registro.*día y hora aproximada/i).length).toBeGreaterThan(0);
+    expect(within(workspace).getByRole("textbox", { name: /actividad concreta/i })).toBeTruthy();
+    expect(within(workspace).getByRole("combobox", { name: /cómo me dejó/i })).toBeTruthy();
 
-    await userEvent.type(within(workspace).getByRole("textbox", { name: "Agregar a Me drena" }), "Junta sin propósito");
-    await userEvent.click(within(workspace).getByRole("button", { name: "Agregar en Me drena" }));
+    await userEvent.type(within(workspace).getByRole("textbox", { name: /actividad concreta/i }), "Junta sin propósito");
+    await userEvent.selectOptions(within(workspace).getByRole("combobox", { name: /cómo me dejó/i }), "drena");
+    await userEvent.click(within(workspace).getByRole("button", { name: /registrar actividad/i }));
     expect(within(workspace).getByText("Junta sin propósito")).toBeTruthy();
+    expect(within(workspace).getByText(/1 drena · 0 neutro · 0 recarga/i)).toBeTruthy();
   });
 
   it("abre una hoja directamente desde su URL y vuelve al indice", async () => {
@@ -119,5 +118,73 @@ describe("cuaderno de trabajo", () => {
 
     render(<Ejercicios />);
     expect(screen.getByRole("textbox", { name: "¿Qué necesito recordar de hoy?" })).toHaveValue("Que sí avancé aunque fuera poco");
+  });
+
+  it("D4 convierte la auditoria en tres pasadas sin mover notas", () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=D4");
+    render(<Ejercicios />);
+
+    expect(screen.getByRole("heading", { name: /Primera pasada · escucha/i })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: /Segunda pasada · observa/i })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: /Tres automatismos/i })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /Mover .* a /i })).toBeNull();
+    expect(screen.getByText(/Anota únicamente lo que se repite/i)).toBeTruthy();
+  });
+
+  it("E1 compara respuestas corporales y permite elegir una respiracion", () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=E1");
+    render(<Ejercicios />);
+
+    expect(screen.getByText(/Inhala 4 · retén 4 · exhala 8/i)).toBeTruthy();
+    expect(screen.getByRole("radio", { name: /Elegir Respiración de caja/i })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /Mover .* a /i })).toBeNull();
+  });
+
+  it("P3 usa un mapa de territorio inspirado en el ikigai", () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=P3");
+    render(<Ejercicios />);
+
+    expect(screen.getByRole("heading", { name: /Tu territorio aparece en el cruce/i })).toBeTruthy();
+    expect(screen.getByRole("textbox", { name: /Dónde se usa/i })).toBeTruthy();
+    expect(screen.getByRole("textbox", { name: /A quién le sirve/i })).toBeTruthy();
+    expect(screen.getByRole("textbox", { name: /Quién contrataría por ello/i })).toBeTruthy();
+  });
+
+  it("P4 planea tasks contra una capacidad semanal", () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=P4");
+    render(<Ejercicios />);
+
+    expect(screen.getByRole("spinbutton", { name: /Capacidad semanal/i })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Agregar task/i })).toBeTruthy();
+    expect(screen.getByText(/0 de .* puntos planeados/i)).toBeTruthy();
+  });
+
+  it("A2 concentra el analisis en tres zonas y una decision", () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=A2");
+    render(<Ejercicios />);
+
+    expect(screen.getByRole("heading", { name: /Separa lo que pasó de lo que imaginas/i })).toBeTruthy();
+    expect(screen.getAllByTestId("decision-analysis-zone")).toHaveLength(3);
+    expect(screen.getByText(/Viendo sólo los hechos y los riesgos reales/i)).toBeTruthy();
+  });
+
+  it.each([
+    ["D2", /No tienes que resolver tu vida entera/i],
+    ["D3", /Lo que dices sin pensarlo/i],
+    ["S1", /Lo que cuesta y vale/i],
+    ["S2", /Antes de hablar/i],
+    ["S3", /Escribe una despedida, no un reporte/i],
+    ["S4", /Haz visible lo que se va y lo que se queda/i],
+    ["P1", /Escribe desde «soy»/i],
+    ["P2", /Convierte identidad en piezas/i],
+    ["EJ1", /No todo pendiente pesa igual/i],
+    ["EJ2", /Ajustar no es abandonar/i],
+    ["G1", /Mira el tramo completo/i],
+    ["G2", /Qué necesito recordar de hoy/i],
+    ["A1", /No tires el sistema completo/i],
+  ])("%s muestra una herramienta propia", (code, landmark) => {
+    window.history.replaceState({}, "", `/ejercicios/?ejercicio=${code}`);
+    render(<Ejercicios />);
+    expect(screen.getByRole("heading", { name: landmark })).toBeTruthy();
   });
 });

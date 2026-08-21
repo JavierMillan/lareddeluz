@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { EXERCISES } from "@/despega/exercises";
 import { LETTERS } from "@/despega/letters";
-import { EXPERIENCE_BY_CODE, type ExerciseAnswer } from "@/despega/exerciseExperiences";
+import { EXPERIENCE_BY_CODE, type ExerciseAnswer, type ExerciseExperience } from "@/despega/exerciseExperiences";
 import { clearAnswer, loadAnswer, saveAnswer } from "@/despega/exerciseStorage";
 import ExerciseWorkspace from "@/despega/ExerciseWorkspace";
 import "@/despega/despega.css";
 import "@/despega/ejercicios.css";
+import "@/despega/journey-experiences.css";
 
 const WORKBOOK = "/assets/despega-workbook.pdf";
 
@@ -33,14 +34,32 @@ function Nav() {
   </nav>;
 }
 
-const KIND_COPY = {
+const KIND_COPY: Record<ExerciseExperience["kind"], string> = {
   reading: "Lectura directa",
   energy: "Mapa semanal",
   writing: "Escritura íntima",
   capture: "Registro vivo",
   decision: "Decisión visual",
   compose: "Construcción guiada",
-} as const;
+  audit: "Auditoría en capas",
+  breathing: "Laboratorio corporal",
+  territory: "Mapa de territorio",
+  sprint: "Miniviaje",
+  "decision-table": "Mesa de decisión",
+  belief: "Excavación guiada",
+  phrase: "Laboratorio de frase",
+  "drain-ledger": "Balanza de energía",
+  conversation: "Ritual de conversación",
+  farewell: "Carta de despedida",
+  commitment: "Muro de decisión",
+  identity: "Retrato de identidad",
+  gap: "Mapa de brecha",
+  effort: "Peso real",
+  pivot: "Consola de pivote",
+  retrospective: "Retrospectiva",
+  "daily-log": "Registro mínimo",
+  "system-map": "Anatomía del sistema",
+};
 
 export default function Ejercicios() {
   const [activeCode, setActiveCode] = useState<string | null>(() => codeFromLocation());
