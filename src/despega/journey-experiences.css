@@ -30,4 +30,39 @@
 }
 @media screen and (max-width:1100px) and (min-width:801px){.energy-days{grid-template-columns:repeat(5,minmax(0,1fr))}.energy-composer{grid-template-columns:1fr}.territory-map{grid-template-columns:1fr 1fr}.territory-stage--result{grid-column:1/-1;margin-top:1rem;min-height:0}.identity-signature .journey-field{grid-template-columns:1fr}}
 @media screen and (max-width:800px){.belief-story,.belief-closing,.identity-spread,.territory-map{grid-template-columns:1fr}.belief-story:before{top:0;right:auto;bottom:0;left:.5rem;width:1px;height:auto;background:linear-gradient(transparent,rgba(229,154,95,.3),transparent)}.belief-story>section,.belief-story>section:nth-child(2){margin-top:0;padding:1.5rem 0 1.5rem 1.5rem;background:none}.belief-story__number{top:1.75rem;left:-.05rem}.belief-closing{padding:1.2rem}.breath-card,.breath-card.is-chosen{min-height:0}.identity-spread>.journey-list,.identity-spread>.journey-list:last-child{min-height:0;margin:0;padding:1.2rem 0;border-left:0}.identity-signature .journey-field{grid-template-columns:1fr}.territory-stage,.territory-stage--groups,.territory-stage--result{min-height:0;margin:0;padding:1.2rem 0 1.5rem 1.25rem;border-top:0;border-left:1px solid rgba(229,154,95,.18)}.territory-stage--result{border-left-color:rgba(229,154,95,.5)}.territory-stage+ .territory-stage{border-left-color:rgba(229,154,95,.18)}.energy-composer,.energy-composer__meta{grid-template-columns:1fr}.energy-composer button{width:100%}.energy-days{grid-template-columns:1fr}.energy-days>section{min-height:0}.energy-days>section>p{margin:.5rem 0}}
+
+/* Legibilidad del desplegable nativo.
+   El menú de un <select> lo pinta el sistema operativo, no la página: no hereda
+   el fondo semitransparente del control, así que el texto claro terminaba sobre
+   un fondo casi blanco y las opciones sin seleccionar quedaban ilegibles.
+   La solución es dar a las opciones un fondo y un color OPACOS. */
+.energy-composer select,
+.commitment-add select,
+.gap-composer select,
+.effort-add select,
+.task-composer select,
+.sprint-experience select { color-scheme:dark; }
+
+.energy-composer select option,
+.commitment-add select option,
+.gap-composer select option,
+.effort-add select option,
+.task-composer select option,
+.sprint-experience select option {
+  color:#f4e9dc;
+  background-color:#1b141b;   /* opaco a propósito: nada de rgba aquí */
+}
+
+/* Firefox pinta la opción activa con su propio acento; se fija a mano para que
+   el contraste no dependa del tema del sistema. */
+.energy-composer select option:checked,
+.commitment-add select option:checked,
+.gap-composer select option:checked,
+.effort-add select option:checked,
+.task-composer select option:checked,
+.sprint-experience select option:checked {
+  color:#1b141b;
+  background-color:#df9455;
+}
+
 @media print{.energy-composer,.breath-choice,.breath-reflection textarea,.farewell-source{display:none!important}.belief-story,.belief-closing,.identity-spread,.territory-map{display:block}.belief-story:before{display:none}.belief-story>section,.belief-closing,.identity-spread>.journey-list,.identity-name.identity-signature,.territory-stage{min-height:0;margin:0 0 5mm;padding:3mm 0;break-inside:avoid;border:0;border-radius:0;background:none}.belief-story__number,.territory-stage__number,.territory-stage__cue{color:#7d4b28!important}.identity-signature>p,.farewell-source span{color:#171218!important}.energy-days{display:grid;grid-template-columns:repeat(2,1fr);gap:4mm;overflow:visible}.energy-days>section{min-height:0;break-inside:avoid;border-radius:0;background:none}}
