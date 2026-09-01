@@ -65,4 +65,66 @@
   background-color:#df9455;
 }
 
-@media print{.energy-composer,.breath-choice,.breath-reflection textarea,.farewell-source{display:none!important}.belief-story,.belief-closing,.identity-spread,.territory-map{display:block}.belief-story:before{display:none}.belief-story>section,.belief-closing,.identity-spread>.journey-list,.identity-name.identity-signature,.territory-stage{min-height:0;margin:0 0 5mm;padding:3mm 0;break-inside:avoid;border:0;border-radius:0;background:none}.belief-story__number,.territory-stage__number,.territory-stage__cue{color:#7d4b28!important}.identity-signature>p,.farewell-source span{color:#171218!important}.energy-days{display:grid;grid-template-columns:repeat(2,1fr);gap:4mm;overflow:visible}.energy-days>section{min-height:0;break-inside:avoid;border-radius:0;background:none}}
+@media print{.energy-block-form,.breath-choice,.breath-reflection textarea,.farewell-source{display:none!important}.belief-story,.belief-closing,.identity-spread,.territory-map{display:block}.belief-story:before{display:none}.belief-story>section,.belief-closing,.identity-spread>.journey-list,.identity-name.identity-signature,.territory-stage{min-height:0;margin:0 0 5mm;padding:3mm 0;break-inside:avoid;border:0;border-radius:0;background:none}.belief-story__number,.territory-stage__number,.territory-stage__cue{color:#7d4b28!important}.identity-signature>p,.farewell-source span{color:#171218!important}.energy-days{display:grid;grid-template-columns:repeat(2,1fr);gap:4mm;overflow:visible}.energy-days>section{min-height:0;break-inside:avoid;border-radius:0;background:none}}
+
+/* E2 Â· AuditorÃ­a de energÃ­a â€” bloques recurrentes, no capturas sueltas.
+   La vida se repite por semana: "lunes a viernes 9-18" es UNA captura. */
+.energy-block-form{display:grid;gap:clamp(.9rem,2.2vw,1.4rem);padding:1.1rem 0;border-top:1px solid rgba(229,154,95,.18);border-bottom:1px solid rgba(229,154,95,.1)}
+.energy-block-form label{display:grid;gap:.35rem;min-width:0;color:rgba(244,233,220,.5);font:.56rem var(--font-mono);letter-spacing:.09em;text-transform:uppercase}
+.energy-block-form input,.energy-block-form select{width:100%;min-width:0;min-height:46px;padding:.5rem .1rem;border:0;border-bottom:1px solid rgba(229,154,95,.26);color:var(--ink);background:linear-gradient(90deg,rgba(224,132,65,.05),transparent);font-size:.95rem}
+.energy-block-form input:focus,.energy-block-form select:focus{outline:none;border-bottom-color:#efb581}
+.energy-block-form__activity input{font:1.05rem/1.4 var(--font-display,"Instrument Serif"),serif}
+
+/* Los dÃ­as son un teclado, no un desplegable: se ven todos a la vez. */
+.energy-days-picker{display:grid;gap:.55rem}
+.energy-days-picker>span{color:rgba(244,233,220,.5);font:.56rem var(--font-mono);letter-spacing:.09em;text-transform:uppercase}
+.energy-days-picker>div{display:flex;flex-wrap:wrap;gap:.4rem}
+.energy-days-picker button[role=checkbox]{width:44px;height:44px;border:0;border-radius:50%;color:rgba(244,233,220,.45);cursor:pointer;font:.8rem var(--font-mono);
+  background:radial-gradient(circle at 34% 26%,rgba(255,220,180,.05),transparent 60%),linear-gradient(155deg,#241a24,#15111d 64%,#100d18);
+  box-shadow:inset 0 1px 0 rgba(240,190,140,.12),inset 0 -1px 0 rgba(0,0,0,.55),0 0 0 1px rgba(212,130,63,.2);
+  transition:box-shadow .35s cubic-bezier(.22,1,.36,1),color .3s,transform .35s}
+.energy-days-picker button[role=checkbox]:hover{transform:translateY(-1px);color:#f2c396}
+.energy-days-picker button[data-on]{color:#fbe6cd;
+  background:radial-gradient(circle at 34% 26%,rgba(255,226,186,.3),transparent 62%),linear-gradient(155deg,#6b3d1c,#331f18 68%,#1b1220);
+  box-shadow:inset 0 1px 0 rgba(255,224,180,.4),inset 0 -2px 3px rgba(0,0,0,.5),0 0 0 1px rgba(230,166,104,.7),0 0 18px rgba(212,130,63,.26)}
+.energy-days-picker__presets{display:flex;flex-wrap:wrap;gap:.4rem}
+.energy-days-picker__presets button{min-height:34px;padding:.35rem .75rem;border:0;border-radius:99px;color:rgba(229,161,104,.8);background:rgba(224,132,65,.07);box-shadow:0 0 0 1px rgba(212,130,63,.2);cursor:pointer;font:.62rem var(--font-mono);letter-spacing:.06em;transition:color .3s,background .3s}
+.energy-days-picker__presets button:hover{color:#fbe6cd;background:rgba(224,132,65,.16)}
+
+.energy-block-form__meta{display:grid;grid-template-columns:minmax(7rem,.8fr) minmax(7rem,.8fr) minmax(8rem,1.2fr) auto;gap:.6rem;align-items:end}
+.energy-block-form__meta input[type=time]{min-width:6.5rem}
+.energy-block-form__meta button{min-height:46px;min-width:6rem;padding:.6rem 1.2rem;border:0;border-radius:99px;color:rgba(244,238,228,.85);cursor:pointer;font:500 .84rem/1.3 system-ui,sans-serif;
+  background:radial-gradient(circle at 34% 24%,rgba(255,220,180,.1),transparent 60%),linear-gradient(155deg,#241a24,#15111d 64%,#100d18);
+  box-shadow:inset 0 1px 0 rgba(240,190,140,.18),inset 0 -1px 0 rgba(0,0,0,.6),0 0 0 1px rgba(212,130,63,.3);transition:box-shadow .4s,color .35s,transform .4s}
+.energy-block-form__meta button:hover{color:#fbe6cd;transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,224,180,.34),0 0 0 1px rgba(230,166,104,.6),0 0 22px rgba(212,130,63,.26)}
+
+/* La balanza: cuÃ¡nto de tu semana drena y cuÃ¡nto recarga, a escala. */
+.energy-balance{display:flex;gap:3px;height:2.6rem;margin-top:1.4rem;overflow:hidden;border-radius:2px}
+.energy-balance span{display:grid;place-items:center;min-width:3.5rem;color:rgba(255,255,255,.82);font:.62rem var(--font-mono);letter-spacing:.06em;transition:flex-grow .5s cubic-bezier(.22,1,.36,1)}
+.energy-balance--drena{background:linear-gradient(160deg,#8d4234,#5c2a24)}
+.energy-balance--neutro{background:linear-gradient(160deg,#3a3040,#241d2b)}
+.energy-balance--recarga{background:linear-gradient(160deg,#4d7a58,#2c4a36)}
+.energy-summary{margin-top:.6rem;color:rgba(244,233,220,.5);font:.64rem var(--font-mono);letter-spacing:.06em;text-transform:uppercase}
+
+.energy-blocks{display:grid;gap:.6rem;margin-top:1.3rem}
+.energy-block{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:1rem;align-items:center;padding:.9rem 1rem;border-left:2px solid rgba(255,255,255,.14);border-radius:2px;background:linear-gradient(145deg,rgba(34,24,30,.6),rgba(15,12,19,.75))}
+.energy-block--drena{border-left-color:#b7624d}
+.energy-block--recarga{border-left-color:#77a982}
+.energy-block__week{display:flex;gap:2px}
+.energy-block__week i{display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;color:rgba(255,255,255,.2);font:.52rem var(--font-mono);font-style:normal;background:rgba(255,255,255,.03)}
+.energy-block__week i[data-on]{color:#fbe6cd;background:rgba(224,132,65,.28);box-shadow:0 0 0 1px rgba(230,166,104,.4)}
+.energy-block__body{min-width:0}
+.energy-block__body p{color:rgba(244,233,220,.88);font-size:.95rem;line-height:1.35;overflow-wrap:anywhere}
+.energy-block__body small{display:block;margin-top:.25rem;color:rgba(255,255,255,.4);font:.6rem var(--font-mono);letter-spacing:.05em}
+.energy-block>button{min-width:44px;min-height:44px;border:0;color:rgba(255,255,255,.35);background:transparent;cursor:pointer;font-size:1.1rem;transition:color .3s}
+.energy-block>button:hover{color:#e5a168}
+
+@media(max-width:800px){
+  /* Los atajos tambien son destino de dedo en movil. */
+  .energy-days-picker__presets button{min-height:44px;padding:.5rem 1rem}
+  .energy-block-form__meta{grid-template-columns:1fr 1fr}
+  .energy-block-form__meta label:nth-child(3),.energy-block-form__meta button{grid-column:1/-1}
+  .energy-block-form__meta button{width:100%}
+  .energy-block{grid-template-columns:minmax(0,1fr) auto;gap:.6rem}
+  .energy-block__week{grid-column:1/-1}
+}

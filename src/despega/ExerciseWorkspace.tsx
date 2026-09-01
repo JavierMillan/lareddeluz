@@ -144,47 +144,164 @@ function EnergyExperience({ experience, answer, onChange }: {
   answer: ExerciseAnswer;
   onChange: Props["onChange"];
 }) {
-  type EnergyEntry = { id: string; activity: string; day: string; time: string; energy: "drena" | "neutro" | "recarga" };
+  /**
+   * Un bloque describe un tramo recurrente: "lunes a viernes, 9:00-18:00".
+   * La vida se repite por semana, asi que capturarla dia por dia obligaba a
+   * escribir cinco veces lo mismo. Patron tomado de SavvyCal/Calendly.
+   */
+  type EnergyBlock = {
+    id: string;
+    activity: string;
+    days: number[];
+    from: string;
+    to: string;
+    energy: "drena" | "neutro" | "recarga";
+  };
+  const SHORT = ["L", "M", "M", "J", "V", "S", "D"];
+  const WEEKDAYS = [0, 1, 2, 3, 4];
+
   const [activity, setActivity] = useState("");
-  const [day, setDay] = useState(experience.days[0]);
-  const [time, setTime] = useState("09:00");
-  const [energy, setEnergy] = useState<EnergyEntry["energy"]>("neutro");
-  const entries = asList(answer.entries).flatMap((line) => { try { return [JSON.parse(line) as EnergyEntry]; } catch { return []; } });
-  const saveEntries = (next: EnergyEntry[]) => onChange({
-    ...answer,
-    entries: next.map((entry) => JSON.stringify(entry)),
-    drena: next.filter((entry) => entry.energy === "drena").map((entry) => entry.activity),
-    neutro: next.filter((entry) => entry.energy === "neutro").map((entry) => entry.activity),
-    recarga: next.filter((entry) => entry.energy === "recarga").map((entry) => entry.activity),
+  const [days, setDays] = useState<number[]>(WEEKDAYS);
+  const [from, setFrom] = useState("09:00");
+  const [to, setTo] = useState("18:00");
+  const [energy, setEnergy] = useState<EnergyBlock["energy"]>("neutro");
+
+  const blocks = asList(answer.entries).flatMap((line) => {
+    try {
+      const parsed = JSON.parse(line) as Partial<EnergyBlock> & { day?: string; time?: string };
+      // Compatibilidad: las capturas viejas guardaban un dia y una hora sueltos.
+      if (!parsed.days) {
+        const index = experience.days.findIndex((name) => name === parsed.day);
+        return [{
+          id: String(parsed.id ?? Math.random()),
+          activity: String(parsed.activity ?? ""),
+          days: index >= 0 ? [index] : [0],
+          from: String(parsed.time ?? "09:00"),
+          to: String(parsed.time ?? "09:00"),
+          energy: (parsed.energy ?? "neutro") as EnergyBlock["energy"],
+        }];
+      }
+      return [parsed as EnergyBlock];
+    } catch { return []; }
   });
+
+  const label = (block: EnergyBlock) => {
+    const sorted = [...block.days].sort((a, b) => a - b);
+    if (!sorted.length) return "Sin días";
+    const consecutive = sorted.every((day, index) => index === 0 || day === sorted[index - 1] + 1);
+    if (sorted.length > 2 && consecutive) return `${experience.days[sorted[0]]} a ${experience.days[sorted[sorted.length - 1]]}`;
+    return sorted.map((day) => experience.days[day]).join(", ");
+  };
+
+  const saveBlocks = (next: EnergyBlock[]) => onChange({
+    ...answer,
+    entries: next.map((block) => JSON.stringify(block)),
+    drena: next.filter((block) => block.energy === "drena").map((block) => `${block.activity} · ${label(block)} ${block.from}-${block.to}`),
+    neutro: next.filter((block) => block.energy === "neutro").map((block) => `${block.activity} · ${label(block)} ${block.from}-${block.to}`),
+    recarga: next.filter((block) => block.energy === "recarga").map((block) => `${block.activity} · ${label(block)} ${block.from}-${block.to}`),
+  });
+
   const add = () => {
     const value = activity.trim();
-    if (!value) return;
-    saveEntries([...entries, { id: `${Date.now()}-${Math.random()}`, activity: value, day, time, energy }]);
+    if (!value || !days.length) return;
+    saveBlocks([...blocks, { id: `${Date.now()}-${Math.random()}`, activity: value, days: [...days], from, to, energy }]);
     setActivity("");
   };
-  const counts = { drena: entries.filter((entry) => entry.energy === "drena").length, neutro: entries.filter((entry) => entry.energy === "neutro").length, recarga: entries.filter((entry) => entry.energy === "recarga").length };
 
-  return <div className="energy-experience energy-experience--timeline">
+  const toggleDay = (index: number) => setDays((current) =>
+    current.includes(index) ? current.filter((day) => day !== index) : [...current, index]);
+
+  /** Horas que cubre un bloque en toda la semana: mide el peso real. */
+  const weeklyHours = (block: EnergyBlock) => {
+    const [fromH, fromM] = block.from.split(":").map(Number);
+    const [toH, toM] = block.to.split(":").map(Number);
+    const minutes = Math.max(0, (toH * 60 + toM) - (fromH * 60 + fromM));
+    return (minutes / 60) * block.days.length;
+  };
+  const totals = {
+    drena: blocks.filter((block) => block.energy === "drena").reduce((sum, block) => sum + weeklyHours(block), 0),
+    neutro: blocks.filter((block) => block.energy === "neutro").reduce((sum, block) => sum + weeklyHours(block), 0),
+    recarga: blocks.filter((block) => block.energy === "recarga").reduce((sum, block) => sum + weeklyHours(block), 0),
+  };
+  const totalHours = totals.drena + totals.neutro + totals.recarga;
+  const hours = (value: number) => `${Math.round(value * 10) / 10} h`;
+
+  return <div className="energy-experience">
     <header className="instrument-intro">
-      <p className="instrument-kicker">Una actividad · una sola captura</p>
+      <p className="instrument-kicker">Un bloque · toda la semana</p>
       <h2>Dónde se te va el día.</h2>
-      <p>Recorre tu registro y anota cada actividad con su día y hora aproximada. Clasifícala aquí mismo; no tienes que copiarla después a otra columna.</p>
+      <p>Marca los días que se repiten y su horario. Si algo pasa de lunes a viernes, es una sola captura — no cinco.</p>
     </header>
-    <div className="energy-composer">
-      <div className="energy-composer__activity"><label><span>Actividad concreta</span><input aria-label="Actividad concreta" value={activity} onChange={(event) => setActivity(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") add(); }} placeholder="Ej. reunión semanal, traslado, caminar…" /></label></div>
-      <div className="energy-composer__meta">
-        <label><span>Día</span><select aria-label="Día" value={day} onChange={(event) => setDay(event.target.value)}>{experience.days.map((item) => <option key={item}>{item}</option>)}</select></label>
-        <label><span>Hora</span><input type="time" aria-label="Hora aproximada" value={time} onChange={(event) => setTime(event.target.value)} /></label>
-        <label><span>Me dejó</span><select aria-label="Cómo me dejó" value={energy} onChange={(event) => setEnergy(event.target.value as EnergyEntry["energy"])}><option value="drena">Me drenó</option><option value="neutro">Neutro</option><option value="recarga">Me recargó</option></select></label>
+
+    <div className="energy-block-form">
+      <label className="energy-block-form__activity">
+        <span>Actividad concreta</span>
+        <input
+          aria-label="Actividad concreta"
+          value={activity}
+          onChange={(event) => setActivity(event.target.value)}
+          onKeyDown={(event) => { if (event.key === "Enter") add(); }}
+          placeholder="Ej. reunión semanal, traslado, caminar…"
+        />
+      </label>
+
+      <div className="energy-days-picker" role="group" aria-label="Días que se repite">
+        <span>Se repite</span>
+        <div>
+          {SHORT.map((initial, index) => <button
+            key={index}
+            type="button"
+            role="checkbox"
+            aria-checked={days.includes(index)}
+            aria-label={experience.days[index]}
+            data-on={days.includes(index) || undefined}
+            onClick={() => toggleDay(index)}
+          >{initial}</button>)}
+        </div>
+        <div className="energy-days-picker__presets">
+          <button type="button" onClick={() => setDays(WEEKDAYS)}>Entre semana</button>
+          <button type="button" onClick={() => setDays([5, 6])}>Fin de semana</button>
+          <button type="button" onClick={() => setDays([0, 1, 2, 3, 4, 5, 6])}>Todos</button>
+        </div>
+      </div>
+
+      <div className="energy-block-form__meta">
+        <label><span>De</span><input type="time" aria-label="Hora de inicio" value={from} onChange={(event) => setFrom(event.target.value)} /></label>
+        <label><span>A</span><input type="time" aria-label="Hora de fin" value={to} onChange={(event) => setTo(event.target.value)} /></label>
+        <label><span>Me dejó</span>
+          <select aria-label="Cómo me dejó" value={energy} onChange={(event) => setEnergy(event.target.value as EnergyBlock["energy"])}>
+            <option value="drena">Me drenó</option>
+            <option value="neutro">Neutro</option>
+            <option value="recarga">Me recargó</option>
+          </select>
+        </label>
         <button type="button" onClick={add}>Añadir</button>
       </div>
     </div>
-    <p className="energy-summary">{counts.drena} drena · {counts.neutro} neutro · {counts.recarga} recarga</p>
-    <div className="energy-days">{experience.days.map((item) => {
-      const daily = entries.filter((entry) => entry.day === item).sort((a, b) => a.time.localeCompare(b.time));
-      return <section key={item} className={daily.length ? "has-entries" : ""}><h3>{item}</h3>{daily.length ? <ol>{daily.map((entry) => <li key={entry.id} className={`energy-entry energy-entry--${entry.energy}`}><time>{entry.time}</time><p>{entry.activity}</p><span>{entry.energy === "drena" ? "Drena" : entry.energy === "recarga" ? "Recarga" : "Neutro"}</span><button type="button" onClick={() => saveEntries(entries.filter((itemEntry) => itemEntry.id !== entry.id))} aria-label={`Quitar ${entry.activity}`}>×</button></li>)}</ol> : <p>Sin registro</p>}</section>;
-    })}</div>
+
+    {blocks.length > 0 && <>
+      <div className="energy-balance" aria-hidden="true">
+        {(["drena", "neutro", "recarga"] as const).map((key) => totals[key] > 0 && <span
+          key={key}
+          className={`energy-balance--${key}`}
+          style={{ flexGrow: totals[key] }}
+        >{hours(totals[key])}</span>)}
+      </div>
+      <p className="energy-summary">{hours(totals.drena)} drenan · {hours(totals.recarga)} recargan · {hours(totalHours)} registradas</p>
+
+      <ul className="energy-blocks">
+        {blocks.map((block) => <li key={block.id} className={`energy-block energy-block--${block.energy}`}>
+          <div className="energy-block__week" aria-hidden="true">
+            {SHORT.map((initial, index) => <i key={index} data-on={block.days.includes(index) || undefined}>{initial}</i>)}
+          </div>
+          <div className="energy-block__body">
+            <p>{block.activity}</p>
+            <small>{label(block)} · {block.from}–{block.to} · {hours(weeklyHours(block))} por semana</small>
+          </div>
+          <button type="button" onClick={() => saveBlocks(blocks.filter((item) => item.id !== block.id))} aria-label={`Quitar ${block.activity}`}>×</button>
+        </li>)}
+      </ul>
+    </>}
   </div>;
 }
 

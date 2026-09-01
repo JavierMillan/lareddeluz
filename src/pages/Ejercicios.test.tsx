@@ -56,20 +56,26 @@ describe("cuaderno de trabajo", () => {
     expect(within(workspace).getByText("Cómo vas a notar que algo cambió")).toBeTruthy();
   });
 
-  it("E2 registra cada actividad una sola vez con su energia", async () => {
+  it("E2 captura un tramo recurrente en una sola vez", async () => {
     render(<Ejercicios />);
     await userEvent.click(screen.getByText("E2").closest("button")!);
     const workspace = screen.getByRole("main", { name: /E2 · Auditoría de energía/i });
 
-    expect(within(workspace).getAllByText(/recorre tu registro.*día y hora aproximada/i).length).toBeGreaterThan(0);
-    expect(within(workspace).getByRole("textbox", { name: /actividad concreta/i })).toBeTruthy();
-    expect(within(workspace).getByRole("combobox", { name: /cómo me dejó/i })).toBeTruthy();
+    // Los dias son un teclado visible, no un desplegable de uno a la vez.
+    expect(within(workspace).getByRole("checkbox", { name: "Lunes" })).toBeTruthy();
+    expect(within(workspace).getByRole("checkbox", { name: "Domingo" })).toBeTruthy();
+    // Entre semana viene preseleccionado: es el caso mas comun.
+    expect(within(workspace).getByRole("checkbox", { name: "Miércoles" })).toBeChecked();
+    expect(within(workspace).getByRole("checkbox", { name: "Sábado" })).not.toBeChecked();
 
     await userEvent.type(within(workspace).getByRole("textbox", { name: /actividad concreta/i }), "Junta sin propósito");
     await userEvent.selectOptions(within(workspace).getByRole("combobox", { name: /cómo me dejó/i }), "drena");
     await userEvent.click(within(workspace).getByRole("button", { name: "Añadir" }));
+
+    // Un bloque, no cinco entradas: lunes a viernes 09:00-18:00 son 45 h.
     expect(within(workspace).getByText("Junta sin propósito")).toBeTruthy();
-    expect(within(workspace).getByText(/1 drena · 0 neutro · 0 recarga/i)).toBeTruthy();
+    expect(within(workspace).getByText(/Lunes a Viernes · 09:00–18:00 · 45 h por semana/i)).toBeTruthy();
+    expect(within(workspace).getByText(/45 h drenan/i)).toBeTruthy();
   });
 
   it("abre una hoja directamente desde su URL y vuelve al indice", async () => {
@@ -176,14 +182,18 @@ describe("cuaderno de trabajo", () => {
     expect(screen.getByText("Un compromiso que ya cumplió su función")).toBeTruthy();
   });
 
-  it("E2 usa una captura compacta y una semana sin contenedor de scroll", () => {
+  it("E2 ofrece atajos de semana y respeta el area tactil de los dias", async () => {
     window.history.replaceState({}, "", "/ejercicios/?ejercicio=E2");
     const { container } = render(<Ejercicios />);
 
-    expect(screen.getByRole("button", { name: "Añadir" })).toBeTruthy();
-    expect(screen.getByText("Actividad concreta")).toBeTruthy();
+    await userEvent.click(screen.getByRole("button", { name: "Fin de semana" }));
+    expect(screen.getByRole("checkbox", { name: "Sábado" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Lunes" })).not.toBeChecked();
+
+    // La grilla de 7 columnas con scroll horizontal quedo fuera.
     expect(container.querySelector(".energy-table-scroll")).toBeNull();
-    expect(container.querySelector(".energy-days")).toBeTruthy();
+    expect(container.querySelector(".energy-days")).toBeNull();
+    expect(container.querySelector(".energy-days-picker")).toBeTruthy();
   });
 
   it("P1 termina como una firma editorial sin medidor", () => {
