@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import type { Exercise } from "./exercises";
 import {
@@ -34,6 +34,32 @@ type Props = {
 };
 
 const asText = (value: ExerciseAnswer[string]) => Array.isArray(value) ? value.join("\n") : value ?? "";
+/**
+ * Aviso corto para un campo que falta.
+ *
+ * Un boton que no hace nada al pulsarlo deja al lector adivinando. El aviso
+ * se dice en voz alta (aria-live) y se borra solo, para no acumular reganos
+ * en pantalla.
+ */
+function useHint() {
+  const [hint, setHint] = useState("");
+  const timer = useRef<number | undefined>(undefined);
+  const say = (message: string) => {
+    setHint(message);
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setHint(""), 4000);
+  };
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+  return { hint, say, clear: () => setHint("") };
+}
+
+/** Se anuncia siempre, aunque este vacio, para que el lector de pantalla lo siga. */
+function Hint({ children }: { children: string }) {
+  return <p className="field-hint" role="status" aria-live="polite" data-shown={children ? "" : undefined}>
+    {children ? <><span aria-hidden="true">!</span>{children}</> : null}
+  </p>;
+}
+
 const asList = (value: ExerciseAnswer[string]) => Array.isArray(value) ? value : value?.trim() ? [value] : [];
 
 function ReadingExperience({ experience }: {
@@ -84,11 +110,14 @@ function ListExperience({ categories, answer, onChange, variant, movable = false
   variant: "capture" | "decision";
   movable?: boolean;
 }) {
+  const { hint, say, clear } = useHint();
   const [drafts, setDrafts] = useState<Record<string, string>>({});
 
   const add = (category: Category) => {
     const value = drafts[category.key]?.trim();
-    if (!value) return;
+    if (!value) { say("Escribe algo antes de agregarlo."); return; }
+    if (asList(answer[category.key]).includes(value)) { say("Eso ya está en la lista."); return; }
+    clear();
     onChange({ ...answer, [category.key]: [...asList(answer[category.key]), value] });
     setDrafts((current) => ({ ...current, [category.key]: "" }));
   };
@@ -136,6 +165,7 @@ function ListExperience({ categories, answer, onChange, variant, movable = false
         <button type="button" onClick={() => add(category)} aria-label={`Agregar en ${category.label}`}>+</button>
       </div>
     </section>)}
+    <Hint>{hint}</Hint>
   </div>;
 }
 
@@ -160,6 +190,7 @@ function EnergyExperience({ experience, answer, onChange }: {
   const SHORT = ["L", "M", "M", "J", "V", "S", "D"];
   const WEEKDAYS = [0, 1, 2, 3, 4];
 
+  const { hint, say, clear } = useHint();
   const [activity, setActivity] = useState("");
   const [days, setDays] = useState<number[]>(WEEKDAYS);
   const [from, setFrom] = useState("09:00");
@@ -203,7 +234,10 @@ function EnergyExperience({ experience, answer, onChange }: {
 
   const add = () => {
     const value = activity.trim();
-    if (!value || !days.length) return;
+    if (!value) { say("Escribe qué actividad es antes de añadirla."); return; }
+    if (!days.length) { say("Marca al menos un día de la semana."); return; }
+    if (from >= to) { say("La hora de fin tiene que ser posterior a la de inicio."); return; }
+    clear();
     saveBlocks([...blocks, { id: `${Date.now()}-${Math.random()}`, activity: value, days: [...days], from, to, energy }]);
     setActivity("");
   };
@@ -277,6 +311,7 @@ function EnergyExperience({ experience, answer, onChange }: {
         </label>
         <button type="button" onClick={add}>Añadir</button>
       </div>
+      <Hint>{hint}</Hint>
     </div>
 
     {blocks.length > 0 && <>
@@ -394,7 +429,7 @@ export default function ExerciseWorkspace({ exercise, answer, onChange, onBack, 
       </aside>}
 
       {experience.downloadable && <footer className="workbook-actions">
-        <p className="save-state" aria-live="polite">{SAVE_COPY[saveState]}</p>
+        <p className="save-state" data-state={saveState} aria-live="polite">{SAVE_COPY[saveState]}</p>
         <div>
           <button type="button" onClick={() => window.print()}>Imprimir esta hoja</button>
           <button type="button" disabled={!written} onClick={() => downloadExercisePdf(exercise, answer)}>Descargar esta hoja en PDF</button>

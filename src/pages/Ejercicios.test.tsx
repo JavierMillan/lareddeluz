@@ -254,4 +254,61 @@ describe("cuaderno de trabajo", () => {
     render(<Ejercicios />);
     expect(screen.getByRole("heading", { name: landmark })).toBeTruthy();
   });
+  it("E2 dice qué falta en vez de ignorar el clic", async () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=E2");
+    render(<Ejercicios />);
+    const workspace = screen.getByRole("main", { name: /E2 · Auditoría de energía/i });
+    const add = within(workspace).getByRole("button", { name: "Añadir" });
+
+    // Sin actividad: el boton no puede quedarse mudo.
+    await userEvent.click(add);
+    expect(within(workspace).getByText(/escribe qué actividad/i)).toBeTruthy();
+
+    // Con actividad pero sin dias marcados.
+    await userEvent.type(within(workspace).getByRole("textbox", { name: /actividad concreta/i }), "Traslado");
+    for (const day of ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]) {
+      await userEvent.click(within(workspace).getByRole("checkbox", { name: day }));
+    }
+    await userEvent.click(add);
+    expect(within(workspace).getByText(/marca al menos un día/i)).toBeTruthy();
+
+    // Rango invertido: fin antes que inicio.
+    await userEvent.click(within(workspace).getByRole("checkbox", { name: "Lunes" }));
+    const to = within(workspace).getByLabelText("Hora de fin");
+    await userEvent.clear(to);
+    await userEvent.type(to, "07:00");
+    await userEvent.click(add);
+    expect(within(workspace).getByText(/posterior a la de inicio/i)).toBeTruthy();
+
+    // Ya corregido: entra y el aviso se limpia.
+    await userEvent.clear(to);
+    await userEvent.type(to, "10:00");
+    await userEvent.click(add);
+    expect(within(workspace).getByText("Traslado")).toBeTruthy();
+    expect(within(workspace).queryByText(/posterior a la de inicio/i)).toBeNull();
+  });
+
+  it("distingue el guardado fallido del exitoso", async () => {
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=G2");
+    const { container } = render(<Ejercicios />);
+    await userEvent.type(screen.getByRole("textbox", { name: "¿Qué necesito recordar de hoy?" }), "algo");
+    await waitFor(() => expect(container.querySelector(".save-state")).toHaveAttribute("data-state", "saved"));
+  });
+  it("S1 permite mover una ficha entre las dos columnas", async () => {
+    saveAnswer("E2", { drena: ["Junta sin propósito"] });
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=S1");
+    render(<Ejercicios />);
+
+    await userEvent.click(screen.getByRole("button", { name: /Traer lo que marqué como drenaje/i }));
+    expect(screen.getByText(/Llegaron 1 de E2/i)).toBeTruthy();
+
+    // Todo cae en "no devuelve": tiene que poder pasar al otro lado.
+    const toReturns = screen.getByRole("button", { name: /Mover "Junta sin propósito" a ← Sí vale/i });
+    await userEvent.click(toReturns);
+    expect(screen.getByRole("button", { name: /Mover "Junta sin propósito" a No devuelve →/i })).toBeTruthy();
+
+    // Y de regreso, sin perder el texto.
+    await userEvent.click(screen.getByRole("button", { name: /Mover "Junta sin propósito" a No devuelve →/i }));
+    expect(screen.getByRole("button", { name: /Mover "Junta sin propósito" a ← Sí vale/i })).toBeTruthy();
+  });
 });

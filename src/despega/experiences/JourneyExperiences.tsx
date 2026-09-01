@@ -11,11 +11,39 @@ function Field({ answerKey, label, help, placeholder, answer, onChange, rows = 4
   return <label className="journey-field"><span>{label}</span>{help && <small>{help}</small>}<textarea aria-label={label} rows={rows} value={asText(answer[answerKey])} onChange={(event) => onChange({ ...answer, [answerKey]: event.target.value })} placeholder={placeholder} /><div className="print-value">{asText(answer[answerKey])}</div></label>;
 }
 
-function ListBuilder({ answerKey, label, placeholder, answer, onChange, limit }: Props & { answerKey: string; label: string; placeholder: string; limit?: number }) {
+function ListBuilder({ answerKey, label, placeholder, answer, onChange, limit, moveTo, moveLabel }: Props & { answerKey: string; label: string; placeholder: string; limit?: number; moveTo?: string; moveLabel?: string }) {
   const [draft, setDraft] = useState("");
+  const [hint, setHint] = useState("");
   const items = asList(answer[answerKey]);
-  const add = () => { const value = draft.trim(); if (!value || (limit && items.length >= limit)) return; onChange({ ...answer, [answerKey]: [...items, value] }); setDraft(""); };
-  return <section className="journey-list"><h3>{label}</h3><ul>{items.map((item, index) => <li key={`${item}-${index}`}><p>{item}</p><button type="button" onClick={() => onChange({ ...answer, [answerKey]: items.filter((_, itemIndex) => itemIndex !== index) })} aria-label={`Quitar ${item}`}>×</button></li>)}</ul>{(!limit || items.length < limit) && <div className="instrument-add"><input aria-label={`Agregar a ${label}`} value={draft} onChange={(event) => setDraft(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") add(); }} placeholder={placeholder} /><button type="button" onClick={add}>Agregar</button></div>}</section>;
+  const say = (message: string) => { setHint(message); window.setTimeout(() => setHint(""), 4000); };
+  const add = () => {
+    const value = draft.trim();
+    if (!value) { say("Escribe algo antes de agregarlo."); return; }
+    if (limit && items.length >= limit) { say(`Aquí caben ${limit}. Quita uno para seguir.`); return; }
+    if (items.includes(value)) { say("Eso ya está en esta lista."); return; }
+    setHint("");
+    onChange({ ...answer, [answerKey]: [...items, value] });
+    setDraft("");
+  };
+  /* Clasificar es cambiar de opinión: lo que entra en una columna tiene que
+     poder pasarse a la otra sin borrarlo y volverlo a escribir. */
+  const move = (item: string) => {
+    if (!moveTo) return;
+    const target = asList(answer[moveTo]);
+    onChange({
+      ...answer,
+      [answerKey]: items.filter((value) => value !== item),
+      [moveTo]: target.includes(item) ? target : [...target, item],
+    });
+  };
+  return <section className="journey-list"><h3>{label}</h3><ul>{items.map((item, index) => <li key={`${item}-${index}`}>
+    <p>{item}</p>
+    {moveTo && <button type="button" className="list-move" onClick={() => move(item)} aria-label={`Mover "${item}" a ${moveLabel}`} title={`Mover a ${moveLabel}`}>{moveLabel}</button>}
+    <button type="button" onClick={() => onChange({ ...answer, [answerKey]: items.filter((_, itemIndex) => itemIndex !== index) })} aria-label={`Quitar ${item}`}>×</button>
+  </li>)}</ul>
+  <div className="journey-list__add"><input aria-label={label} value={draft} onChange={(event) => setDraft(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") add(); }} placeholder={placeholder} /><button type="button" onClick={add}>Agregar</button></div>
+  <p className="field-hint" role="status" aria-live="polite" data-shown={hint ? "" : undefined}>{hint ? <><span aria-hidden="true">!</span>{hint}</> : null}</p>
+  </section>;
 }
 
 function ImportCue({ from, label, onImport }: { from: string; label: string; onImport: () => void }) {
@@ -37,8 +65,20 @@ function PhraseExperience(props: Props) {
 }
 
 function DrainLedgerExperience(props: Props) {
-  const importE2 = () => { const source = loadAnswer("E2"); const drains = asList(source.drena); props.onChange({ ...props.answer, empty: [...new Set([...asList(props.answer.empty), ...drains])] }); };
-  return <div className="drain-ledger journey-instrument"><header className="instrument-intro"><p className="instrument-kicker">Costo no es lo mismo que desperdicio</p><h2>Separa lo que cuesta y vale de lo que sólo se lleva algo.</h2></header><ImportCue from="E2" label="Traer lo que marqué como drenaje" onImport={importE2} /><div className="ledger-scale"><ListBuilder {...props} answerKey="returns" label="Drena y devuelve" placeholder="Cuesta, pero sí vale…" /><div className="scale-spine" aria-hidden="true">↔</div><ListBuilder {...props} answerKey="empty" label="Drena y no devuelve" placeholder="Se repite y no regresa nada…" /></div><Field {...props} answerKey="counts" label="Lo que más se repitió" help="Cuenta las apariciones en tu registro. Eso es lo primero que toca atender." placeholder="Apareció ___ veces…" rows={3} /></div>;
+  const [imported, setImported] = useState("");
+  const importE2 = () => {
+    const drains = asList(loadAnswer("E2").drena);
+    const current = asList(props.answer.empty);
+    const fresh = drains.filter((item) => !current.includes(item));
+    setImported(drains.length === 0
+      ? "No hay nada marcado como drenaje en E2 todavía."
+      : fresh.length === 0
+        ? "Ya habías traído todo lo de E2."
+        : `Llegaron ${fresh.length} de E2. Muévelas al lado que les toque.`);
+    window.setTimeout(() => setImported(""), 6000);
+    if (fresh.length) props.onChange({ ...props.answer, empty: [...current, ...fresh] });
+  };
+  return <div className="drain-ledger journey-instrument"><header className="instrument-intro"><p className="instrument-kicker">Costo no es lo mismo que desperdicio</p><h2>Separa lo que cuesta y vale de lo que sólo se lleva algo.</h2></header><ImportCue from="E2" label="Traer lo que marqué como drenaje" onImport={importE2} /><p className="field-hint" role="status" aria-live="polite" data-shown={imported ? "" : undefined}>{imported ? <><span aria-hidden="true">!</span>{imported}</> : null}</p><div className="ledger-scale"><ListBuilder {...props} answerKey="returns" label="Drena y devuelve" placeholder="Cuesta, pero sí vale…" moveTo="empty" moveLabel="No devuelve →" /><div className="scale-spine" aria-hidden="true">↔</div><ListBuilder {...props} answerKey="empty" label="Drena y no devuelve" placeholder="Se repite y no regresa nada…" moveTo="returns" moveLabel="← Sí vale" /></div><Field {...props} answerKey="counts" label="Lo que más se repitió" help="Cuenta las apariciones en tu registro. Eso es lo primero que toca atender." placeholder="Apareció ___ veces…" rows={3} /></div>;
 }
 
 function ConversationExperience(props: Props) {

@@ -32,37 +32,24 @@
 @media screen and (max-width:800px){.belief-story,.belief-closing,.identity-spread,.territory-map{grid-template-columns:1fr}.belief-story:before{top:0;right:auto;bottom:0;left:.5rem;width:1px;height:auto;background:linear-gradient(transparent,rgba(229,154,95,.3),transparent)}.belief-story>section,.belief-story>section:nth-child(2){margin-top:0;padding:1.5rem 0 1.5rem 1.5rem;background:none}.belief-story__number{top:1.75rem;left:-.05rem}.belief-closing{padding:1.2rem}.breath-card,.breath-card.is-chosen{min-height:0}.identity-spread>.journey-list,.identity-spread>.journey-list:last-child{min-height:0;margin:0;padding:1.2rem 0;border-left:0}.identity-signature .journey-field{grid-template-columns:1fr}.territory-stage,.territory-stage--groups,.territory-stage--result{min-height:0;margin:0;padding:1.2rem 0 1.5rem 1.25rem;border-top:0;border-left:1px solid rgba(229,154,95,.18)}.territory-stage--result{border-left-color:rgba(229,154,95,.5)}.territory-stage+ .territory-stage{border-left-color:rgba(229,154,95,.18)}.energy-composer,.energy-composer__meta{grid-template-columns:1fr}.energy-composer button{width:100%}.energy-days{grid-template-columns:1fr}.energy-days>section{min-height:0}.energy-days>section>p{margin:.5rem 0}}
 
 /* Legibilidad del desplegable nativo.
-   El menú de un <select> lo pinta el sistema operativo, no la página: no hereda
-   el fondo semitransparente del control, así que el texto claro terminaba sobre
+   El menu de un <select> lo pinta el sistema operativo, no la pagina: no hereda
+   el fondo semitransparente del control, asi que el texto claro terminaba sobre
    un fondo casi blanco y las opciones sin seleccionar quedaban ilegibles.
-   La solución es dar a las opciones un fondo y un color OPACOS. */
-.energy-composer select,
-.commitment-add select,
-.gap-composer select,
-.effort-add select,
-.task-composer select,
-.sprint-experience select { color-scheme:dark; }
+   La solucion es dar a las opciones un fondo y un color OPACOS.
 
-.energy-composer select option,
-.commitment-add select option,
-.gap-composer select option,
-.effort-add select option,
-.task-composer select option,
-.sprint-experience select option {
+   Se aplica a TODO select de la hoja, no a una lista de clases: la lista se
+   quedaba atras cada vez que un contenedor cambiaba de nombre. */
+.exercise-workspace select { color-scheme:dark; }
+.exercise-workspace select option {
   color:#f4e9dc;
-  background-color:#1b141b;   /* opaco a propósito: nada de rgba aquí */
+  background-color:#1b141b;   /* opaco a proposito: nada de rgba aqui */
 }
-
-/* Firefox pinta la opción activa con su propio acento; se fija a mano para que
+/* Firefox pinta la opcion activa con su propio acento; se fija a mano para que
    el contraste no dependa del tema del sistema. */
-.energy-composer select option:checked,
-.commitment-add select option:checked,
-.gap-composer select option:checked,
-.effort-add select option:checked,
-.task-composer select option:checked,
-.sprint-experience select option:checked {
-  color:#1b141b;
-  background-color:#df9455;
+.exercise-workspace select option:checked,
+.exercise-workspace select option:hover {
+  color:#120d14;
+  background-color:#e5a168;
 }
 
 @media print{.energy-block-form,.breath-choice,.breath-reflection textarea,.farewell-source{display:none!important}.belief-story,.belief-closing,.identity-spread,.territory-map{display:block}.belief-story:before{display:none}.belief-story>section,.belief-closing,.identity-spread>.journey-list,.identity-name.identity-signature,.territory-stage{min-height:0;margin:0 0 5mm;padding:3mm 0;break-inside:avoid;border:0;border-radius:0;background:none}.belief-story__number,.territory-stage__number,.territory-stage__cue{color:#7d4b28!important}.identity-signature>p,.farewell-source span{color:#171218!important}.energy-days{display:grid;grid-template-columns:repeat(2,1fr);gap:4mm;overflow:visible}.energy-days>section{min-height:0;break-inside:avoid;border-radius:0;background:none}}
@@ -127,4 +114,33 @@
   .energy-block-form__meta button{width:100%}
   .energy-block{grid-template-columns:minmax(0,1fr) auto;gap:.6rem}
   .energy-block__week{grid-column:1/-1}
+}
+
+/* Retroalimentacion al capturar.
+   Un boton que no responde deja al lector adivinando que hizo mal. El aviso
+   ocupa su lugar siempre (sin saltos de layout) y solo se pinta cuando hay
+   algo que decir. */
+.field-hint{display:flex;align-items:center;gap:.5rem;min-height:1.5rem;margin-top:.6rem;font:.72rem/1.4 var(--font-mono);letter-spacing:.03em;color:#f2b183;visibility:hidden}
+.field-hint[data-shown]{visibility:visible}
+.field-hint span{display:grid;place-items:center;width:1.15rem;height:1.15rem;border-radius:50%;color:#1a1016;background:#e2924f;font-size:.72rem;font-weight:700}
+@media(prefers-reduced-motion:no-preference){
+  .field-hint[data-shown]{animation:hint-in .28s cubic-bezier(.22,1,.36,1)}
+  @keyframes hint-in{from{transform:translateY(-3px)}to{transform:none}}
+}
+
+/* El guardado fallido no puede verse igual que el exitoso. */
+.save-state[data-state=memory]{color:#f0a97a}
+.save-state[data-state=saved]{color:rgba(150,196,160,.75)}
+
+/* Clasificar es cambiar de opinion: la ficha se pasa de columna sin
+   borrarla y volverla a escribir. */
+.journey-list li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:.4rem}
+.list-move{min-height:36px;padding:.3rem .7rem;border:0;border-radius:99px;color:rgba(229,161,104,.85);background:rgba(224,132,65,.09);box-shadow:0 0 0 1px rgba(212,130,63,.24);cursor:pointer;font:.6rem/1 var(--font-mono);letter-spacing:.04em;white-space:nowrap;transition:color .3s,background .3s,box-shadow .3s}
+.list-move:hover{color:#fbe6cd;background:rgba(224,132,65,.2);box-shadow:0 0 0 1px rgba(230,166,104,.6)}
+@media(max-width:800px){
+  .journey-list li{grid-template-columns:minmax(0,1fr) auto}
+  .list-move{grid-column:1/-1;justify-self:start;min-height:44px;margin-top:.3rem}
+  /* Todo lo que se toca en la hoja cumple el minimo tactil. */
+  .journey-list li>button,.journey-list__add button{min-height:44px}
+  .journey-list__add button{padding-inline:1rem}
 }
