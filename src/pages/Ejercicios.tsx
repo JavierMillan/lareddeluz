@@ -9,11 +9,9 @@ import "@/despega/ejercicios.css";
 import "@/despega/journey-experiences.css";
 
 const WORKBOOK = "/assets/despega-workbook.pdf";
-const JOURNEY_ORDER = EXERCISES.flatMap((exercise) => {
-  if (exercise.code === "S3") return [];
-  if (exercise.code === "S4") return [exercise, EXERCISES.find((item) => item.code === "S3")!];
-  return [exercise];
-});
+// El recorrido es el mismo orden en que están declarados los ejercicios: en la
+// S se decide qué se va y qué se queda (S3) antes de despedirse (S4).
+const JOURNEY_ORDER = EXERCISES;
 
 type SaveState = "idle" | "saving" | "saved" | "memory";
 

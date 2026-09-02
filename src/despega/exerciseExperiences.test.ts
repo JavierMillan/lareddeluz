@@ -28,7 +28,7 @@ describe("experiencias del cuaderno", () => {
     expect(Object.fromEntries(Object.entries(EXPERIENCE_BY_CODE).map(([code, experience]) => [code, experience.kind]))).toEqual({
       D1: "reading", D2: "belief", D3: "phrase", D4: "audit",
       E1: "breathing", E2: "energy",
-      S1: "drain-ledger", S2: "conversation", S3: "farewell", S4: "commitment",
+      S1: "drain-ledger", S2: "conversation", S3: "commitment", S4: "farewell",
       P1: "identity", P2: "gap", P3: "territory", P4: "sprint",
       EJ1: "effort", EJ2: "pivot",
       G1: "retrospective", G2: "daily-log",

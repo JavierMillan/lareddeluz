@@ -164,17 +164,17 @@ describe("cuaderno de trabajo", () => {
     window.history.replaceState({}, "", "/ejercicios/?ejercicio=S2");
     render(<Ejercicios />);
 
-    await userEvent.click(screen.getByRole("button", { name: /ejercicio siguiente: S4/i }));
-    expect(screen.getByRole("main", { name: /S4 · Se va o se queda/i })).toBeTruthy();
     await userEvent.click(screen.getByRole("button", { name: /ejercicio siguiente: S3/i }));
-    expect(screen.getByRole("main", { name: /S3 · La despedida/i })).toBeTruthy();
+    expect(screen.getByRole("main", { name: /S3 · Se va o se queda/i })).toBeTruthy();
+    await userEvent.click(screen.getByRole("button", { name: /ejercicio siguiente: S4/i }));
+    expect(screen.getByRole("main", { name: /S4 · La despedida/i })).toBeTruthy();
     await userEvent.click(screen.getByRole("button", { name: /ejercicio siguiente: P1/i }));
     expect(screen.getByRole("main", { name: /P1 · Escribe a tu súper tú/i })).toBeTruthy();
   });
 
-  it("S3 permite traer lo que la persona decidio soltar en S4", async () => {
-    saveAnswer("S4", { leaves: ["Un compromiso que ya cumplió su función"] });
-    window.history.replaceState({}, "", "/ejercicios/?ejercicio=S3");
+  it("S4 permite traer lo que la persona decidio soltar en S3", async () => {
+    saveAnswer("S3", { leaves: ["Un compromiso que ya cumplió su función"] });
+    window.history.replaceState({}, "", "/ejercicios/?ejercicio=S4");
     render(<Ejercicios />);
 
     expect(screen.queryByText("Un compromiso que ya cumplió su función")).toBeNull();
@@ -240,8 +240,8 @@ describe("cuaderno de trabajo", () => {
     ["D3", /Lo que dices sin pensarlo/i],
     ["S1", /Lo que cuesta y vale/i],
     ["S2", /Antes de hablar/i],
-    ["S3", /Escribe una despedida, no un reporte/i],
-    ["S4", /Haz visible lo que se va y lo que se queda/i],
+    ["S3", /Haz visible lo que se va y lo que se queda/i],
+    ["S4", /Escribe una despedida, no un reporte/i],
     ["P1", /Escribe desde «soy»/i],
     ["P2", /Convierte identidad en piezas/i],
     ["EJ1", /No todo pendiente pesa igual/i],
