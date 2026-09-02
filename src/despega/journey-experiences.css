@@ -52,6 +52,77 @@
   background-color:#e5a168;
 }
 
+
+/* Compositor de las listas del cuaderno (identidad, brecha, balanza…).
+   Antes el input heredaba un gris de caja flotante y «Agregar» se leía como
+   texto suelto, no como botón. Se alinea con el resto del cuaderno: línea
+   inferior dorada para escribir y píldora con borde para la acción. */
+.journey-list__add {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:.55rem;
+  align-items:end;
+  margin-top:.35rem;
+}
+
+.journey-list__add input {
+  width:100%;
+  min-width:0;
+  min-height:46px;
+  padding:.65rem .75rem;
+  border:0;
+  border-bottom:1px solid rgba(229,154,95,.28);
+  border-radius:0;
+  color:var(--ink);
+  background:linear-gradient(90deg,rgba(224,132,65,.05),transparent);
+  font:inherit;
+  transition:border-color .2s ease,background-color .2s ease;
+}
+
+/* .42 y no menos: por debajo de eso la pista deja de leerse (4.10:1 sobre el
+   papel del cuaderno), y por encima competiría con lo que escribe la persona. */
+.journey-list__add input::placeholder { color:rgba(255,255,255,.42); }
+
+.journey-list__add input:hover { border-bottom-color:rgba(229,154,95,.45); }
+
+.journey-list__add input:focus {
+  outline:none;
+  border-bottom-color:#e7a56d;
+  background:linear-gradient(90deg,rgba(224,132,65,.1),transparent);
+}
+
+.journey-list__add button {
+  min-height:46px;
+  padding:.65rem 1.15rem;
+  border:1px solid rgba(229,154,95,.3);
+  border-radius:999px;
+  color:#efb581;
+  background:rgba(224,132,65,.05);
+  font:.72rem var(--font-mono);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  cursor:pointer;
+  transition:color .2s ease,border-color .2s ease,background-color .2s ease;
+}
+
+.journey-list__add button:hover {
+  border-color:rgba(229,154,95,.55);
+  color:#ffd0aa;
+  background:rgba(224,132,65,.12);
+}
+
+.journey-list__add button:focus-visible {
+  outline:2px solid #e7a56d;
+  outline-offset:2px;
+}
+
+/* En pantallas angostas el botón cabe mejor debajo que espachurrando el campo. */
+@media (max-width:30rem) {
+  .journey-list__add { grid-template-columns:1fr; }
+  .journey-list__add button { justify-self:start; }
+}
+
 @media print{.energy-block-form,.breath-choice,.breath-reflection textarea,.farewell-source{display:none!important}.belief-story,.belief-closing,.identity-spread,.territory-map{display:block}.belief-story:before{display:none}.belief-story>section,.belief-closing,.identity-spread>.journey-list,.identity-name.identity-signature,.territory-stage{min-height:0;margin:0 0 5mm;padding:3mm 0;break-inside:avoid;border:0;border-radius:0;background:none}.belief-story__number,.territory-stage__number,.territory-stage__cue{color:#7d4b28!important}.identity-signature>p,.farewell-source span{color:#171218!important}.energy-days{display:grid;grid-template-columns:repeat(2,1fr);gap:4mm;overflow:visible}.energy-days>section{min-height:0;break-inside:avoid;border-radius:0;background:none}}
 
 /* E2 Â· AuditorÃ­a de energÃ­a â€” bloques recurrentes, no capturas sueltas.
